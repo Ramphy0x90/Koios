@@ -1,0 +1,7 @@
+.books-main-container {
+	flex-direction: row;
+}
+
+.content-container {
+	flex: 1 1 auto;
+}
