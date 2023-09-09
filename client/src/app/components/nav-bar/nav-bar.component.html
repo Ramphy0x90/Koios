@@ -1,0 +1,33 @@
+<nav class="navbar navbar-expand-lg shadow-sm">
+	<div class="container-fluid">
+		<a class="navbar-brand" href="#">Koios</a>
+
+		<button
+			class="navbar-toggler"
+			type="button"
+			data-bs-toggle="collapse"
+			data-bs-target="#navbarNavAltMarkup"
+			aria-controls="navbarNavAltMarkup"
+			aria-expanded="false"
+			aria-label="Toggle navigation"
+		>
+			<i class="bi bi-list"></i>
+		</button>
+
+		<div class="collapse navbar-collapse" id="navbarNavAltMarkup">
+			<div class="navbar-nav">
+				<ng-container *ngFor="let option of navOptions">
+					<a
+						class="nav-link"
+						data-bs-toggle="collapse"
+						data-bs-target=".navbar-collapse.show"
+						routerLinkActive="active"
+						[routerLinkActiveOptions]="{ exact: true }"
+						[routerLink]="option.route"
+						>{{ option.name }}</a
+					>
+				</ng-container>
+			</div>
+		</div>
+	</div>
+</nav>

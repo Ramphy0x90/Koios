@@ -1,0 +1,52 @@
+.inspector-main-container {
+	gap: var(--space-7);
+	width: 360px;
+	height: 100%;
+	padding: var(--space-6);
+	background-color: var(--color-light);
+}
+
+.actions-container {
+	justify-content: space-between;
+	align-items: center;
+	margin-bottom: var(--space-6);
+}
+
+.actions-container div {
+	cursor: pointer;
+}
+
+.actions-container button {
+	padding: var(--space-2) var(--space-6);
+	border-radius: 0;
+}
+
+.actions-container .btn-edit {
+	background-color: var(--color-light-1);
+}
+
+.actions-container .btn-save {
+	background-color: var(--color-green);
+}
+
+.inspector-field {
+	display: flex;
+	flex-direction: column;
+}
+
+.inspector-field label {
+	color: var(--color-green);
+}
+
+.inspector-field input {
+	white-space: no-wrap;
+	text-overflow: ellipsis;
+	overflow: hidden;
+}
+
+.readOnly .inspector-field input,
+.readOnly .inspector-field textarea,
+.readOnly .inspector-field select {
+	border: 1px solid var(--color-light-1);
+	background-color: var(--color-light);
+}

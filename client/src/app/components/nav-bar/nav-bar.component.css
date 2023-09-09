@@ -1,0 +1,19 @@
+.navbar {
+	background-color: var(--color-blue);
+}
+
+.navbar a {
+	color: var(--color-light);
+}
+
+.navbar-nav a.active {
+	color: var(--color-blue-1);
+}
+
+.navbar-nav a:hover {
+	color: var(--color-light-1);
+}
+
+.navbar-nav {
+	margin-left: auto;
+}

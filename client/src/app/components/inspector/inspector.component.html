@@ -1,0 +1,86 @@
+<div
+	class="inspector-main-container d-flex flex-column"
+	[class.readOnly]="mode == inpectorMode.READ"
+>
+	<div class="actions-container d-flex flex-row">
+		<ng-container *ngIf="mode == inpectorMode.READ">
+			<button
+				class="btn btn-edit btn-secondary"
+				(click)="setMode(inpectorMode.EDIT)"
+			>
+				Modifica
+			</button>
+			<div>Elimina</div>
+		</ng-container>
+
+		<ng-container
+			*ngIf="mode == inpectorMode.NEW || mode == inpectorMode.EDIT"
+		>
+			<button class="btn btn-save btn-secondary">Salva</button>
+			<div (click)="setMode(inpectorMode.READ)">Annulla</div>
+		</ng-container>
+	</div>
+
+	<ng-container *ngIf="model == inspectModel.BOOK">
+		<div class="inspector-field form-group">
+			<label>Richiedenti <i class="bi bi-people-fill"></i></label>
+			<select
+				class="form-control"
+				[disabled]="mode == inpectorMode.READ"
+			></select>
+			<div></div>
+		</div>
+
+		<div class="inspector-field form-group">
+			<label>Autore <i class="bi bi-person-fill"></i></label>
+			<select
+				class="form-control"
+				[title]="data.author"
+				[(ngModel)]="data.author"
+				[disabled]="mode == inpectorMode.READ"
+			></select>
+		</div>
+
+		<div class="inspector-field form-group">
+			<label>Titolo <i class="bi bi-justify-left"></i></label>
+			<input
+				type="text"
+				class="form-control"
+				[title]="data.title"
+				[(ngModel)]="data.title"
+				[disabled]="mode == inpectorMode.READ"
+			/>
+		</div>
+
+		<div class="inspector-field form-group">
+			<label>Anno <i class="bi bi-hash"></i></label>
+			<input
+				type="number"
+				class="form-control"
+				[title]="data.year"
+				[(ngModel)]="data.year"
+				[disabled]="mode == inpectorMode.READ"
+			/>
+		</div>
+
+		<div class="inspector-field form-group">
+			<label>Argomento <i class="bi bi-justify-left"></i></label>
+			<textarea
+				class="form-control"
+				[title]="data.topic"
+				[(ngModel)]="data.topic"
+				[disabled]="mode == inpectorMode.READ"
+			></textarea>
+		</div>
+
+		<div class="inspector-field form-group">
+			<label>Note <i class="bi bi-justify-left"></i></label>
+			<textarea
+				class="form-control"
+				[disabled]="mode == inpectorMode.READ"
+			></textarea>
+		</div>
+	</ng-container>
+
+	<ng-container *ngIf="model == inspectModel.AUTHOR"> </ng-container>
+</div>

@@ -1,0 +1,13 @@
+tr {
+	cursor: pointer;
+}
+
+tr:hover td {
+	color: var(--color-dark);
+	background-color: var(--color-light) !important;
+}
+
+tr.active td {
+	color: var(--color-light);
+	background-color: var(--color-green) !important;
+}
