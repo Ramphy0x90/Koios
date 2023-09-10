@@ -1,33 +1,22 @@
 <div
 	class="inspector-main-container d-flex flex-column"
-	[class.readOnly]="mode == inpectorMode.READ"
+	[class.readOnly]="mode == userMode.READ"
 >
-	<div class="actions-container d-flex flex-row">
-		<ng-container *ngIf="mode == inpectorMode.READ">
-			<button
-				class="btn btn-edit btn-secondary"
-				(click)="setMode(inpectorMode.EDIT)"
-			>
-				Modifica
-			</button>
-			<div>Elimina</div>
-		</ng-container>
-
-		<ng-container
-			*ngIf="mode == inpectorMode.NEW || mode == inpectorMode.EDIT"
-		>
-			<button class="btn btn-save btn-secondary">Salva</button>
-			<div (click)="setMode(inpectorMode.READ)">Annulla</div>
-		</ng-container>
-	</div>
-
 	<ng-container *ngIf="model == inspectModel.BOOK">
 		<div class="inspector-field form-group">
 			<label>Richiedenti <i class="bi bi-people-fill"></i></label>
-			<select
-				class="form-control"
-				[disabled]="mode == inpectorMode.READ"
-			></select>
+
+			<div class="d-flex flex-row gap-1">
+				<select
+					class="form-control"
+					[disabled]="mode == userMode.READ"
+				></select>
+
+				<button class="btn btn-outline-secondary">
+					<i class="bi bi-plus-lg"></i>
+				</button>
+			</div>
+
 			<div></div>
 		</div>
 
@@ -37,7 +26,7 @@
 				class="form-control"
 				[title]="data.author"
 				[(ngModel)]="data.author"
-				[disabled]="mode == inpectorMode.READ"
+				[disabled]="mode == userMode.READ"
 			></select>
 		</div>
 
@@ -48,7 +37,7 @@
 				class="form-control"
 				[title]="data.title"
 				[(ngModel)]="data.title"
-				[disabled]="mode == inpectorMode.READ"
+				[disabled]="mode == userMode.READ"
 			/>
 		</div>
 
@@ -59,7 +48,7 @@
 				class="form-control"
 				[title]="data.year"
 				[(ngModel)]="data.year"
-				[disabled]="mode == inpectorMode.READ"
+				[disabled]="mode == userMode.READ"
 			/>
 		</div>
 
@@ -69,7 +58,7 @@
 				class="form-control"
 				[title]="data.topic"
 				[(ngModel)]="data.topic"
-				[disabled]="mode == inpectorMode.READ"
+				[disabled]="mode == userMode.READ"
 			></textarea>
 		</div>
 
@@ -77,7 +66,8 @@
 			<label>Note <i class="bi bi-justify-left"></i></label>
 			<textarea
 				class="form-control"
-				[disabled]="mode == inpectorMode.READ"
+				[(ngModel)]="data.notes"
+				[disabled]="mode == userMode.READ"
 			></textarea>
 		</div>
 	</ng-container>

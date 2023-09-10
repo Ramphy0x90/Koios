@@ -1,6 +1,15 @@
 import { Component, OnInit } from "@angular/core";
+import { take } from "rxjs";
 import { InspectModel } from "src/app/components/inspector/inspector.component";
 import { Book } from "src/app/models/book";
+import { BookDto } from "src/app/models/bookDto";
+import { BookService } from "src/app/services/book.service";
+
+export enum UserMode {
+	READ,
+	NEW,
+	EDIT,
+}
 
 @Component({
 	selector: "app-books",
@@ -9,35 +18,77 @@ import { Book } from "src/app/models/book";
 })
 export class BooksComponent implements OnInit {
 	inspectModel = InspectModel;
-	books: Book[] = [
-		{
-			requestor: "",
-			author: "CDC Massagno",
-			title: "Catalogo documentazione Ticino. A valli e regioni",
-			year: 1995,
-			topic: "bibliografie.etnografia",
-			place: "Svizzera.Ticino",
-			notes_1: "",
-			notes_2: "",
-		},
-		{
-			requestor: "",
-			author: "CDC Massagno",
-			title: "Catalogo documentazione Ticino. B1 comuni Sottoceneri",
-			year: 1996,
-			topic: "bibliografie.etnografia",
-			place: "Svizzera.Ticino",
-			notes_1: "",
-			notes_2: "",
-		},
-	];
-	selectedBook: Book = this.books[0];
+	userMode = UserMode;
+	mode = UserMode.READ;
 
-	constructor() {}
+	books: Book[] = [];
+	bookTemplate: BookDto = {
+		requestor: "",
+		author: "",
+		title: "",
+		year: new Date().getFullYear(),
+		topic: "",
+		place: "",
+		notes: "",
+	};
+	selectedBook: Book | BookDto = this.bookTemplate;
 
-	ngOnInit(): void {}
+	constructor(private bookService: BookService) {}
 
-	updateBook(book: Book): void {
-		this.selectedBook = book;
+	ngOnInit(): void {
+		this.fetchBooks();
+	}
+
+	setMode(mode: UserMode): void {
+		this.mode = mode;
+
+		switch (mode) {
+			case UserMode.NEW:
+				this.selectedBook = { ...this.bookTemplate };
+				break;
+			case UserMode.EDIT:
+				break;
+			case UserMode.READ:
+				this.selectedBook = this.books[0];
+				break;
+		}
+	}
+
+	setBook(book: Book): void {
+		this.selectedBook = book || this.bookTemplate;
+	}
+
+	fetchBooks(): void {
+		this.bookService
+			.getAll()
+			.pipe(take(1))
+			.subscribe((data) => {
+				this.books = data;
+			});
+	}
+
+	updateBook(): void {
+		this.bookService
+			.updateBook((<Book>this.selectedBook)._id, this.selectedBook)
+			.pipe(take(1))
+			.subscribe((data) => {
+				this.selectedBook = data;
+				this.mode = UserMode.READ;
+			});
+	}
+
+	submit(): void {
+		if (this.mode == UserMode.NEW) {
+			this.bookService
+				.createBook(this.selectedBook)
+				.pipe(take(1))
+				.subscribe((data) => {
+					this.selectedBook = data;
+					this.mode = UserMode.READ;
+					this.fetchBooks();
+				});
+		} else if (this.mode == UserMode.EDIT) {
+			this.updateBook();
+		}
 	}
 }

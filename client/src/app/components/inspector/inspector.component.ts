@@ -1,5 +1,7 @@
 import { Component, OnInit, Input } from "@angular/core";
+import { UserMode } from "src/app/containers/books/books.component";
 import { Book } from "src/app/models/book";
+import { BookDto } from "src/app/models/bookDto";
 
 export enum InspectModel {
 	BOOK,
@@ -19,26 +21,13 @@ export enum InpectorMode {
 })
 export class InspectorComponent implements OnInit {
 	@Input() model?: InspectModel;
-	@Input() data: Book = {
-		requestor: "",
-		author: "",
-		title: "",
-		year: 0,
-		topic: "",
-		place: "",
-		notes_1: "",
-		notes_2: "",
-	};
+	@Input() mode: UserMode = UserMode.READ;
+	@Input() data!: Book | BookDto;
 
 	inspectModel = InspectModel;
-	inpectorMode = InpectorMode;
-	mode: InpectorMode = InpectorMode.READ;
+	userMode = UserMode;
 
 	constructor() {}
 
 	ngOnInit(): void {}
-
-	setMode(mode: InpectorMode): void {
-		this.mode = mode;
-	}
 }

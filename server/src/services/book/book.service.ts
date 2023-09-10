@@ -16,6 +16,9 @@ export class BookService {
 	}
 
 	async create(bookDto): Promise<Book> {
+		bookDto.author = bookDto.author == "" ? null : bookDto.author;
+		bookDto.place = bookDto.place == "" ? null : bookDto.place;
+
 		const newBook = new this.bookModel(bookDto);
 		return await newBook.save();
 	}

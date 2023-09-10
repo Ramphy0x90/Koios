@@ -1,14 +1,46 @@
 <div class="page-main-container books-main-container">
 	<div class="content-container">
+		<div class="actions-container d-flex flex-row">
+			<ng-container *ngIf="mode == userMode.READ">
+				<div class="d-flex flex-row gap-2">
+					<button
+						class="btn btn-new btn-secondary"
+						(click)="setMode(userMode.NEW)"
+					>
+						Crea
+					</button>
+
+					<button
+						class="btn btn-edit btn-secondary"
+						(click)="setMode(userMode.EDIT)"
+					>
+						Modifica
+					</button>
+				</div>
+
+				<div>
+					<i class="bi bi-trash3 danger" title="Elimina"></i>
+				</div>
+			</ng-container>
+
+			<ng-container *ngIf="mode == userMode.NEW || mode == userMode.EDIT">
+				<button class="btn btn-save btn-secondary" (click)="submit()">
+					Salva
+				</button>
+				<div (click)="setMode(userMode.READ)">Annulla</div>
+			</ng-container>
+		</div>
+
 		<app-book-table
 			[data]="books"
-			(updateBook)="updateBook($event)"
+			(updateBook)="setBook($event)"
 		></app-book-table>
 	</div>
 
 	<div class="inspector-container">
 		<app-inspector
 			[model]="inspectModel.BOOK"
+			[mode]="mode"
 			[data]="selectedBook"
 		></app-inspector>
 	</div>

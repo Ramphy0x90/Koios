@@ -9,7 +9,12 @@ export class Book {
 	@Prop()
 	requestor: string;
 
-	@Prop({ type: mongoose.Schema.Types.ObjectId, ref: "Author" })
+	@Prop({
+		type: mongoose.Schema.Types.ObjectId,
+		ref: "Author",
+		required: false,
+		default: undefined,
+	})
 	author: Author;
 
 	@Prop({ required: true })
@@ -21,14 +26,16 @@ export class Book {
 	@Prop()
 	topic: string;
 
-	@Prop({ type: mongoose.Schema.Types.ObjectId, ref: "Place" })
+	@Prop({
+		type: mongoose.Schema.Types.ObjectId,
+		ref: "Place",
+		required: false,
+		default: undefined,
+	})
 	place: Place;
 
 	@Prop()
-	notes_1: string;
-
-	@Prop()
-	notes_2: string;
+	notes: string;
 
 	@Prop({ default: mongoose.now() })
 	createdAt: Date;

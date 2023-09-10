@@ -6,29 +6,6 @@
 	background-color: var(--color-light);
 }
 
-.actions-container {
-	justify-content: space-between;
-	align-items: center;
-	margin-bottom: var(--space-6);
-}
-
-.actions-container div {
-	cursor: pointer;
-}
-
-.actions-container button {
-	padding: var(--space-2) var(--space-6);
-	border-radius: 0;
-}
-
-.actions-container .btn-edit {
-	background-color: var(--color-light-1);
-}
-
-.actions-container .btn-save {
-	background-color: var(--color-green);
-}
-
 .inspector-field {
 	display: flex;
 	flex-direction: column;
