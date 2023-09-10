@@ -16,18 +16,29 @@
 					>
 						Modifica
 					</button>
+
+					<button
+						class="btn btn-edit btn-secondary"
+						(click)="export()"
+					>
+						Esporta
+					</button>
 				</div>
 
 				<div>
-					<i class="bi bi-trash3 danger" title="Elimina"></i>
+					<i
+						class="bi bi-trash3 icon-delete"
+						title="Elimina"
+						(click)="deleteBook()"
+					></i>
 				</div>
 			</ng-container>
 
 			<ng-container *ngIf="mode == userMode.NEW || mode == userMode.EDIT">
-				<button class="btn btn-save btn-secondary" (click)="submit()">
+				<button class="btn btn-save btn-secondary" (click)="saveBook()">
 					Salva
 				</button>
-				<div (click)="setMode(userMode.READ)">Annulla</div>
+				<div (click)="cancelOperation()">Annulla</div>
 			</ng-container>
 		</div>
 
@@ -41,7 +52,7 @@
 		<app-inspector
 			[model]="inspectModel.BOOK"
 			[mode]="mode"
-			[data]="selectedBook"
+			[data]="mode == userMode.EDIT ? draftBookVersion : selectedBook"
 		></app-inspector>
 	</div>
 </div>

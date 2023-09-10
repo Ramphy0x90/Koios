@@ -7,17 +7,33 @@
 			<label>Richiedenti <i class="bi bi-people-fill"></i></label>
 
 			<div class="d-flex flex-row gap-1">
-				<select
+				<input
+					type="text"
 					class="form-control"
+					[(ngModel)]="requestorsInputRef"
 					[disabled]="mode == userMode.READ"
-				></select>
+				/>
 
-				<button class="btn btn-outline-secondary">
+				<button
+					class="btn btn-outline-secondary"
+					(click)="insertRequestor()"
+				>
 					<i class="bi bi-plus-lg"></i>
 				</button>
 			</div>
 
-			<div></div>
+			<div class="d-flex flex-column requestors-list">
+				<ng-container *ngFor="let requestor of data.requestor">
+					<div class="d-flex flex-row item">
+						{{ requestor }}
+						<i
+							class="bi bi-trash3 icon-delete"
+							title="Rimuovi richiedente"
+							(click)="deleteRequestor(requestor)"
+						></i>
+					</div>
+				</ng-container>
+			</div>
 		</div>
 
 		<div class="inspector-field form-group">

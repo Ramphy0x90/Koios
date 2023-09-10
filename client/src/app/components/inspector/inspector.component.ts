@@ -1,7 +1,14 @@
-import { Component, OnInit, Input } from "@angular/core";
+import {
+	Component,
+	OnInit,
+	Input,
+	OnChanges,
+	SimpleChanges,
+} from "@angular/core";
 import { UserMode } from "src/app/containers/books/books.component";
 import { Book } from "src/app/models/book";
 import { BookDto } from "src/app/models/bookDto";
+import _ from "lodash";
 
 export enum InspectModel {
 	BOOK,
@@ -19,15 +26,33 @@ export enum InpectorMode {
 	templateUrl: "./inspector.component.html",
 	styleUrls: ["./inspector.component.css"],
 })
-export class InspectorComponent implements OnInit {
+export class InspectorComponent implements OnChanges {
 	@Input() model?: InspectModel;
 	@Input() mode: UserMode = UserMode.READ;
 	@Input() data!: Book | BookDto;
 
 	inspectModel = InspectModel;
 	userMode = UserMode;
+	requestorsInputRef: string = "";
 
 	constructor() {}
 
-	ngOnInit(): void {}
+	ngOnChanges(changes: SimpleChanges): void {
+		if (changes["data"]?.currentValue) {
+			this.data = changes["data"].currentValue;
+			console.log("on changeee");
+			console.log(changes);
+		}
+	}
+
+	insertRequestor(): void {
+		this.data.requestor.push(this.requestorsInputRef);
+		this.requestorsInputRef = "";
+	}
+
+	deleteRequestor(name: string): void {
+		_.remove(this.data.requestor, (requestor) => {
+			return requestor == name;
+		});
+	}
 }

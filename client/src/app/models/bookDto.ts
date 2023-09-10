@@ -1,5 +1,5 @@
 export interface BookDto {
-	requestor: string;
+	requestor: string[];
 	author: string;
 	title: string;
 	year: number;

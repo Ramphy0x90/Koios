@@ -36,4 +36,8 @@ export class BookService {
 			book
 		);
 	}
+
+	deleteBook(id: string): void {
+		this.httpClient.delete(`${environment.server}/${this.API_URI}/${id}`);
+	}
 }

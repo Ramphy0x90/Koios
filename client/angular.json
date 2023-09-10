@@ -26,6 +26,7 @@
 						"styles": [
 							"node_modules/bootstrap/dist/css/bootstrap.min.css",
 							"node_modules/bootstrap-icons/font/bootstrap-icons.css",
+							"node_modules/@ng-select/ng-select/themes/default.theme.css",
 							"src/styles.css"
 						],
 						"scripts": [
@@ -94,7 +95,8 @@
 						"styles": [
 							"src/styles.css",
 							"node_modules/bootstrap/dist/css/bootstrap.min.css",
-							"node_modules/bootstrap-icons/font/bootstrap-icons.css"
+							"node_modules/bootstrap-icons/font/bootstrap-icons.css",
+							"node_modules/@ng-select/ng-select/themes/default.theme.css"
 						],
 						"scripts": [
 							"node_modules/bootstrap/dist/js/bootstrap.min.js"
@@ -103,5 +105,8 @@
 				}
 			}
 		}
-  }
+	},
+	"cli": {
+		"analytics": false
+	}
 }

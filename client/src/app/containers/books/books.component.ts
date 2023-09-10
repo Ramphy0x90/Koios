@@ -23,7 +23,7 @@ export class BooksComponent implements OnInit {
 
 	books: Book[] = [];
 	bookTemplate: BookDto = {
-		requestor: "",
+		requestor: [],
 		author: "",
 		title: "",
 		year: new Date().getFullYear(),
@@ -31,7 +31,9 @@ export class BooksComponent implements OnInit {
 		place: "",
 		notes: "",
 	};
+
 	selectedBook: Book | BookDto = this.bookTemplate;
+	draftBookVersion: Book = <Book>this.selectedBook;
 
 	constructor(private bookService: BookService) {}
 
@@ -40,18 +42,19 @@ export class BooksComponent implements OnInit {
 	}
 
 	setMode(mode: UserMode): void {
-		this.mode = mode;
-
 		switch (mode) {
 			case UserMode.NEW:
 				this.selectedBook = { ...this.bookTemplate };
 				break;
 			case UserMode.EDIT:
+				this.draftBookVersion = { ...(<Book>this.selectedBook) };
 				break;
 			case UserMode.READ:
 				this.selectedBook = this.books[0];
 				break;
 		}
+
+		this.mode = mode;
 	}
 
 	setBook(book: Book): void {
@@ -69,26 +72,46 @@ export class BooksComponent implements OnInit {
 
 	updateBook(): void {
 		this.bookService
-			.updateBook((<Book>this.selectedBook)._id, this.selectedBook)
+			.updateBook(this.draftBookVersion._id, this.draftBookVersion)
 			.pipe(take(1))
 			.subscribe((data) => {
+				this.fetchBooks();
 				this.selectedBook = data;
 				this.mode = UserMode.READ;
 			});
 	}
 
-	submit(): void {
+	saveBook(): void {
 		if (this.mode == UserMode.NEW) {
 			this.bookService
 				.createBook(this.selectedBook)
 				.pipe(take(1))
 				.subscribe((data) => {
-					this.selectedBook = data;
 					this.mode = UserMode.READ;
+					this.selectedBook = { ...data };
 					this.fetchBooks();
 				});
 		} else if (this.mode == UserMode.EDIT) {
 			this.updateBook();
 		}
+	}
+
+	deleteBook(): void {
+		this.bookService.deleteBook((<Book>this.selectedBook)._id);
+		this.fetchBooks();
+		this.selectedBook =
+			this.books.length > 0 ? this.books[0] : this.bookTemplate;
+	}
+
+	export(): void {}
+
+	cancelOperation(): void {
+		if (this.mode == UserMode.EDIT) {
+			this.draftBookVersion = <Book>this.selectedBook;
+		} else if (this.mode == UserMode.NEW) {
+			this.selectedBook = { ...this.books[0] };
+		}
+
+		this.mode = UserMode.READ;
 	}
 }

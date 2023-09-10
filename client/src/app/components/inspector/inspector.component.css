@@ -11,6 +11,10 @@
 	flex-direction: column;
 }
 
+.inspector-field ng-select {
+	width: 100%;
+}
+
 .inspector-field label {
 	color: var(--color-green);
 }
@@ -19,6 +23,22 @@
 	white-space: no-wrap;
 	text-overflow: ellipsis;
 	overflow: hidden;
+}
+
+.inspector-field .requestors-list {
+	padding: var(--space-3);
+	font-size: 14px;
+	height: auto !important;
+	max-height: 300px;
+	overflow-y: scroll;
+}
+
+.inspector-field .requestors-list .item {
+	justify-content: space-between;
+}
+
+.inspector-field .requestors-list i {
+	cursor: pointer;
 }
 
 .readOnly .inspector-field input,

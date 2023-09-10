@@ -7,7 +7,7 @@ import { Place } from "./place.schema";
 @Schema({ timestamps: true })
 export class Book {
 	@Prop()
-	requestor: string;
+	requestor: string[];
 
 	@Prop({
 		type: mongoose.Schema.Types.ObjectId,

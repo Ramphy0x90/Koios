@@ -14,15 +14,13 @@ import { Book } from "src/app/models/book";
 	templateUrl: "./book-table.component.html",
 	styleUrls: ["./book-table.component.css"],
 })
-export class BookTableComponent implements OnInit, OnChanges {
+export class BookTableComponent implements OnChanges {
 	@Input() data: Book[] = [];
 	@Output() updateBook: EventEmitter<Book> = new EventEmitter();
 
 	selectedBook: Book = this.data[0];
 
 	constructor() {}
-
-	ngOnInit(): void {}
 
 	ngOnChanges(changes: SimpleChanges): void {
 		if (changes["data"]?.currentValue) {
