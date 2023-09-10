@@ -2,6 +2,16 @@ tr {
 	cursor: pointer;
 }
 
+tr th {
+	color: var(--color-light);
+	background-color: var(--color-blue) !important;
+}
+
+tr th:hover {
+	color: var(--color-light);
+	background-color: var(--color-light-1) !important;
+}
+
 tr:hover td {
 	color: var(--color-dark);
 	background-color: var(--color-light) !important;

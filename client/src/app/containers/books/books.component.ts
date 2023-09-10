@@ -1,9 +1,11 @@
-import { Component, OnInit } from "@angular/core";
+import { Component, OnInit, Inject } from "@angular/core";
 import { take } from "rxjs";
 import { InspectModel } from "src/app/components/inspector/inspector.component";
 import { Book } from "src/app/models/book";
 import { BookDto } from "src/app/models/bookDto";
 import { BookService } from "src/app/services/book.service";
+import * as XLSX from "xlsx";
+import { DOCUMENT } from "@angular/common";
 
 export enum UserMode {
 	READ,
@@ -35,7 +37,10 @@ export class BooksComponent implements OnInit {
 	selectedBook: Book | BookDto = this.bookTemplate;
 	draftBookVersion: Book = <Book>this.selectedBook;
 
-	constructor(private bookService: BookService) {}
+	constructor(
+		private bookService: BookService,
+		@Inject(DOCUMENT) private document: Document
+	) {}
 
 	ngOnInit(): void {
 		this.fetchBooks();
@@ -103,7 +108,11 @@ export class BooksComponent implements OnInit {
 			this.books.length > 0 ? this.books[0] : this.bookTemplate;
 	}
 
-	export(): void {}
+	export(): void {
+		let elt = this.document.querySelector("app-book-table table");
+		let wb = XLSX.utils.table_to_book(elt, { sheet: "sheet1" });
+		return XLSX.writeFile(wb, "LibriCDE.xlsx");
+	}
 
 	cancelOperation(): void {
 		if (this.mode == UserMode.EDIT) {

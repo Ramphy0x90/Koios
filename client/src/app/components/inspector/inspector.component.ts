@@ -40,8 +40,6 @@ export class InspectorComponent implements OnChanges {
 	ngOnChanges(changes: SimpleChanges): void {
 		if (changes["data"]?.currentValue) {
 			this.data = changes["data"].currentValue;
-			console.log("on changeee");
-			console.log(changes);
 		}
 	}
 
