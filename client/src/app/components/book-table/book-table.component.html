@@ -1,13 +1,9 @@
-<table class="table">
+<table class="table" sort [data]="data" (updateData)="updateData($event)">
 	<thead>
 		<tr>
-			<th scope="col">Richiedenti</th>
-			<th scope="col">Autore</th>
-			<th scope="col">Titolo</th>
-			<th scope="col">Anno</th>
-			<th scope="col">Argomento</th>
-			<th scope="col">Luogo</th>
-			<th scope="col">Note</th>
+			<ng-container *ngFor="let column of tableColumns">
+				<th scope="col" [id]="column.id">{{ column.title }}</th>
+			</ng-container>
 		</tr>
 	</thead>
 	<tbody>

@@ -6,10 +6,17 @@ import { InspectorComponent } from "./inspector/inspector.component";
 import { BookTableComponent } from "./book-table/book-table.component";
 import { FormsModule } from "@angular/forms";
 import { NgSelectModule } from "@ng-select/ng-select";
+import { DirectivesModule } from "../directives/directives.module";
 
 @NgModule({
 	declarations: [NavBarComponent, InspectorComponent, BookTableComponent],
-	imports: [CommonModule, AppRoutingModule, FormsModule, NgSelectModule],
+	imports: [
+		CommonModule,
+		AppRoutingModule,
+		FormsModule,
+		NgSelectModule,
+		DirectivesModule,
+	],
 	exports: [NavBarComponent, InspectorComponent, BookTableComponent],
 })
 export class ComponentsModule {}

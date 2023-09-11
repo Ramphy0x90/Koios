@@ -1,6 +1,5 @@
 import {
 	Component,
-	OnInit,
 	Input,
 	Output,
 	EventEmitter,
@@ -19,6 +18,15 @@ export class BookTableComponent implements OnChanges {
 	@Output() updateBook: EventEmitter<Book> = new EventEmitter();
 
 	selectedBook: Book = this.data[0];
+	tableColumns = [
+		{ id: "requestor", title: "Richiedenti" },
+		{ id: "author", title: "Autore" },
+		{ id: "title", title: "Titolo" },
+		{ id: "year", title: "Anno" },
+		{ id: "topic", title: "Argomento" },
+		{ id: "place", title: "Luogo" },
+		{ id: "notes", title: "Note" },
+	];
 
 	constructor() {}
 
@@ -32,5 +40,9 @@ export class BookTableComponent implements OnChanges {
 	select(book: Book): void {
 		this.selectedBook = book;
 		this.updateBook.emit(book);
+	}
+
+	updateData(data: Book[]): void {
+		this.data = data;
 	}
 }

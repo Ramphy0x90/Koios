@@ -63,3 +63,8 @@ input[type="number"]:focus {
 .icon-delete:hover {
 	color: rgb(209, 96, 96);
 }
+
+.sort-icon {
+	position: absolute;
+	margin-left: var(--space-4);
+}

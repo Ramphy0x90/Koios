@@ -63,7 +63,7 @@ export class BooksComponent implements OnInit, AfterViewInit {
 						this.onSearch = true;
 						this.books = data;
 					});
-				} else if (search == "") {
+				} else if (search == "" && this.onSearch == true) {
 					this.restoreSearch();
 				}
 			});
