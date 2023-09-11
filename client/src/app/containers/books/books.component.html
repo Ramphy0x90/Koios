@@ -3,6 +3,24 @@
 		<div class="actions-container d-flex flex-row">
 			<ng-container *ngIf="mode == userMode.READ">
 				<div class="d-flex flex-row gap-2">
+					<div
+						[formGroup]="searchFormGroup"
+						class="book-search d-flex flex-row gap-1"
+					>
+						<input
+							formControlName="search"
+							type="text"
+							placeholder="Cerca..."
+						/>
+
+						<i
+							class="bi bi-x-lg"
+							*ngIf="onSearch"
+							(click)="restoreSearch()"
+						></i>
+						<i class="bi bi-search" *ngIf="!onSearch"></i>
+					</div>
+
 					<button
 						class="btn btn-new btn-secondary"
 						(click)="setMode(userMode.NEW)"

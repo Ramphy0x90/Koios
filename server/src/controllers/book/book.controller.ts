@@ -23,6 +23,15 @@ export class BookController {
 		return this.bookService.getAll();
 	}
 
+	@Get("search/:term")
+	searchBook(
+		@Res({ passthrough: true }) res: Response,
+		@Param("term") term: string
+	): Promise<Book[]> {
+		res.status(HttpStatus.OK);
+		return this.bookService.search(term);
+	}
+
 	@Get(":id")
 	getBookById(
 		@Res({ passthrough: true }) res: Response,

@@ -17,6 +17,12 @@ export class BookService {
 		);
 	}
 
+	searchBook(term: string): Observable<Book[]> {
+		return this.httpClient.get<Book[]>(
+			`${environment.server}/${this.API_URI}/search/${term}`
+		);
+	}
+
 	getBookById(id: string): Observable<Book> {
 		return this.httpClient.get<Book>(
 			`${environment.server}/${this.API_URI}/${id}`

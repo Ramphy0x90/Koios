@@ -7,6 +7,20 @@
 	padding: var(--space-4);
 }
 
+.book-search {
+	align-items: center;
+	padding: var(--space-3);
+	border: 1px solid var(--color-dark);
+}
+
+.book-search input {
+	border: none;
+}
+
+.book-search input:focus {
+	outline: none;
+}
+
 .actions-container {
 	justify-content: space-between;
 	align-items: center;

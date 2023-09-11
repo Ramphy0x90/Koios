@@ -2,6 +2,7 @@ import { Injectable } from "@nestjs/common";
 import { InjectModel } from "@nestjs/mongoose";
 import { Model } from "mongoose";
 import { Book } from "src/schemas/book.schema";
+import _ from "lodash";
 
 @Injectable()
 export class BookService {
@@ -9,6 +10,26 @@ export class BookService {
 
 	async getAll(): Promise<Book[]> {
 		return await this.bookModel.find().exec();
+	}
+
+	async search(term: string): Promise<Book[]> {
+		let result = this.bookModel.find();
+		let regex = new RegExp(term, "i");
+
+		result.where({
+			$and: [
+				{
+					$or: [
+						{ requestor: { $in: [regex] } },
+						{ title: regex },
+						{ topic: regex },
+						{ notes: regex },
+					],
+				},
+			],
+		});
+
+		return await result.exec();
 	}
 
 	async getById(id: string): Promise<Book> {

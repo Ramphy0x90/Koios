@@ -1,4 +1,4 @@
-import { Component, OnInit, Inject } from "@angular/core";
+import { Component, OnInit, Inject, AfterViewInit } from "@angular/core";
 import { take } from "rxjs";
 import { InspectModel } from "src/app/components/inspector/inspector.component";
 import { Book } from "src/app/models/book";
@@ -6,6 +6,7 @@ import { BookDto } from "src/app/models/bookDto";
 import { BookService } from "src/app/services/book.service";
 import * as XLSX from "xlsx";
 import { DOCUMENT } from "@angular/common";
+import { FormControl, FormGroup } from "@angular/forms";
 
 export enum UserMode {
 	READ,
@@ -18,7 +19,7 @@ export enum UserMode {
 	templateUrl: "./books.component.html",
 	styleUrls: ["./books.component.css"],
 })
-export class BooksComponent implements OnInit {
+export class BooksComponent implements OnInit, AfterViewInit {
 	inspectModel = InspectModel;
 	userMode = UserMode;
 	mode = UserMode.READ;
@@ -36,6 +37,11 @@ export class BooksComponent implements OnInit {
 
 	selectedBook: Book | BookDto = this.bookTemplate;
 	draftBookVersion: Book = <Book>this.selectedBook;
+	onSearch: boolean = false;
+
+	searchFormGroup: FormGroup = new FormGroup({
+		search: new FormControl(),
+	});
 
 	constructor(
 		private bookService: BookService,
@@ -44,6 +50,23 @@ export class BooksComponent implements OnInit {
 
 	ngOnInit(): void {
 		this.fetchBooks();
+	}
+
+	ngAfterViewInit(): void {
+		this.searchFormGroup
+			.get("search")
+			?.valueChanges.subscribe((value: string) => {
+				const search = value.trim();
+
+				if (search.length >= 2) {
+					this.bookService.searchBook(search).subscribe((data) => {
+						this.onSearch = true;
+						this.books = data;
+					});
+				} else if (search == "") {
+					this.restoreSearch();
+				}
+			});
 	}
 
 	setMode(mode: UserMode): void {
@@ -112,6 +135,12 @@ export class BooksComponent implements OnInit {
 		let elt = this.document.querySelector("app-book-table table");
 		let wb = XLSX.utils.table_to_book(elt, { sheet: "sheet1" });
 		return XLSX.writeFile(wb, "LibriCDE.xlsx");
+	}
+
+	restoreSearch(): void {
+		this.onSearch = false;
+		this.searchFormGroup.get("search")?.setValue("");
+		this.fetchBooks();
 	}
 
 	cancelOperation(): void {
