@@ -152,4 +152,16 @@ export class BooksComponent implements OnInit, AfterViewInit {
 
 		this.mode = UserMode.READ;
 	}
+
+	openInspector(): void {
+
+	}
+
+	closeInspector(): void {
+		const inspectorContainer = this.document.querySelector(".inspector-container");
+		const containerWidth = inspectorContainer?.getBoundingClientRect().width || 0;
+		//(<HTMLElement>inspectorContainer).style.left = `${containerWidth}px`;
+
+		(<HTMLElement>inspectorContainer).style.width = `${1}px`;
+	}
 }

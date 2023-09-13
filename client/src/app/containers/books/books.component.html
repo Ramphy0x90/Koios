@@ -36,7 +36,7 @@
 					</button>
 
 					<button
-						class="btn btn-edit btn-secondary"
+						class="btn btn-export btn-secondary"
 						(click)="export()"
 					>
 						Esporta
@@ -67,6 +67,10 @@
 	</div>
 
 	<div class="inspector-container">
+		<div (click)="closeInspector()">
+			Chiudi
+		</div>
+
 		<app-inspector
 			[model]="inspectModel.BOOK"
 			[mode]="mode"
