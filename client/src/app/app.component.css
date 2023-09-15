@@ -1,0 +1,13 @@
+.app-main-container {
+	display: flex;
+	flex-direction: column;
+	height: 100%;
+}
+
+app-nav-bar {
+	flex: 0 0 56px;
+}
+
+.content {
+	flex: 1 1 auto;
+}

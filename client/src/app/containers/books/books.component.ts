@@ -1,6 +1,9 @@
 import { Component, OnInit, Inject, AfterViewInit } from "@angular/core";
 import { take } from "rxjs";
-import { InspectModel } from "src/app/components/inspector/inspector.component";
+import {
+	InspectModel,
+	InspectorStatus,
+} from "src/app/components/inspector/inspector.component";
 import { Book } from "src/app/models/book";
 import { BookDto } from "src/app/models/bookDto";
 import { BookService } from "src/app/services/book.service";
@@ -21,8 +24,11 @@ export enum UserMode {
 })
 export class BooksComponent implements OnInit, AfterViewInit {
 	inspectModel = InspectModel;
+	inspectorStatus = InspectorStatus;
 	userMode = UserMode;
+
 	mode = UserMode.READ;
+	status = this.inspectorStatus.CLOSED;
 
 	books: Book[] = [];
 	bookTemplate: BookDto = {
@@ -76,6 +82,7 @@ export class BooksComponent implements OnInit, AfterViewInit {
 				break;
 			case UserMode.EDIT:
 				this.draftBookVersion = { ...(<Book>this.selectedBook) };
+				this.status = this.inspectorStatus.OPEN;
 				break;
 			case UserMode.READ:
 				this.selectedBook = this.books[0];
@@ -151,17 +158,6 @@ export class BooksComponent implements OnInit, AfterViewInit {
 		}
 
 		this.mode = UserMode.READ;
-	}
-
-	openInspector(): void {
-
-	}
-
-	closeInspector(): void {
-		const inspectorContainer = this.document.querySelector(".inspector-container");
-		const containerWidth = inspectorContainer?.getBoundingClientRect().width || 0;
-		//(<HTMLElement>inspectorContainer).style.left = `${containerWidth}px`;
-
-		(<HTMLElement>inspectorContainer).style.width = `${1}px`;
+		this.status = this.inspectorStatus.CLOSED;
 	}
 }

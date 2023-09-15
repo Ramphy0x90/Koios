@@ -1,7 +1,12 @@
 <div
+	#inspectorContainer
 	class="inspector-main-container d-flex flex-column"
 	[class.readOnly]="mode == userMode.READ"
 >
+	<div class="inspector-actions-container" (click)="closeInspector()">
+		<i class="bi bi-x" title="Chiudi"></i>
+	</div>
+
 	<ng-container *ngIf="model == inspectModel.BOOK">
 		<div class="inspector-field form-group">
 			<label>Richiedenti <i class="bi bi-people-fill"></i></label>
@@ -88,5 +93,5 @@
 		</div>
 	</ng-container>
 
-	<ng-container *ngIf="model == inspectModel.AUTHOR"> </ng-container>
+	<ng-container *ngIf="model == inspectModel.AUTHOR"></ng-container>
 </div>

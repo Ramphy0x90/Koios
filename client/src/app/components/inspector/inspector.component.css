@@ -4,6 +4,7 @@
 	height: 100%;
 	padding: var(--space-6);
 	background-color: var(--color-light);
+	overflow-y: scroll;
 }
 
 .inspector-field {
@@ -46,4 +47,23 @@
 .readOnly .inspector-field select {
 	border: 1px solid var(--color-light-1);
 	background-color: var(--color-light);
+}
+
+.inspector-actions-container {
+	flex: 0 0 30px;
+	display: flex;
+	justify-content: end;
+	align-items: end;
+	color: var(--color-light-1);
+	font-size: 30px;
+	cursor: pointer;
+	text-align: right;
+	overflow: hidden;
+}
+
+/* Large devices (desktops, 992px and up) */
+@media (min-width: 992px) {
+	.inspector-actions-container {
+		display: none;
+	}
 }

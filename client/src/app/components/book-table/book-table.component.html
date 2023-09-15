@@ -1,24 +1,26 @@
-<table class="table" sort [data]="data" (updateData)="updateData($event)">
-	<thead>
-		<tr>
-			<ng-container *ngFor="let column of tableColumns">
-				<th scope="col" [id]="column.id">{{ column.title }}</th>
-			</ng-container>
-		</tr>
-	</thead>
-	<tbody>
-		<tr
-			*ngFor="let book of data"
-			(click)="select(book)"
-			[class.active]="book.title == selectedBook.title"
-		>
-			<td>{{ book.requestor }}</td>
-			<td>{{ book.author }}</td>
-			<td>{{ book.title }}</td>
-			<td>{{ book.year }}</td>
-			<td>{{ book.topic }}</td>
-			<td>{{ book.place }}</td>
-			<td>{{ book.notes }}</td>
-		</tr>
-	</tbody>
-</table>
+<div class="book-table-main-container">
+	<table class="table" sort [data]="data" (updateData)="updateData($event)">
+		<thead>
+			<tr>
+				<ng-container *ngFor="let column of tableColumns">
+					<th scope="col" [id]="column.id">{{ column.title }}</th>
+				</ng-container>
+			</tr>
+		</thead>
+		<tbody>
+			<tr
+				*ngFor="let book of data"
+				(click)="select(book)"
+				[class.active]="book.title == selectedBook.title"
+			>
+				<td>{{ book.requestor }}</td>
+				<td>{{ book.author }}</td>
+				<td>{{ book.title }}</td>
+				<td>{{ book.year }}</td>
+				<td>{{ book.topic }}</td>
+				<td>{{ book.place }}</td>
+				<td>{{ book.notes }}</td>
+			</tr>
+		</tbody>
+	</table>
+</div>
