@@ -1,7 +1,11 @@
-import { BookDto } from "./bookDto";
+import { DBData } from "./dbData";
 
-export interface Book extends BookDto {
-	_id: string;
-	createdAt: Date;
-	updatedAt: Date;
+export interface Book extends DBData {
+	requestor: string[];
+	author: string;
+	title: string;
+	year: number;
+	topic: string;
+	place: string;
+	notes: string;
 }

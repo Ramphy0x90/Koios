@@ -1,71 +1,12 @@
 <div class="page-main-container books-main-container">
 	<div class="content-container">
-		<div class="actions-container d-flex">
-			<ng-container *ngIf="mode == userMode.READ">
-				<div class="d-flex gap-2 container-read">
-					<div
-						[formGroup]="searchFormGroup"
-						class="book-search d-flex flex-row gap-1"
-					>
-						<input
-							formControlName="search"
-							type="text"
-							placeholder="Cerca..."
-						/>
-
-						<i
-							class="bi bi-x-lg"
-							*ngIf="onSearch"
-							(click)="restoreSearch()"
-						></i>
-						<i class="bi bi-search" *ngIf="!onSearch"></i>
-					</div>
-
-					<div class="action-buttons-container d-flex flex-row">
-						<button
-							class="btn btn-new btn-secondary"
-							(click)="setMode(userMode.NEW)"
-						>
-							Crea
-						</button>
-
-						<button
-							class="btn btn-edit btn-secondary"
-							(click)="setMode(userMode.EDIT)"
-						>
-							Modifica
-						</button>
-
-						<button
-							class="btn btn-export btn-secondary"
-							(click)="export()"
-						>
-							Esporta
-						</button>
-
-						<div class="icon-delete">
-							<i
-								class="bi bi-trash3"
-								title="Elimina"
-								(click)="deleteBook()"
-							></i>
-						</div>
-					</div>
-				</div>
-			</ng-container>
-
-			<ng-container *ngIf="mode == userMode.NEW || mode == userMode.EDIT">
-				<div class="d-flex container-edit">
-					<button
-						class="btn btn-save btn-secondary"
-						(click)="saveBook()"
-					>
-						Salva
-					</button>
-					<div (click)="cancelOperation()">Annulla</div>
-				</div>
-			</ng-container>
-		</div>
+		<app-table-actions
+			[userMode]="mode"
+			(mode)="updateMode($event)"
+			(action)="handleTableAction($event)"
+			(search)="search($event)"
+			(restore)="fetchBooks()"
+		></app-table-actions>
 
 		<app-book-table
 			[data]="books"
@@ -75,10 +16,9 @@
 
 	<div class="inspector-container">
 		<app-inspector
-			[model]="inspectModel.BOOK"
 			[mode]="mode"
 			[status]="status"
-			[data]="mode == userMode.EDIT ? draftBookVersion : selectedBook"
+			[data]="getBook()"
 			(closed)="cancelOperation()"
 		></app-inspector>
 	</div>

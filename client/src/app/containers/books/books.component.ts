@@ -1,29 +1,22 @@
 import { Component, OnInit, Inject, AfterViewInit } from "@angular/core";
 import { take } from "rxjs";
-import {
-	InspectModel,
-	InspectorStatus,
-} from "src/app/components/inspector/inspector.component";
+import { InspectorStatus } from "src/app/components/inspector/inspector.component";
 import { Book } from "src/app/models/book";
-import { BookDto } from "src/app/models/bookDto";
 import { BookService } from "src/app/services/book.service";
 import * as XLSX from "xlsx";
 import { DOCUMENT } from "@angular/common";
-import { FormControl, FormGroup } from "@angular/forms";
-
-export enum UserMode {
-	READ,
-	NEW,
-	EDIT,
-}
+import { InspectorData } from "src/app/models/inspectorData";
+import {
+	Action,
+	UserMode,
+} from "src/app/components/table-actions/table-actions.component";
 
 @Component({
 	selector: "app-books",
 	templateUrl: "./books.component.html",
 	styleUrls: ["./books.component.css"],
 })
-export class BooksComponent implements OnInit, AfterViewInit {
-	inspectModel = InspectModel;
+export class BooksComponent implements OnInit {
 	inspectorStatus = InspectorStatus;
 	userMode = UserMode;
 
@@ -31,7 +24,7 @@ export class BooksComponent implements OnInit, AfterViewInit {
 	status = this.inspectorStatus.CLOSED;
 
 	books: Book[] = [];
-	bookTemplate: BookDto = {
+	bookTemplate: Book = {
 		requestor: [],
 		author: "",
 		title: "",
@@ -41,13 +34,8 @@ export class BooksComponent implements OnInit, AfterViewInit {
 		notes: "",
 	};
 
-	selectedBook: Book | BookDto = this.bookTemplate;
-	draftBookVersion: Book = <Book>this.selectedBook;
-	onSearch: boolean = false;
-
-	searchFormGroup: FormGroup = new FormGroup({
-		search: new FormControl(),
-	});
+	selectedBook: Book = this.bookTemplate;
+	draftBookVersion: Book = this.selectedBook;
 
 	constructor(
 		private bookService: BookService,
@@ -58,42 +46,60 @@ export class BooksComponent implements OnInit, AfterViewInit {
 		this.fetchBooks();
 	}
 
-	ngAfterViewInit(): void {
-		this.searchFormGroup
-			.get("search")
-			?.valueChanges.subscribe((value: string) => {
-				const search = value.trim();
-
-				if (search.length >= 2) {
-					this.bookService.searchBook(search).subscribe((data) => {
-						this.onSearch = true;
-						this.books = data;
-					});
-				} else if (search == "" && this.onSearch == true) {
-					this.restoreSearch();
-				}
-			});
-	}
-
-	setMode(mode: UserMode): void {
+	updateMode(mode: UserMode): void {
 		switch (mode) {
+			case UserMode.READ:
+				this.cancelOperation();
+				break;
 			case UserMode.NEW:
 				this.selectedBook = { ...this.bookTemplate };
 				break;
 			case UserMode.EDIT:
-				this.draftBookVersion = { ...(<Book>this.selectedBook) };
+				this.draftBookVersion = { ...this.selectedBook };
 				this.status = this.inspectorStatus.OPEN;
-				break;
-			case UserMode.READ:
-				this.selectedBook = this.books[0];
 				break;
 		}
 
 		this.mode = mode;
 	}
 
+	handleTableAction(action: Action): void {
+		switch (action) {
+			case Action.SAVE:
+				this.saveBook();
+				break;
+			case Action.CANCEL:
+				this.cancelOperation();
+				break;
+			case Action.DELETE:
+				this.deleteBook();
+				break;
+			case Action.EXPORT:
+				this.export();
+				break;
+		}
+	}
+
+	search(term: string): void {
+		this.bookService.searchBook(term).subscribe((data) => {
+			this.books = data;
+		});
+	}
+
 	setBook(book: Book): void {
 		this.selectedBook = book || this.bookTemplate;
+	}
+
+	getBook(): InspectorData<Book> {
+		let book: InspectorData<Book> = {
+			type: "Book",
+			value:
+				this.mode == this.userMode.EDIT
+					? this.draftBookVersion
+					: this.selectedBook,
+		};
+
+		return book;
 	}
 
 	fetchBooks(): void {
@@ -106,8 +112,10 @@ export class BooksComponent implements OnInit, AfterViewInit {
 	}
 
 	updateBook(): void {
+		const bookId = this.draftBookVersion?._id || "";
+
 		this.bookService
-			.updateBook(this.draftBookVersion._id, this.draftBookVersion)
+			.updateBook(bookId, this.draftBookVersion)
 			.pipe(take(1))
 			.subscribe((data) => {
 				this.fetchBooks();
@@ -132,7 +140,9 @@ export class BooksComponent implements OnInit, AfterViewInit {
 	}
 
 	deleteBook(): void {
-		this.bookService.deleteBook((<Book>this.selectedBook)._id);
+		const bookId = this.draftBookVersion?._id || "";
+
+		this.bookService.deleteBook(bookId);
 		this.fetchBooks();
 		this.selectedBook =
 			this.books.length > 0 ? this.books[0] : this.bookTemplate;
@@ -144,15 +154,9 @@ export class BooksComponent implements OnInit, AfterViewInit {
 		return XLSX.writeFile(wb, "LibriCDE.xlsx");
 	}
 
-	restoreSearch(): void {
-		this.onSearch = false;
-		this.searchFormGroup.get("search")?.setValue("");
-		this.fetchBooks();
-	}
-
 	cancelOperation(): void {
 		if (this.mode == UserMode.EDIT) {
-			this.draftBookVersion = <Book>this.selectedBook;
+			this.draftBookVersion = this.selectedBook;
 		} else if (this.mode == UserMode.NEW) {
 			this.selectedBook = { ...this.books[0] };
 		}

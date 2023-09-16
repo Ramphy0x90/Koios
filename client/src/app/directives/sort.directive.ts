@@ -25,8 +25,8 @@ export class SortDirective implements AfterViewInit {
 
 	private readonly icons = {
 		[Order.NONE]: "bi bi-arrow-down-up sort-icon",
-		[Order.ASCENDING]: "bi bi-sort-down sort-icon",
-		[Order.DESCENDING]: "bi bi-sort-up-alt sort-icon",
+		[Order.ASCENDING]: "bi bi-sort-up-alt sort-icon",
+		[Order.DESCENDING]: "bi bi-sort-down sort-icon",
 	};
 
 	tableColumns: HTMLElement[] = [];

@@ -11,15 +11,11 @@ import {
 	EventEmitter,
 	AfterViewInit,
 } from "@angular/core";
-import { UserMode } from "src/app/containers/books/books.component";
 import { Book } from "src/app/models/book";
-import { BookDto } from "src/app/models/bookDto";
 import _ from "lodash";
-
-export enum InspectModel {
-	BOOK,
-	AUTHOR,
-}
+import { InspectorData } from "src/app/models/inspectorData";
+import { Author } from "src/app/models/author";
+import { UserMode } from "../table-actions/table-actions.component";
 
 export enum InpectorMode {
 	READ,
@@ -37,16 +33,14 @@ export enum InspectorStatus {
 	templateUrl: "./inspector.component.html",
 	styleUrls: ["./inspector.component.css"],
 })
-export class InspectorComponent implements OnInit, AfterViewInit, OnChanges {
+export class InspectorComponent<T> implements OnInit, AfterViewInit, OnChanges {
 	@ViewChild("inspectorContainer") container!: ElementRef;
 
-	@Input() model?: InspectModel;
 	@Input() mode: UserMode = UserMode.READ;
 	@Input() status: InspectorStatus = InspectorStatus.CLOSED;
-	@Input() data!: Book | BookDto;
+	@Input() data!: InspectorData<T>;
 	@Output() closed: EventEmitter<boolean> = new EventEmitter();
 
-	inspectModel = InspectModel;
 	userMode = UserMode;
 	requestorsInputRef: string = "";
 
@@ -59,12 +53,12 @@ export class InspectorComponent implements OnInit, AfterViewInit, OnChanges {
 	}
 
 	ngAfterViewInit(): void {
-		this.container && this.closeInspector();
+		this.updateInspectorView();
 	}
 
 	ngOnChanges(changes: SimpleChanges): void {
-		if (changes["data"]?.currentValue) {
-			this.data = changes["data"].currentValue;
+		if (changes["mode"]?.currentValue) {
+			this.mode = changes["mode"]?.currentValue;
 		}
 
 		if (changes["status"]) {
@@ -76,13 +70,28 @@ export class InspectorComponent implements OnInit, AfterViewInit, OnChanges {
 				}
 			}
 		}
+
+		if (changes["data"]?.currentValue) {
+			this.data = changes["data"].currentValue;
+		}
+	}
+
+	isBook(item: any): item is Book {
+		return this.data.type == "Book";
+	}
+
+	isAuthor(item: any): item is Author {
+		return this.data.type == "Author";
 	}
 
 	@HostListener("window:resize", ["$event"])
 	onWindowResize() {
 		this.getScreenWidth = window.innerWidth;
 		this.getScreenHeight = window.innerHeight;
+		this.updateInspectorView();
+	}
 
+	updateInspectorView(): void {
 		if (this.canMutate()) {
 			this.container && this.closeInspector();
 		} else {
@@ -91,14 +100,18 @@ export class InspectorComponent implements OnInit, AfterViewInit, OnChanges {
 	}
 
 	insertRequestor(): void {
-		this.data.requestor.push(this.requestorsInputRef);
-		this.requestorsInputRef = "";
+		if (this.isBook(this.data)) {
+			this.data.requestor.push(this.requestorsInputRef);
+			this.requestorsInputRef = "";
+		}
 	}
 
 	deleteRequestor(name: string): void {
-		_.remove(this.data.requestor, (requestor) => {
-			return requestor == name;
-		});
+		if (this.isBook(this.data)) {
+			_.remove(this.data.requestor, (requestor) => {
+				return requestor == name;
+			});
+		}
 	}
 
 	canMutate(): boolean {

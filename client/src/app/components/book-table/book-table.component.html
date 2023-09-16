@@ -1,4 +1,4 @@
-<div class="book-table-main-container">
+<div class="table-main-container book-table-main-container">
 	<table class="table" sort [data]="data" (updateData)="updateData($event)">
 		<thead>
 			<tr>
@@ -11,7 +11,7 @@
 			<tr
 				*ngFor="let book of data"
 				(click)="select(book)"
-				[class.active]="book.title == selectedBook.title"
+				[class.active]="book._id == selectedBook._id"
 			>
 				<td>{{ book.requestor }}</td>
 				<td>{{ book.author }}</td>

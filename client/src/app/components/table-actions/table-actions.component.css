@@ -1,0 +1,82 @@
+.actions-main-container {
+	flex-direction: column;
+	padding-bottom: var(--space-4);
+	margin-bottom: var(--space-6);
+	border-bottom: 1px solid var(--color-dark);
+}
+
+.actions-main-container .container-read {
+	flex-direction: column;
+}
+
+.actions-main-container .container-edit {
+	flex-direction: row;
+	justify-content: space-between;
+}
+
+.actions-main-container div {
+	cursor: pointer;
+}
+
+.actions-main-container button {
+	padding: var(--space-2) var(--space-6);
+	border: none;
+	border-radius: 0;
+}
+
+.actions-main-container .btn-new,
+.actions-main-container .btn-edit,
+.actions-main-container .btn-export {
+	background-color: var(--color-light-1);
+}
+
+.actions-main-container .btn-save {
+	background-color: var(--color-green);
+}
+
+.actions-main-container .btn-new:hover,
+.actions-main-container .btn-edit:hover,
+.actions-main-container .btn-export:hover {
+	background-color: var(--color-blue);
+}
+
+.actions-main-container .icon-delete {
+	margin-left: auto;
+}
+
+.actions-main-container .action-buttons-container {
+	width: 100%;
+	align-items: center;
+	gap: var(--space-4);
+}
+
+.search {
+	justify-content: space-between;
+	align-items: center;
+	padding: var(--space-3);
+	border: 1px solid var(--color-dark);
+}
+
+.search input {
+	border: none;
+	width: 100%;
+}
+
+.search input:focus {
+	outline: none;
+}
+
+/* Large devices (desktops, 992px and up) */
+@media (min-width: 992px) {
+	.actions-main-container .container-read {
+		flex-direction: row;
+	}
+
+	.actions-main-container .action-buttons-container {
+		justify-content: space-between;
+	}
+
+	.inspector-container {
+		position: inherit;
+	}
+}

@@ -69,3 +69,46 @@ input[type="number"]:focus {
 	position: absolute;
 	margin-left: var(--space-4);
 }
+
+.table-main-container {
+	width: 100%;
+	height: 100%;
+	overflow: scroll;
+}
+
+.table-main-container tr {
+	cursor: pointer;
+}
+
+.table-main-container tr th {
+	color: var(--color-light);
+	background-color: var(--color-blue) !important;
+}
+
+.table-main-container tr th:hover {
+	color: var(--color-light);
+	background-color: var(--color-light-1) !important;
+}
+
+.table-main-container tr:hover td {
+	color: var(--color-dark);
+	background-color: var(--color-light) !important;
+}
+
+.table-main-container tr.active td {
+	color: var(--color-light);
+	background-color: var(--color-green) !important;
+}
+
+.inspector-container {
+	position: absolute;
+	height: 100%;
+	background-color: var(--color-light);
+}
+
+/* Large devices (desktops, 992px and up) */
+@media (min-width: 992px) {
+	.inspector-container {
+		position: inherit;
+	}
+}

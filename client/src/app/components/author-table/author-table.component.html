@@ -1,0 +1,22 @@
+<div class="table-main-container author-table-main-container">
+	<table class="table" sort [data]="data" (updateData)="updateData($event)">
+		<thead>
+			<tr>
+				<ng-container *ngFor="let column of tableColumns">
+					<th scope="col" [id]="column.id">{{ column.title }}</th>
+				</ng-container>
+			</tr>
+		</thead>
+		<tbody>
+			<tr
+				*ngFor="let author of data"
+				(click)="select(author)"
+				[class.active]="author._id == selectedAuthor._id"
+			>
+				<td>{{ author.name }}</td>
+				<td>{{ author.surname }}</td>
+				<td>{{ 1 }}</td>
+			</tr>
+		</tbody>
+	</table>
+</div>

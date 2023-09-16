@@ -7,7 +7,7 @@
 		<i class="bi bi-x" title="Chiudi"></i>
 	</div>
 
-	<ng-container *ngIf="model == inspectModel.BOOK">
+	<ng-container *ngIf="isBook(data.value)">
 		<div class="inspector-field form-group">
 			<label>Richiedenti <i class="bi bi-people-fill"></i></label>
 
@@ -28,7 +28,7 @@
 			</div>
 
 			<div class="d-flex flex-column requestors-list">
-				<ng-container *ngFor="let requestor of data.requestor">
+				<ng-container *ngFor="let requestor of data.value.requestor">
 					<div class="d-flex flex-row item">
 						{{ requestor }}
 						<i
@@ -45,8 +45,8 @@
 			<label>Autore <i class="bi bi-person-fill"></i></label>
 			<select
 				class="form-control"
-				[title]="data.author"
-				[(ngModel)]="data.author"
+				[title]="data.value.author"
+				[(ngModel)]="data.value.author"
 				[disabled]="mode == userMode.READ"
 			></select>
 		</div>
@@ -56,8 +56,8 @@
 			<input
 				type="text"
 				class="form-control"
-				[title]="data.title"
-				[(ngModel)]="data.title"
+				[title]="data.value.title"
+				[(ngModel)]="data.value.title"
 				[disabled]="mode == userMode.READ"
 			/>
 		</div>
@@ -67,8 +67,8 @@
 			<input
 				type="number"
 				class="form-control"
-				[title]="data.year"
-				[(ngModel)]="data.year"
+				[title]="data.value.year"
+				[(ngModel)]="data.value.year"
 				[disabled]="mode == userMode.READ"
 			/>
 		</div>
@@ -77,8 +77,8 @@
 			<label>Argomento <i class="bi bi-justify-left"></i></label>
 			<textarea
 				class="form-control"
-				[title]="data.topic"
-				[(ngModel)]="data.topic"
+				[title]="data.value.topic"
+				[(ngModel)]="data.value.topic"
 				[disabled]="mode == userMode.READ"
 			></textarea>
 		</div>
@@ -87,11 +87,33 @@
 			<label>Note <i class="bi bi-justify-left"></i></label>
 			<textarea
 				class="form-control"
-				[(ngModel)]="data.notes"
+				[(ngModel)]="data.value.notes"
 				[disabled]="mode == userMode.READ"
 			></textarea>
 		</div>
 	</ng-container>
 
-	<ng-container *ngIf="model == inspectModel.AUTHOR"></ng-container>
+	<ng-container *ngIf="isAuthor(data.value)">
+		<div class="inspector-field form-group">
+			<label>Nome</label>
+			<input
+				type="text"
+				class="form-control"
+				[title]="data.value.name"
+				[(ngModel)]="data.value.name"
+				[disabled]="mode == userMode.READ"
+			/>
+		</div>
+
+		<div class="inspector-field form-group">
+			<label>Cognome</label>
+			<input
+				type="text"
+				class="form-control"
+				[title]="data.value.surname"
+				[(ngModel)]="data.value.surname"
+				[disabled]="mode == userMode.READ"
+			/>
+		</div>
+	</ng-container>
 </div>

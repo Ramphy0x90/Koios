@@ -3,7 +3,6 @@ import { Injectable } from "@angular/core";
 import { Observable } from "rxjs";
 import { Book } from "../models/book";
 import { environment } from "src/environments/environment.prod";
-import { BookDto } from "../models/bookDto";
 
 @Injectable()
 export class BookService {
@@ -29,14 +28,14 @@ export class BookService {
 		);
 	}
 
-	createBook(book: BookDto): Observable<Book> {
+	createBook(book: Book): Observable<Book> {
 		return this.httpClient.post<Book>(
 			`${environment.server}/${this.API_URI}/create`,
 			book
 		);
 	}
 
-	updateBook(id: string, book: BookDto): Observable<Book> {
+	updateBook(id: string, book: Book): Observable<Book> {
 		return this.httpClient.put<Book>(
 			`${environment.server}/${this.API_URI}/${id}`,
 			book
