@@ -23,6 +23,15 @@ export class AuthorController {
 		return this.authorService.getAll();
 	}
 
+	@Get("search/:term")
+	searchBook(
+		@Res({ passthrough: true }) res: Response,
+		@Param("term") term: string
+	): Promise<Author[]> {
+		res.status(HttpStatus.OK);
+		return this.authorService.search(term);
+	}
+
 	@Get(":id")
 	getAuthorById(
 		@Res({ passthrough: true }) res: Response,
@@ -54,10 +63,9 @@ export class AuthorController {
 	@Delete(":id")
 	deleteAuthor(
 		@Res({ passthrough: true }) res: Response,
-		@Param(":id") id: string
-	): Promise<Author[]> {
-		this.authorService.delete(id);
-		res.status(HttpStatus.GONE);
-		return this.authorService.getAll();
+		@Param("id") id: string
+	): Promise<object> {
+		res.status(HttpStatus.OK);
+		return this.authorService.delete(id);
 	}
 }

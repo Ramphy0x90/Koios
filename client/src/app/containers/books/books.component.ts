@@ -108,6 +108,8 @@ export class BooksComponent implements OnInit {
 			.pipe(take(1))
 			.subscribe((data) => {
 				this.books = data;
+				this.selectedBook =
+					this.books.length > 0 ? this.books[0] : this.bookTemplate;
 			});
 	}
 
@@ -140,12 +142,8 @@ export class BooksComponent implements OnInit {
 	}
 
 	deleteBook(): void {
-		const bookId = this.draftBookVersion?._id || "";
-
-		this.bookService.deleteBook(bookId);
-		this.fetchBooks();
-		this.selectedBook =
-			this.books.length > 0 ? this.books[0] : this.bookTemplate;
+		const bookId = this.selectedBook?._id || "";
+		this.bookService.deleteBook(bookId).subscribe(() => this.fetchBooks());
 	}
 
 	export(): void {

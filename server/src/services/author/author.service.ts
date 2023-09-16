@@ -11,6 +11,17 @@ export class AuthorService {
 		return await this.authorModel.find().exec();
 	}
 
+	async search(term: string): Promise<Author[]> {
+		let result = this.authorModel.find();
+		let regex = new RegExp(term, "i");
+
+		result.where({
+			$or: [{ name: regex }, { surname: regex }],
+		});
+
+		return await result.exec();
+	}
+
 	async getById(id: string): Promise<Author> {
 		return await this.authorModel.findById(id).exec();
 	}
@@ -26,7 +37,7 @@ export class AuthorService {
 		});
 	}
 
-	async delete(id: string): Promise<void> {
-		await this.authorModel.deleteOne({ _id: id });
+	async delete(id: string): Promise<object> {
+		return await this.authorModel.deleteOne({ _id: id });
 	}
 }

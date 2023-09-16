@@ -17,15 +17,11 @@ export class BookService {
 		let regex = new RegExp(term, "i");
 
 		result.where({
-			$and: [
-				{
-					$or: [
-						{ requestor: { $in: [regex] } },
-						{ title: regex },
-						{ topic: regex },
-						{ notes: regex },
-					],
-				},
+			$or: [
+				{ requestor: { $in: [regex] } },
+				{ title: regex },
+				{ topic: regex },
+				{ notes: regex },
 			],
 		});
 
@@ -48,7 +44,7 @@ export class BookService {
 		return await this.bookModel.findByIdAndUpdate(id, book, { new: true });
 	}
 
-	async delete(id: string): Promise<void> {
-		await this.bookModel.deleteOne({ _id: id });
+	async delete(id: string): Promise<object> {
+		return await this.bookModel.deleteOne({ _id: id });
 	}
 }

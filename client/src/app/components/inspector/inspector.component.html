@@ -48,7 +48,11 @@
 				[title]="data.value.author"
 				[(ngModel)]="data.value.author"
 				[disabled]="mode == userMode.READ"
-			></select>
+			>
+				<option *ngFor="let author of authors" [value]="author._id">
+					{{ author.name }} {{ author.surname }}
+				</option>
+			</select>
 		</div>
 
 		<div class="inspector-field form-group">

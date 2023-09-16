@@ -16,6 +16,7 @@ import _ from "lodash";
 import { InspectorData } from "src/app/models/inspectorData";
 import { Author } from "src/app/models/author";
 import { UserMode } from "../table-actions/table-actions.component";
+import { AuthorService } from "src/app/services/author.service";
 
 export enum InpectorMode {
 	READ,
@@ -47,9 +48,17 @@ export class InspectorComponent<T> implements OnInit, AfterViewInit, OnChanges {
 	getScreenWidth: number = 0;
 	getScreenHeight: number = 0;
 
+	authors: Author[] = [];
+
+	constructor(private authorService: AuthorService) {}
+
 	ngOnInit() {
 		this.getScreenWidth = window.innerWidth;
 		this.getScreenHeight = window.innerHeight;
+
+		if (this.isBook(this.data.value)) {
+			this.getAuthors();
+		}
 	}
 
 	ngAfterViewInit(): void {
@@ -99,21 +108,6 @@ export class InspectorComponent<T> implements OnInit, AfterViewInit, OnChanges {
 		}
 	}
 
-	insertRequestor(): void {
-		if (this.isBook(this.data)) {
-			this.data.requestor.push(this.requestorsInputRef);
-			this.requestorsInputRef = "";
-		}
-	}
-
-	deleteRequestor(name: string): void {
-		if (this.isBook(this.data)) {
-			_.remove(this.data.requestor, (requestor) => {
-				return requestor == name;
-			});
-		}
-	}
-
 	canMutate(): boolean {
 		return this.getScreenWidth < 992;
 	}
@@ -131,5 +125,26 @@ export class InspectorComponent<T> implements OnInit, AfterViewInit, OnChanges {
 
 		this.status = InspectorStatus.CLOSED;
 		this.closed.emit(true);
+	}
+
+	insertRequestor(): void {
+		if (this.isBook(this.data.value)) {
+			this.data.value.requestor.push(this.requestorsInputRef);
+			this.requestorsInputRef = "";
+		}
+	}
+
+	deleteRequestor(name: string): void {
+		if (this.isBook(this.data.value)) {
+			_.remove(this.data.value.requestor, (requestor) => {
+				return requestor == name;
+			});
+		}
+	}
+
+	getAuthors(): void {
+		this.authorService.getAll().subscribe((data) => {
+			this.authors = data;
+		});
 	}
 }

@@ -63,10 +63,9 @@ export class BookController {
 	@Delete(":id")
 	deleteBook(
 		@Res({ passthrough: true }) res: Response,
-		@Param(":id") id: string
-	): Promise<Book[]> {
-		this.bookService.delete(id);
-		res.status(HttpStatus.GONE);
-		return this.bookService.getAll();
+		@Param("id") id: string
+	): Promise<object> {
+		res.status(HttpStatus.OK);
+		return this.bookService.delete(id);
 	}
 }

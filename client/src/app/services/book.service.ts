@@ -42,7 +42,9 @@ export class BookService {
 		);
 	}
 
-	deleteBook(id: string): void {
-		this.httpClient.delete(`${environment.server}/${this.API_URI}/${id}`);
+	deleteBook(id: string): Observable<object> {
+		return this.httpClient.delete(
+			`${environment.server}/${this.API_URI}/${id}`
+		);
 	}
 }
