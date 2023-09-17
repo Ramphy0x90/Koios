@@ -1,0 +1,41 @@
+<div class="register-main-container">
+	<form [formGroup]="registerForm" (ngSubmit)="register()">
+		<div class="form-field form-group">
+			<label>Nome</label>
+			<input type="text" class="form-control" formControlName="name" />
+			<div *ngIf="name?.touched && name?.hasError('required')">
+				Nome è obbligatorio
+			</div>
+		</div>
+
+		<div class="form-field form-group">
+			<label>Cognome</label>
+			<input type="text" class="form-control" formControlName="surname" />
+			<div *ngIf="surname?.touched && surname?.hasError('required')">
+				Cognome è obbligatorio
+			</div>
+		</div>
+
+		<div class="form-field form-group">
+			<label>Email</label>
+			<input type="email" class="form-control" formControlName="email" />
+			<div *ngIf="email?.touched && email?.hasError('required')">
+				Email è obbligatorio
+			</div>
+		</div>
+
+		<div class="form-field form-group">
+			<label>Password</label>
+			<input
+				type="password"
+				class="form-control"
+				formControlName="password"
+			/>
+			<div *ngIf="password?.touched && password?.hasError('required')">
+				Password è obbligatoria
+			</div>
+		</div>
+
+		<button type="submit" [disabled]="!registerForm.valid"></button>
+	</form>
+</div>

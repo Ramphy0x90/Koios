@@ -1,6 +1,5 @@
 import { Schema, Prop, SchemaFactory } from "@nestjs/mongoose";
 import mongoose, { HydratedDocument } from "mongoose";
-import { Book } from "./book.schema";
 
 @Schema({ timestamps: true })
 export class Author {

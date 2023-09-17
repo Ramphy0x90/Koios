@@ -1,5 +1,5 @@
 import { Component, OnInit } from "@angular/core";
-import { NavOption } from "src/app/models/nav-option";
+import { NavOption } from "src/app/models/navOptions";
 
 @Component({
 	selector: "app-nav-bar",
@@ -19,6 +19,14 @@ export class NavBarComponent implements OnInit {
 		{
 			name: "Logs",
 			route: "logs",
+		},
+		{
+			name: "Login",
+			route: "login",
+		},
+		{
+			name: "Registra",
+			route: "register",
 		},
 	];
 

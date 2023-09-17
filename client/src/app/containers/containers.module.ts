@@ -5,11 +5,25 @@ import { CommonModule } from "@angular/common";
 import { AuthorsComponent } from "./authors/authors.component";
 import { ComponentsModule } from "../components/components.module";
 import { ServicesModule } from "../services/services.module";
-import { FormsModule } from "@angular/forms";
+import { FormsModule, ReactiveFormsModule } from "@angular/forms";
+import { LoginComponent } from "./login/login.component";
+import { RegisterComponent } from "./register/register.component";
 
 @NgModule({
-	declarations: [BooksComponent, LogComponent, AuthorsComponent],
-	imports: [CommonModule, ComponentsModule, ServicesModule, FormsModule],
+	declarations: [
+		BooksComponent,
+		LogComponent,
+		AuthorsComponent,
+		LoginComponent,
+		RegisterComponent,
+	],
+	imports: [
+		CommonModule,
+		ComponentsModule,
+		ServicesModule,
+		FormsModule,
+		ReactiveFormsModule,
+	],
 	exports: [BooksComponent, LogComponent],
 })
 export class ContainersModule {}
