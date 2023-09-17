@@ -17,6 +17,7 @@ import { InspectorData } from "src/app/models/inspectorData";
 import { Author } from "src/app/models/author";
 import { UserMode } from "../table-actions/table-actions.component";
 import { AuthorService } from "src/app/services/author.service";
+import { UserService } from "src/app/services/user.service";
 
 export enum InpectorMode {
 	READ,
@@ -48,9 +49,17 @@ export class InspectorComponent<T> implements OnInit, AfterViewInit, OnChanges {
 	getScreenWidth: number = 0;
 	getScreenHeight: number = 0;
 
+	userLogged: boolean = false;
 	authors: Author[] = [];
 
-	constructor(private authorService: AuthorService) {}
+	constructor(
+		private userService: UserService,
+		private authorService: AuthorService
+	) {
+		this.userService.isLogged$.subscribe((status) => {
+			this.userLogged = status;
+		});
+	}
 
 	ngOnInit() {
 		this.getScreenWidth = window.innerWidth;

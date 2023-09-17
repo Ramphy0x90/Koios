@@ -1,7 +1,7 @@
 import { Injectable } from "@angular/core";
 import { UserLogin } from "../models/userLogin";
 import { UserRegister } from "../models/userRegister";
-import { Observable, tap } from "rxjs";
+import { BehaviorSubject, Observable, tap } from "rxjs";
 import { User } from "../models/user";
 import { LoginResponse } from "../models/loginResponse";
 import { HttpClient } from "@angular/common/http";
@@ -12,8 +12,15 @@ import { environment } from "src/environments/environment.prod";
 })
 export class UserService {
 	private readonly API_URI = "api/v1/user";
+	private readonly logged$: BehaviorSubject<boolean> = new BehaviorSubject(
+		false
+	);
 
-	constructor(private httpClient: HttpClient) {}
+	readonly isLogged$: Observable<boolean> = this.logged$.asObservable();
+
+	constructor(private httpClient: HttpClient) {
+		this.checkIfUserLogged();
+	}
 
 	login(user: UserLogin): Observable<LoginResponse> {
 		return this.httpClient
@@ -22,9 +29,10 @@ export class UserService {
 				user
 			)
 			.pipe(
-				tap((res: LoginResponse) =>
-					localStorage.setItem("token", res.token)
-				)
+				tap((res: LoginResponse) => {
+					localStorage.setItem("token", res.token);
+					this.logged$.next(true);
+				})
 			);
 	}
 
@@ -33,5 +41,18 @@ export class UserService {
 			`${environment.server}/${this.API_URI}/register`,
 			user
 		);
+	}
+
+	logOut(): void {
+		localStorage.removeItem("token");
+		this.logged$.next(false);
+	}
+
+	checkIfUserLogged(): void {
+		if (localStorage.getItem("token")) {
+			this.logged$.next(true);
+		} else {
+			this.logged$.next(false);
+		}
 	}
 }

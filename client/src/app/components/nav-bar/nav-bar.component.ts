@@ -1,5 +1,6 @@
 import { Component, OnInit } from "@angular/core";
 import { NavOption } from "src/app/models/navOptions";
+import { UserService } from "src/app/services/user.service";
 
 @Component({
 	selector: "app-nav-bar",
@@ -20,17 +21,19 @@ export class NavBarComponent implements OnInit {
 			name: "Logs",
 			route: "logs",
 		},
-		{
-			name: "Login",
-			route: "login",
-		},
-		{
-			name: "Registra",
-			route: "register",
-		},
 	];
 
-	constructor() {}
+	userLogged: boolean = false;
+
+	constructor(private userService: UserService) {
+		this.userService.isLogged$.subscribe((status) => {
+			this.userLogged = status;
+		});
+	}
 
 	ngOnInit(): void {}
+
+	logOut(): void {
+		this.userService.logOut();
+	}
 }
