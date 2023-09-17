@@ -9,7 +9,7 @@ export class BookService {
 	constructor(@InjectModel(Book.name) private bookModel: Model<Book>) {}
 
 	async getAll(): Promise<Book[]> {
-		return await this.bookModel.find().exec();
+		return await this.bookModel.find().populate("authorInfo").exec();
 	}
 
 	async search(term: string): Promise<Book[]> {
@@ -29,7 +29,9 @@ export class BookService {
 	}
 
 	async getById(id: string): Promise<Book> {
-		return await this.bookModel.findById(id).exec();
+		return await (await this.bookModel.findById(id))
+			.populated("authorInfo")
+			.exec();
 	}
 
 	async create(bookDto): Promise<Book> {

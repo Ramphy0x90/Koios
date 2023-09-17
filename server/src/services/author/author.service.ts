@@ -8,7 +8,7 @@ export class AuthorService {
 	constructor(@InjectModel(Author.name) private authorModel: Model<Author>) {}
 
 	async getAll(): Promise<Author[]> {
-		return await this.authorModel.find().exec();
+		return await this.authorModel.find().populate("books").exec();
 	}
 
 	async search(term: string): Promise<Author[]> {
@@ -23,7 +23,7 @@ export class AuthorService {
 	}
 
 	async getById(id: string): Promise<Author> {
-		return await this.authorModel.findById(id).exec();
+		return await this.authorModel.findById(id).populate("books").exec();
 	}
 
 	async create(authorDto): Promise<Author> {

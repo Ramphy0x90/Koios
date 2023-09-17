@@ -1,5 +1,6 @@
 import { Schema, Prop, SchemaFactory } from "@nestjs/mongoose";
 import mongoose, { HydratedDocument } from "mongoose";
+import { Book } from "./book.schema";
 
 @Schema({ timestamps: true })
 export class Author {
@@ -18,3 +19,12 @@ export class Author {
 
 export type AuthorDocument = HydratedDocument<Author>;
 export const AuthorSchema = SchemaFactory.createForClass(Author);
+
+AuthorSchema.set("toObject", { virtuals: true });
+AuthorSchema.set("toJSON", { virtuals: true });
+
+AuthorSchema.virtual("books", {
+	ref: "Book",
+	localField: "_id",
+	foreignField: "author",
+});

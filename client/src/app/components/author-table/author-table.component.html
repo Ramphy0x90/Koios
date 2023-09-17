@@ -15,7 +15,7 @@
 			>
 				<td>{{ author.name }}</td>
 				<td>{{ author.surname }}</td>
-				<td>{{ 1 }}</td>
+				<td>{{ author.books?.length || 0 }}</td>
 			</tr>
 		</tbody>
 	</table>

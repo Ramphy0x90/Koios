@@ -14,7 +14,9 @@
 				[class.active]="book._id == selectedBook._id"
 			>
 				<td>{{ book.requestor }}</td>
-				<td>{{ book.author }}</td>
+				<td>
+					{{ book.authorInfo?.name }} {{ book.authorInfo?.surname }}
+				</td>
 				<td>{{ book.title }}</td>
 				<td>{{ book.year }}</td>
 				<td>{{ book.topic }}</td>

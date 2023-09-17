@@ -46,3 +46,13 @@ export class Book {
 
 export type BookDocument = HydratedDocument<Book>;
 export const BookSchema = SchemaFactory.createForClass(Book);
+
+BookSchema.set("toObject", { virtuals: true });
+BookSchema.set("toJSON", { virtuals: true });
+
+BookSchema.virtual("authorInfo", {
+	ref: "Author",
+	localField: "author",
+	foreignField: "_id",
+	justOne: true,
+});
