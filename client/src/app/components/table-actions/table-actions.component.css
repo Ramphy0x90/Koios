@@ -73,10 +73,6 @@
 	}
 
 	.actions-main-container .action-buttons-container {
-		justify-content: space-between;
-	}
-
-	.inspector-container {
-		position: inherit;
+		justify-content: start;
 	}
 }

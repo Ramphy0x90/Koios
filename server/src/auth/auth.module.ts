@@ -1,8 +1,10 @@
-import { Module } from "@nestjs/common";
+import { Global, MiddlewareConsumer, Module } from "@nestjs/common";
 import { AuthService } from "./services/auth.service";
 import { JwtStrategy } from "./strategies/jwt.strategy";
-import { JwtModule } from "@nestjs/jwt";
+import { JwtModule, JwtService } from "@nestjs/jwt";
 import { ConfigModule, ConfigService } from "@nestjs/config";
+import { AuthGuard } from "./guards/auth.guard";
+import { AuthMiddleware } from "./middlewares/auth.middleware";
 
 @Module({
 	imports: [
@@ -15,7 +17,11 @@ import { ConfigModule, ConfigService } from "@nestjs/config";
 			inject: [ConfigService],
 		}),
 	],
-	exports: [AuthService],
-	providers: [AuthService, JwtStrategy],
+	exports: [AuthService, AuthGuard],
+	providers: [AuthService, AuthGuard, JwtStrategy],
 })
-export class AuthModule {}
+export class AuthModule {
+	configure(consumer: MiddlewareConsumer) {
+		consumer.apply(AuthMiddleware).forRoutes("*");
+	}
+}

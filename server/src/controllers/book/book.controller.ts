@@ -8,8 +8,10 @@ import {
 	Body,
 	Res,
 	HttpStatus,
+	UseGuards,
 } from "@nestjs/common";
 import { Response } from "express";
+import { AuthGuard } from "src/auth/guards/auth.guard";
 import { Book } from "src/schemas/book.schema";
 import { BookService } from "src/services/book/book.service";
 
@@ -41,6 +43,7 @@ export class BookController {
 		return this.bookService.getById(id);
 	}
 
+	@UseGuards(AuthGuard)
 	@Post("create")
 	createBook(
 		@Res({ passthrough: true }) res: Response,
@@ -60,6 +63,7 @@ export class BookController {
 		return this.bookService.update(id, book);
 	}
 
+	@UseGuards(AuthGuard)
 	@Delete(":id")
 	deleteBook(
 		@Res({ passthrough: true }) res: Response,

@@ -2,9 +2,13 @@ import { Injectable } from "@nestjs/common";
 import { JwtService } from "@nestjs/jwt";
 import { User } from "src/schemas/user.schema";
 import * as bcrypt from "bcrypt";
+import { BehaviorSubject, Observable } from "rxjs";
 
 @Injectable()
 export class AuthService {
+	private readonly user$: BehaviorSubject<User> = new BehaviorSubject(null);
+	readonly loggedUser$: Observable<User> = this.user$.asObservable();
+
 	constructor(private jwtService: JwtService) {}
 
 	async generateJwtToken(user: User): Promise<string> {
@@ -24,5 +28,9 @@ export class AuthService {
 
 	async verifyJwt(token: string): Promise<object> {
 		return this.jwtService.verifyAsync(token);
+	}
+
+	setLoggedUser(user: User): void {
+		this.user$.next(user);
 	}
 }

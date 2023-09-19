@@ -21,6 +21,7 @@
 
 			<div class="action-buttons-container d-flex flex-row">
 				<button
+					*ngIf="userLogged"
 					class="btn btn-new btn-secondary"
 					(click)="setMode(userModeEnum.NEW)"
 				>
@@ -41,7 +42,7 @@
 					Esporta
 				</button>
 
-				<div class="icon-delete">
+				<div class="icon-delete" *ngIf="userLogged">
 					<i
 						class="bi bi-trash3"
 						title="Elimina"

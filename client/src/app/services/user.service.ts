@@ -48,6 +48,10 @@ export class UserService {
 		this.logged$.next(false);
 	}
 
+	getUserToken(): string {
+		return localStorage.getItem("token") || "";
+	}
+
 	checkIfUserLogged(): void {
 		if (localStorage.getItem("token")) {
 			this.logged$.next(true);

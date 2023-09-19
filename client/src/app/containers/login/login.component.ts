@@ -1,5 +1,6 @@
 import { Component } from "@angular/core";
 import { FormControl, FormGroup, Validators } from "@angular/forms";
+import { Router } from "@angular/router";
 import { UserService } from "src/app/services/user.service";
 
 @Component({
@@ -13,7 +14,7 @@ export class LoginComponent {
 		password: new FormControl(),
 	});
 
-	constructor(private userService: UserService) {}
+	constructor(private userService: UserService, private router: Router) {}
 
 	login(): void {
 		this.userService
@@ -21,8 +22,8 @@ export class LoginComponent {
 				email: this.email?.value,
 				password: this.password?.value,
 			})
-			.subscribe((data) => {
-				console.log(data);
+			.subscribe(() => {
+				this.router.navigate(["books"]);
 			});
 	}
 

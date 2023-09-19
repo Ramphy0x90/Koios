@@ -8,10 +8,12 @@ import {
 	HttpStatus,
 	Param,
 	Body,
+	UseGuards,
 } from "@nestjs/common";
 import { AuthorService } from "src/services/author/author.service";
 import { Response } from "express";
 import { Author } from "src/schemas/author.schema";
+import { AuthGuard } from "src/auth/guards/auth.guard";
 
 @Controller("api/v1/author")
 export class AuthorController {
@@ -41,6 +43,7 @@ export class AuthorController {
 		return this.authorService.getById(id);
 	}
 
+	@UseGuards(AuthGuard)
 	@Post("create")
 	createAuthor(
 		@Res({ passthrough: true }) res: Response,
@@ -50,6 +53,7 @@ export class AuthorController {
 		return this.authorService.create(author);
 	}
 
+	@UseGuards(AuthGuard)
 	@Put(":id")
 	updateAuthor(
 		@Res({ passthrough: true }) res: Response,
@@ -60,6 +64,7 @@ export class AuthorController {
 		return this.authorService.update(id, author);
 	}
 
+	@UseGuards(AuthGuard)
 	@Delete(":id")
 	deleteAuthor(
 		@Res({ passthrough: true }) res: Response,

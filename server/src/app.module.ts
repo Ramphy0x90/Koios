@@ -13,16 +13,22 @@ import { UserService } from "./services/user/user.service";
 import { AuthModule } from "./auth/auth.module";
 import { User, UserSchema } from "./schemas/user.schema";
 import { UserController } from "./controllers/user/user.controller";
+import { SeederModule } from "./db/seed/seed.module";
+import { LogService } from "./services/log/log.service";
+import { Log, LogSchema } from "./schemas/log.schema";
+import { LogController } from "./controllers/log/log.controller";
 
 @Module({
 	imports: [
 		AuthModule,
+		SeederModule,
 		ConfigModule.forRoot({ isGlobal: true }),
 		MongooseModule.forRoot(process.env.MONGO_URL),
 		MongooseModule.forFeature([
 			{ name: User.name, schema: UserSchema },
 			{ name: Book.name, schema: BookSchema },
 			{ name: Author.name, schema: AuthorSchema },
+			{ name: Log.name, schema: LogSchema },
 		]),
 	],
 	controllers: [
@@ -30,7 +36,14 @@ import { UserController } from "./controllers/user/user.controller";
 		AuthorController,
 		PlaceController,
 		UserController,
+		LogController,
 	],
-	providers: [BookService, AuthorService, PlaceService, UserService],
+	providers: [
+		BookService,
+		AuthorService,
+		PlaceService,
+		UserService,
+		LogService,
+	],
 })
 export class AppModule {}

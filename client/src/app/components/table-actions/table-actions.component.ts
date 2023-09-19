@@ -8,6 +8,7 @@ import {
 	SimpleChanges,
 } from "@angular/core";
 import { FormControl, FormGroup } from "@angular/forms";
+import { UserService } from "src/app/services/user.service";
 
 export enum UserMode {
 	READ,
@@ -43,6 +44,13 @@ export class TableActionsComponent implements OnChanges, AfterViewInit {
 
 	currentMode = UserMode.READ;
 	onSearch: boolean = false;
+	userLogged: boolean = false;
+
+	constructor(private userService: UserService) {
+		this.userService.isLogged$.subscribe((status) => {
+			this.userLogged = status;
+		});
+	}
 
 	ngAfterViewInit(): void {
 		this.searchFormGroup
