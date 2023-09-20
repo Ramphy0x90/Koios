@@ -9,6 +9,7 @@ import { NgSelectModule } from "@ng-select/ng-select";
 import { DirectivesModule } from "../directives/directives.module";
 import { AuthorTableComponent } from "./author-table/author-table.component";
 import { TableActionsComponent } from "./table-actions/table-actions.component";
+import { LogsTableComponent } from "./logs-table/logs-table.component";
 
 @NgModule({
 	declarations: [
@@ -17,6 +18,7 @@ import { TableActionsComponent } from "./table-actions/table-actions.component";
 		BookTableComponent,
 		AuthorTableComponent,
 		TableActionsComponent,
+		LogsTableComponent,
 	],
 	imports: [
 		CommonModule,
@@ -33,6 +35,7 @@ import { TableActionsComponent } from "./table-actions/table-actions.component";
 		BookTableComponent,
 		AuthorTableComponent,
 		TableActionsComponent,
+		LogsTableComponent,
 	],
 })
 export class ComponentsModule {}
