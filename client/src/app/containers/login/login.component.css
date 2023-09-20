@@ -1,0 +1,40 @@
+.login-main-container {
+	justify-content: center;
+	align-items: center;
+}
+
+.form-container {
+	flex-direction: column;
+	justify-content: center;
+	align-items: center;
+	width: 90%;
+	height: 400px;
+	max-width: 350px;
+	background-color: var(--color-blue);
+	padding: var(--space-7);
+	margin-bottom: 150px;
+	border-radius: 5px;
+}
+
+.form-container svg {
+	color: var(--color-light);
+	margin-bottom: var(--space-6);
+}
+
+.form-container form {
+	display: flex;
+	flex-direction: column;
+	width: 100%;
+	max-width: 250px;
+	gap: var(--space-7);
+}
+
+.form-container form label {
+	color: var(--color-light);
+}
+
+.form-container form button {
+	cursor: pointer;
+	color: var(--color-light);
+	background-color: var(--color-green);
+}

@@ -36,6 +36,7 @@
 				</button>
 
 				<button
+					*ngIf="userLogged"
 					class="btn btn-export btn-secondary"
 					(click)="execAction(actionEnum.EXPORT)"
 				>

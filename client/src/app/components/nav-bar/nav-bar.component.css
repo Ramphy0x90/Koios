@@ -17,3 +17,7 @@
 .navbar-nav {
 	margin-left: auto;
 }
+
+.navbar-toggler i {
+	color: var(--color-light);
+}
