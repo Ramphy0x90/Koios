@@ -6,17 +6,11 @@ import { AuthorSeedService } from "./db/seed/authorsSeed.service";
 
 async function bootstrap() {
 	const app = await NestFactory.create(AppModule);
-	app.enableCors();
-	app.use(function (
-		request: Request,
-		response: Response,
-		next: NextFunction
-	) {
-		response.setHeader(
-			"Access-Control-Allow-Origin",
-			"http://localhost:4200"
-		);
-		next();
+
+	app.enableCors({
+		origin: ["http://localhost:4200", "http://koios.devracom.ch"],
+		methods: ["GET", "POST", "PUT", "DELETE"],
+		credentials: true,
 	});
 
 	const userSeedService = app.get(UserSeedService);
