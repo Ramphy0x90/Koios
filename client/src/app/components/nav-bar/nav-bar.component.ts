@@ -17,10 +17,6 @@ export class NavBarComponent implements OnInit {
 			name: "Autori",
 			route: "authors",
 		},
-		{
-			name: "Logs",
-			route: "logs",
-		},
 	];
 
 	userLogged: boolean = false;

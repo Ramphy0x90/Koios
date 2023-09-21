@@ -46,6 +46,10 @@ input[type="number"]:focus {
 	box-shadow: inset 0 -1px 0 #ddd !important;
 }
 
+table td {
+	word-wrap: break-word;
+}
+
 .gap-1 {
 	gap: var(--space-3);
 }
@@ -108,6 +112,10 @@ input[type="number"]:focus {
 
 /* Large devices (desktops, 992px and up) */
 @media (min-width: 992px) {
+	table {
+		table-layout: fixed;
+	}
+
 	.inspector-container {
 		position: inherit;
 	}

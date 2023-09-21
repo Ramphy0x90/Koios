@@ -24,7 +24,7 @@ export class LogService {
 
 	async create(log): Promise<Log> {
 		const newLog = new this.logModel(log);
-		newLog.executer = this.currentLoggedUser.email;
+		newLog.executer = this.currentLoggedUser?.email || "";
 
 		return await newLog.save();
 	}

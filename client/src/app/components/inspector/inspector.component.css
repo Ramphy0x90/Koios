@@ -27,10 +27,16 @@
 }
 
 .inspector-field .requestors-list {
-	padding: var(--space-3);
+	padding: var(--space-6);
 	font-size: 14px;
-	height: auto !important;
-	max-height: 300px;
+	height: auto;
+	border: 1px solid var(--color-light-1);
+	border-radius: 6px;
+	margin-top: var(--space-6);
+}
+
+.inspector-field .requestors-list.limited {
+	height: 100px;
 	overflow-y: scroll;
 }
 
