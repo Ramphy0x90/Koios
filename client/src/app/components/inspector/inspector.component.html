@@ -3,8 +3,9 @@
 	class="inspector-main-container d-flex flex-column"
 	[class.readOnly]="mode == userMode.READ"
 >
-	<div class="inspector-actions-container" (click)="closeInspector()">
-		<i class="bi bi-x" title="Chiudi"></i>
+	<div class="inspector-actions-container d-flex justify-content-between">
+		<div (click)="emitSave()">salva</div>
+		<i class="bi bi-x" title="Chiudi" (click)="closeInspector()"></i>
 	</div>
 
 	<ng-container *ngIf="isBook(data.value)">
@@ -31,7 +32,7 @@
 			<div
 				class="d-flex flex-column requestors-list"
 				[class.limited]="data.value.requestor.length > 5"
-				*ngIf="data.value.requestor.length > 0"
+				*ngIf="data.value.requestor?.length || 0 > 0"
 			>
 				<ng-container
 					*ngFor="

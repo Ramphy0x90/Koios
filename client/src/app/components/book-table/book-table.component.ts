@@ -28,8 +28,6 @@ export class BookTableComponent implements OnChanges {
 		{ id: "notes", title: "Note" },
 	];
 
-	constructor() {}
-
 	ngOnChanges(changes: SimpleChanges): void {
 		if (changes["data"]?.currentValue) {
 			this.selectedBook = this.data[0];

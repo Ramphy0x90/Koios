@@ -59,12 +59,15 @@
 	flex: 0 0 30px;
 	display: flex;
 	justify-content: end;
-	align-items: end;
+	align-items: center;
 	color: var(--color-light-1);
-	font-size: 30px;
 	cursor: pointer;
 	text-align: right;
 	overflow: hidden;
+}
+
+.inspector-actions-container i {
+	font-size: 30px;
 }
 
 /* Large devices (desktops, 992px and up) */

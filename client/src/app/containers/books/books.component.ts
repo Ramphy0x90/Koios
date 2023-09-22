@@ -1,4 +1,4 @@
-import { Component, OnInit, Inject, AfterViewInit } from "@angular/core";
+import { Component, OnInit, Inject } from "@angular/core";
 import { take } from "rxjs";
 import { InspectorStatus } from "src/app/components/inspector/inspector.component";
 import { Book } from "src/app/models/book";

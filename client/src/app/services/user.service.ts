@@ -5,7 +5,7 @@ import { BehaviorSubject, Observable, tap } from "rxjs";
 import { User } from "../models/user";
 import { LoginResponse } from "../models/loginResponse";
 import { HttpClient } from "@angular/common/http";
-import { environment } from "src/environments/environment.prod";
+import { environment } from "src/environments/environment";
 
 @Injectable({
 	providedIn: "root",

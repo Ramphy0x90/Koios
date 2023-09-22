@@ -41,6 +41,8 @@ export class InspectorComponent<T> implements OnInit, AfterViewInit, OnChanges {
 	@Input() mode: UserMode = UserMode.READ;
 	@Input() status: InspectorStatus = InspectorStatus.CLOSED;
 	@Input() data!: InspectorData<T>;
+
+	@Output() save: EventEmitter<boolean> = new EventEmitter();
 	@Output() closed: EventEmitter<boolean> = new EventEmitter();
 
 	userMode = UserMode;
@@ -94,11 +96,11 @@ export class InspectorComponent<T> implements OnInit, AfterViewInit, OnChanges {
 		}
 	}
 
-	isBook(item: any): item is Book {
+	isBook(item: unknown): item is Book {
 		return this.data.type == "Book";
 	}
 
-	isAuthor(item: any): item is Author {
+	isAuthor(item: unknown): item is Author {
 		return this.data.type == "Author";
 	}
 
@@ -125,6 +127,11 @@ export class InspectorComponent<T> implements OnInit, AfterViewInit, OnChanges {
 		const containerEl = this.container.nativeElement;
 		containerEl.style.width = "360px";
 		containerEl.style.padding = "var(--space-6)";
+	}
+
+	emitSave(): void {
+		this.save.emit(true);
+		this.closeInspector();
 	}
 
 	closeInspector(): void {

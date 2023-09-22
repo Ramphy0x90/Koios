@@ -1,0 +1,36 @@
+.island-item-main-container {
+	display: grid;
+	position: relative;
+	grid-template-rows: repeat(3, 1fr);
+	flex-grow: 1;
+	cursor: pointer;
+	max-width: 100%;
+	padding: var(--space-6);
+	border-left: 6px solid var(--color-blue);
+	box-shadow: 0px 10px 15px 0px rgba(0, 0, 0, 0.1);
+}
+
+.island-item-main-container.active {
+	color: var(--color-green);
+	border-left: 6px solid var(--color-green);
+}
+
+.island-item-main-container i {
+	position: absolute;
+	right: 0;
+	margin: var(--space-6) var(--space-6) 0 0;
+}
+
+.island-item-main-container:hover {
+	background-color: var(--color-light);
+	border-left: 6px solid var(--color-green);
+}
+
+.island-item-main-container .main {
+	font-weight: 600;
+}
+
+.island-item-main-container .sub {
+	color: var(--color-light-1);
+	font-size: 14px;
+}

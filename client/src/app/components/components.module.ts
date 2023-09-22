@@ -10,6 +10,8 @@ import { DirectivesModule } from "../directives/directives.module";
 import { AuthorTableComponent } from "./author-table/author-table.component";
 import { TableActionsComponent } from "./table-actions/table-actions.component";
 import { LogsTableComponent } from "./logs-table/logs-table.component";
+import { ItemsIslandViewComponent } from "./items-island-view/items-island-view.component";
+import { IslandItemComponent } from "./island-item/island-item.component";
 
 @NgModule({
 	declarations: [
@@ -19,6 +21,8 @@ import { LogsTableComponent } from "./logs-table/logs-table.component";
 		AuthorTableComponent,
 		TableActionsComponent,
 		LogsTableComponent,
+		ItemsIslandViewComponent,
+		IslandItemComponent,
 	],
 	imports: [
 		CommonModule,
@@ -36,6 +40,8 @@ import { LogsTableComponent } from "./logs-table/logs-table.component";
 		AuthorTableComponent,
 		TableActionsComponent,
 		LogsTableComponent,
+		ItemsIslandViewComponent,
+		IslandItemComponent,
 	],
 })
 export class ComponentsModule {}

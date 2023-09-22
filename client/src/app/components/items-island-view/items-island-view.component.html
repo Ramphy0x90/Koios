@@ -1,0 +1,9 @@
+<div class="items-island-view-main-container">
+	<ng-container *ngFor="let item of data">
+		<app-island-item
+			[item]="item"
+			[active]="item._id == selectedItem?._id"
+			(click)="select(item)"
+		></app-island-item>
+	</ng-container>
+</div>

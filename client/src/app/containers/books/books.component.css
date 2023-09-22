@@ -7,3 +7,18 @@
 	width: 100%;
 	padding: var(--space-4);
 }
+
+app-book-table {
+	display: none;
+}
+
+/* Large devices (desktops, 992px and up) */
+@media (min-width: 992px) {
+	app-book-table {
+		display: initial;
+	}
+
+	app-items-island-view {
+		display: none;
+	}
+}

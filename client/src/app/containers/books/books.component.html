@@ -12,6 +12,9 @@
 			[data]="books"
 			(updateBook)="setBook($event)"
 		></app-book-table>
+
+		<app-items-island-view [data]="books" (updateItem)="setBook($event)">
+		</app-items-island-view>
 	</div>
 
 	<div class="inspector-container">
@@ -19,6 +22,7 @@
 			[mode]="mode"
 			[status]="status"
 			[data]="getBook()"
+			(save)="saveBook()"
 			(closed)="cancelOperation()"
 		></app-inspector>
 	</div>
