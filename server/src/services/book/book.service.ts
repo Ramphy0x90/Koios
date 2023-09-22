@@ -20,7 +20,7 @@ export class BookService {
 	async search(term: string): Promise<Book[]> {
 		let result = this.bookModel.find();
 		let regex = new RegExp(term, "i");
-		Document;
+
 		result.where({
 			$or: [
 				{ requestor: { $in: [regex] } },
