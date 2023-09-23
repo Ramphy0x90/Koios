@@ -3,6 +3,7 @@ import { JwtService } from "@nestjs/jwt";
 import { User } from "src/schemas/user.schema";
 import * as bcrypt from "bcrypt";
 import { BehaviorSubject, Observable } from "rxjs";
+import { ExpiredTokenException } from "../exceptions/expiredToken.exception";
 
 @Injectable()
 export class AuthService {
@@ -27,7 +28,11 @@ export class AuthService {
 	}
 
 	async verifyJwt(token: string): Promise<object> {
-		return this.jwtService.verifyAsync(token);
+		try {
+			return await this.jwtService.verifyAsync(token);
+		} catch {
+			throw new ExpiredTokenException();
+		}
 	}
 
 	setLoggedUser(user: User): void {
