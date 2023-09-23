@@ -1,14 +1,18 @@
 <div class="island-item-main-container" [class.active]="active">
 	<i class="bi bi-check-circle-fill" *ngIf="active"></i>
 
-	<ng-container *ngIf="isBook(item)">
-		<div class="main">{{ item.title }}</div>
-		<div class="body">{{ item.topic }}</div>
-		<div class="sub">{{ item.year }}</div>
-	</ng-container>
+	<div class="content">
+		<ng-container *ngIf="isBook(item)">
+			<div class="main">{{ item.title }}</div>
+			<div class="body">{{ item.topic }}</div>
+			<div class="sub">{{ item.year }}</div>
+		</ng-container>
 
-	<ng-container *ngIf="isAuthor(item)">
-		<div>{{ item.name }} {{ item.surname }}</div>
-		<div># Libri: {{ item.books?.length }}</div>
-	</ng-container>
+		<ng-container *ngIf="isAuthor(item)">
+			<div>{{ item.name }} {{ item.surname }}</div>
+			<div># Libri: {{ item.books?.length }}</div>
+		</ng-container>
+	</div>
+
+	<div class="marker"></div>
 </div>

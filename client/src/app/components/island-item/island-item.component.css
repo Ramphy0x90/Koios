@@ -1,29 +1,60 @@
 .island-item-main-container {
-	display: grid;
 	position: relative;
-	grid-template-rows: repeat(3, 1fr);
+	display: grid;
+	grid-template-columns: auto 100px;
 	flex-grow: 1;
-	cursor: pointer;
 	max-width: 100%;
+	cursor: pointer;
+	-webkit-box-shadow: 0px 7px 12px -1px rgba(0, 0, 0, 0.28);
+	-moz-box-shadow: 0px 7px 12px -1px rgba(0, 0, 0, 0.28);
+	box-shadow: 0px 7px 12px -1px rgba(0, 0, 0, 0.28);
+	border: 1px solid var(--color-blue);
+	border-left: 8px solid var(--color-blue);
+}
+
+.island-item-main-container .content {
 	padding: var(--space-6);
-	border-left: 6px solid var(--color-blue);
-	box-shadow: 0px 10px 15px 0px rgba(0, 0, 0, 0.1);
+}
+
+.island-item-main-container .marker {
+	width: 100px;
+	height: 100px;
+	overflow: hidden;
+	position: relative;
+}
+
+.island-item-main-container .marker:before {
+	content: "";
+	display: block;
+	width: 200%;
+	height: 200%;
+	position: absolute;
+	border-radius: 50%;
+	top: 0;
+	right: 0;
+	box-shadow: 50px -50px 0 0 var(--color-blue);
 }
 
 .island-item-main-container.active {
-	color: var(--color-green);
-	border-left: 6px solid var(--color-green);
+	border-color: var(--color-green);
+}
+
+.island-item-main-container.active .marker:before {
+	box-shadow: 50px -50px 0 0 var(--color-green);
 }
 
 .island-item-main-container i {
 	position: absolute;
 	right: 0;
-	margin: var(--space-6) var(--space-6) 0 0;
+	color: var(--color-light);
+	margin: var(--space-4) var(--space-4) 0 0;
+	z-index: 1000;
 }
 
 .island-item-main-container:hover {
+	color: var(--color-dark);
 	background-color: var(--color-light);
-	border-left: 6px solid var(--color-green);
+	border-color: var(--color-green);
 }
 
 .island-item-main-container .main {
