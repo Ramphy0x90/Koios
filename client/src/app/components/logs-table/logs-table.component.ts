@@ -1,4 +1,5 @@
 import { Component, Input } from "@angular/core";
+import { Router } from "@angular/router";
 import { Log } from "src/app/models/log";
 
 @Component({
@@ -18,7 +19,13 @@ export class LogsTableComponent {
 		{ id: "updatedAt", title: "Data" },
 	];
 
+	constructor(private router: Router) {}
+
 	updateData(data: Log[]): void {
 		this.data = data;
+	}
+
+	goTo(elementId: string): void {
+		this.router.navigate(["books", elementId]);
 	}
 }

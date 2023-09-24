@@ -10,8 +10,16 @@
 		<tbody>
 			<tr *ngFor="let log of data">
 				<td>{{ log.entity }}</td>
-				<td>{{ log.target }}</td>
-				<td>{{ log.operation }}</td>
+				<td class="target-link" (click)="goTo(log.target)">
+					{{ log.target }}
+				</td>
+				<td
+					[class.text-success]="log.operation == 'CREATE'"
+					[class.text-warning]="log.operation == 'UPDATE'"
+					[class.text-danger]="log.operation == 'DELETE'"
+				>
+					{{ log.operation }}
+				</td>
 				<td>{{ log.executer }}</td>
 				<td>{{ log.changes }}</td>
 				<td>{{ log.updatedAt }}</td>

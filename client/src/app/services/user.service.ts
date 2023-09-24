@@ -17,9 +17,14 @@ export class UserService {
 	);
 
 	readonly isLogged$: Observable<boolean> = this.logged$.asObservable();
+	isLogged: boolean = false;
 
 	constructor(private httpClient: HttpClient) {
 		this.checkIfUserLogged();
+
+		this.isLogged$.subscribe((isLogged) => {
+			this.isLogged = isLogged;
+		});
 	}
 
 	login(user: UserLogin): Observable<LoginResponse> {

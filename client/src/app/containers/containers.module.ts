@@ -8,6 +8,7 @@ import { ServicesModule } from "../services/services.module";
 import { FormsModule, ReactiveFormsModule } from "@angular/forms";
 import { LoginComponent } from "./login/login.component";
 import { RegisterComponent } from "./register/register.component";
+import { AdminComponent } from './admin/admin.component';
 
 @NgModule({
 	declarations: [
@@ -16,6 +17,7 @@ import { RegisterComponent } from "./register/register.component";
 		AuthorsComponent,
 		LoginComponent,
 		RegisterComponent,
+  AdminComponent,
 	],
 	imports: [
 		CommonModule,

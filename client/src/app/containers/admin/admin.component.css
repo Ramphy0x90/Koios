@@ -1,0 +1,15 @@
+.admin-main-container {
+	flex-direction: row;
+	gap: var(--space-6);
+	padding: var(--space-6);
+}
+
+.admin-section {
+	flex: 1 1 50%;
+	background-color: var(--color-light);
+	padding: var(--space-6);
+}
+
+.admin-section h1 {
+	border-bottom: 1px solid var(--color-dark);
+}

@@ -1,0 +1,37 @@
+<div class="table-main-container book-table-main-container">
+	<table class="table" sort [data]="data" (updateData)="updateData($event)">
+		<thead>
+			<tr>
+				<ng-container *ngFor="let column of tableColumns">
+					<th scope="col" [id]="column.id">{{ column.title }}</th>
+				</ng-container>
+			</tr>
+		</thead>
+		<tbody>
+			<tr
+				*ngFor="let item of data"
+				(click)="select(item)"
+				[class.active]="item._id == selectedItem?._id || ''"
+			>
+				<ng-container *ngIf="isBook(item)">
+					<td>{{ item.requestor }}</td>
+					<td>
+						{{ item.authorInfo?.name }}
+						{{ item.authorInfo?.surname }}
+					</td>
+					<td>{{ item.title }}</td>
+					<td>{{ item.year }}</td>
+					<td>{{ item.topic }}</td>
+					<td>{{ item.place }}</td>
+					<td>{{ item.notes }}</td>
+				</ng-container>
+
+				<ng-container *ngIf="isAuthor(item)">
+					<td>{{ item.name }}</td>
+					<td>{{ item.surname }}</td>
+					<td>{{ item.books?.length || 0 }}</td>
+				</ng-container>
+			</tr>
+		</tbody>
+	</table>
+</div>

@@ -12,18 +12,16 @@
 		<div class="inspector-field form-group">
 			<label>Richiedenti <i class="bi bi-people-fill"></i></label>
 
-			<div class="d-flex flex-row gap-1">
+			<div class="d-flex flex-row gap-1" *ngIf="mode != userMode.READ">
 				<input
 					type="text"
 					class="form-control"
 					[(ngModel)]="requestorsInputRef"
-					[disabled]="mode == userMode.READ"
 				/>
 
 				<button
 					class="btn btn-outline-secondary"
 					(click)="insertRequestor()"
-					[disabled]="mode == userMode.READ"
 				>
 					<i class="bi bi-plus-lg"></i>
 				</button>
@@ -133,6 +131,22 @@
 				[(ngModel)]="data.value.surname"
 				[disabled]="mode == userMode.READ || !userLogged"
 			/>
+		</div>
+
+		<div
+			class="inspector-field form-group"
+			*ngIf="data.value.books?.length || 0 > 0"
+		>
+			<label>Libri</label>
+
+			<ng-container *ngFor="let book of data.value.books">
+				<div class="d-flex flex-row item">
+					<span>
+						<i class="bi bi-stop-fill"></i>
+						{{ book.title }}</span
+					>
+				</div>
+			</ng-container>
 		</div>
 	</ng-container>
 </div>

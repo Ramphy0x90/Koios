@@ -8,8 +8,8 @@
 			(restore)="fetchAuthors()"
 		></app-table-actions>
 
-		<app-author-table [data]="authors" (updateAuthor)="setAuthor($event)">
-		</app-author-table>
+		<app-table [data]="authors" (updateItem)="setAuthor($event)">
+		</app-table>
 	</div>
 
 	<div class="inspector-container">

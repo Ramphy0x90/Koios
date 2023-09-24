@@ -22,10 +22,22 @@
 						data-bs-toggle="collapse"
 						data-bs-target=".navbar-collapse.show"
 						routerLinkActive="active"
-						[routerLinkActiveOptions]="{ exact: true }"
 						[routerLink]="option.route"
 						>{{ option.name }}</a
 					>
+				</ng-container>
+
+				<ng-container *ngIf="userLogged">
+					<a
+						*ngFor="let option of navOptionsAdmin"
+						class="nav-link"
+						data-bs-toggle="collapse"
+						data-bs-target=".navbar-collapse.show"
+						routerLinkActive="active"
+						[routerLink]="option.route"
+					>
+						{{ option.name }}
+					</a>
 				</ng-container>
 
 				<ng-container *ngIf="!userLogged">
@@ -34,7 +46,6 @@
 						data-bs-toggle="collapse"
 						data-bs-target=".navbar-collapse.show"
 						routerLinkActive="active"
-						[routerLinkActiveOptions]="{ exact: true }"
 						routerLink="login"
 						>Login</a
 					>
@@ -46,19 +57,10 @@
 						data-bs-toggle="collapse"
 						data-bs-target=".navbar-collapse.show"
 						routerLinkActive="active"
-						[routerLinkActiveOptions]="{ exact: true }"
-						routerLink="logs"
-						>Logs</a
-					>
-					<a
-						class="nav-link"
-						data-bs-toggle="collapse"
-						data-bs-target=".navbar-collapse.show"
-						routerLinkActive="active"
-						[routerLinkActiveOptions]="{ exact: true }"
 						(click)="logOut()"
-						>Esci</a
 					>
+						Esci
+					</a>
 				</ng-container>
 			</div>
 		</div>

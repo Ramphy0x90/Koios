@@ -14,6 +14,9 @@
 	padding: var(--space-7);
 	margin-bottom: 150px;
 	border-radius: 5px;
+	-webkit-box-shadow: 0px 7px 12px -1px rgba(0, 0, 0, 0.28);
+	-moz-box-shadow: 0px 7px 12px -1px rgba(0, 0, 0, 0.28);
+	box-shadow: 0px 7px 12px -1px rgba(0, 0, 0, 0.28);
 }
 
 .form-container svg {

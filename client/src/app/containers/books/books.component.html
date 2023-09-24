@@ -8,10 +8,7 @@
 			(restore)="fetchBooks()"
 		></app-table-actions>
 
-		<app-book-table
-			[data]="books"
-			(updateBook)="setBook($event)"
-		></app-book-table>
+		<app-table [data]="books" (updateItem)="setBook($event)"></app-table>
 
 		<app-items-island-view [data]="books" (updateItem)="setBook($event)">
 		</app-items-island-view>

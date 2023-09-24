@@ -11,11 +11,22 @@ export class NavBarComponent implements OnInit {
 	readonly navOptions: NavOption[] = [
 		{
 			name: "Libri",
-			route: "",
+			route: "books",
 		},
 		{
 			name: "Autori",
 			route: "authors",
+		},
+	];
+
+	readonly navOptionsAdmin: NavOption[] = [
+		{
+			name: "Admin",
+			route: "admin",
+		},
+		{
+			name: "Logs",
+			route: "logs",
 		},
 	];
 
