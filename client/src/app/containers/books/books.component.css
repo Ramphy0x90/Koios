@@ -7,14 +7,13 @@
 	flex-direction: column;
 	flex: 1 1 auto;
 	width: 100%;
-	height: 100%;
 	padding: var(--space-4);
 }
 
 app-table,
 app-items-island-view {
 	height: 100%;
-	overflow-y: scroll;
+	overflow-y: auto;
 }
 
 app-table {

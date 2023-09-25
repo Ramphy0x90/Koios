@@ -5,6 +5,7 @@ import { Book } from "src/schemas/book.schema";
 import _ from "lodash";
 import { LogService } from "../log/log.service";
 import { Log } from "src/schemas/log.schema";
+import { diff } from "mongoose-diff";
 
 @Injectable()
 export class BookService {
@@ -55,6 +56,11 @@ export class BookService {
 	}
 
 	async update(id: string, book: Book): Promise<Book> {
+		const currentDocument: Book = await this.bookModel.findById(id);
+		let updateDiffs = diff(currentDocument, book);
+
+		console.log(updateDiffs);
+
 		await this.logService.create(<Log>{
 			entity: "Book",
 			target: id,

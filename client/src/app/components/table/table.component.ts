@@ -1,12 +1,4 @@
-import {
-	Component,
-	Input,
-	Output,
-	EventEmitter,
-	OnChanges,
-	SimpleChanges,
-	OnInit,
-} from "@angular/core";
+import { Component, Input, Output, EventEmitter, OnInit } from "@angular/core";
 import { ActivatedRoute, Router } from "@angular/router";
 import { take } from "rxjs";
 import _ from "lodash";
@@ -19,7 +11,7 @@ import { Author } from "src/app/models/author";
 	templateUrl: "./table.component.html",
 	styleUrls: ["./table.component.css"],
 })
-export class TableComponent<T extends DBData> implements OnChanges {
+export class TableComponent<T extends DBData> implements OnInit {
 	@Input() data: T[] = [];
 	@Output() updateItem: EventEmitter<T> = new EventEmitter();
 
@@ -45,21 +37,22 @@ export class TableComponent<T extends DBData> implements OnChanges {
 		{ id: "books", title: "# Libri" },
 	];
 
-	ngOnChanges(changes: SimpleChanges): void {
-		if (changes["data"]?.currentValue) {
-			this.tableColumns = this.isBook(this.data[0])
-				? this.bookColumns
-				: this.authorColumns;
-			this.setCurrentBookFromUrl();
+	ngOnInit(): void {
+		if (this.isBook(this.data[0])) {
+			this.tableColumns = this.bookColumns;
+		} else if (this.isAuthor(this.data[0])) {
+			this.tableColumns = this.authorColumns;
 		}
+
+		this.setCurrentItemFromUrl();
 	}
 
 	isBook(item: unknown): item is Book {
-		return _.has(item, "title");
+		return _.has(item, "title") || this.router.url.includes("book");
 	}
 
 	isAuthor(item: unknown): item is Author {
-		return _.has(item, "name");
+		return _.has(item, "name") || this.router.url.includes("author");
 	}
 
 	select(item: T): void {
@@ -74,7 +67,7 @@ export class TableComponent<T extends DBData> implements OnChanges {
 		this.data = data;
 	}
 
-	setCurrentBookFromUrl(): void {
+	setCurrentItemFromUrl(): void {
 		this.route.params.pipe(take(1)).subscribe((params) => {
 			const itemId = params["id"];
 			const item = _.find(this.data, (item) => item._id == itemId);

@@ -1,4 +1,4 @@
-<div class="table-main-container book-table-main-container">
+<div class="table-main-container table-main-container">
 	<table class="table" sort [data]="data" (updateData)="updateData($event)">
 		<thead>
 			<tr>
@@ -7,11 +7,11 @@
 				</ng-container>
 			</tr>
 		</thead>
-		<tbody>
+		<tbody *ngIf="data">
 			<tr
 				*ngFor="let item of data"
 				(click)="select(item)"
-				[class.active]="item._id == selectedItem?._id || ''"
+				[class.active]="item?._id == selectedItem?._id || ''"
 			>
 				<ng-container *ngIf="isBook(item)">
 					<td>{{ item.requestor }}</td>

@@ -147,7 +147,7 @@ export class BooksComponent implements OnInit {
 	}
 
 	export(): void {
-		let elt = this.document.querySelector("app-book-table table");
+		let elt = this.document.querySelector("app-table table");
 		let wb = XLSX.utils.table_to_book(elt, { sheet: "sheet1" });
 		return XLSX.writeFile(wb, "LibriCDE.xlsx");
 	}

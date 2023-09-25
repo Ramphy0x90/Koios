@@ -19,9 +19,11 @@
 }
 
 .actions-main-container button {
-	padding: var(--space-2) var(--space-6);
+	padding: var(--space-3) var(--space-6);
 	border: none;
-	border-radius: 0;
+	border-radius: 6px;
+	font-size: 14px;
+	box-shadow: 0px 10px 9px -7px rgba(0, 0, 0, 0.1);
 }
 
 .actions-main-container .btn-new,
@@ -60,7 +62,7 @@
 .search input {
 	border: none;
 	width: 100%;
-  background: transparent;
+	background: transparent;
 }
 
 .search input:focus {
