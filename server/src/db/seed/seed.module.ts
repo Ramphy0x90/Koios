@@ -5,6 +5,8 @@ import { Author, AuthorSchema } from "src/schemas/author.schema";
 import { UserSeedService } from "./userSeed.service";
 import { AuthModule } from "src/auth/auth.module";
 import { AuthorSeedService } from "./authorsSeed.service";
+import { Book, BookSchema } from "src/schemas/book.schema";
+import { BookSeedService } from "./booksSeed.service";
 
 @Module({
 	imports: [
@@ -12,9 +14,10 @@ import { AuthorSeedService } from "./authorsSeed.service";
 		MongooseModule.forFeature([
 			{ name: User.name, schema: UserSchema },
 			{ name: Author.name, schema: AuthorSchema },
+			{ name: Book.name, schema: BookSchema },
 		]),
 	],
-	providers: [UserSeedService, AuthorSeedService],
-	exports: [UserSeedService, AuthorSeedService],
+	providers: [UserSeedService, AuthorSeedService, BookSeedService],
+	exports: [UserSeedService, AuthorSeedService, BookSeedService],
 })
 export class SeederModule {}
