@@ -17,6 +17,13 @@
 	--space-9: 55px;
 }
 
+@font-face {
+	font-family: "GillSans";
+	src: url("assets/fonts/GIL.ttf");
+	font-weight: normal;
+	font-style: normal;
+}
+
 * {
 	box-sizing: border-box;
 	transition: all 120ms linear;

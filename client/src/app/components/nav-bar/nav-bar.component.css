@@ -1,6 +1,13 @@
 .navbar {
+	height: 100%;
 	background-color: var(--color-blue);
+	box-shadow: 0px 10px 15px -3px rgba(0, 0, 0, 0.2);
 	z-index: 1000;
+}
+
+.navbar div,
+.navbar-brand {
+	height: 100%;
 }
 
 .navbar a {
@@ -21,4 +28,35 @@
 
 .navbar-toggler i {
 	color: var(--color-light);
+}
+
+.logo-container {
+	max-width: 70vw;
+	color: black;
+	font-family: "GillSans";
+	font-size: 17px;
+	gap: var(--space-5);
+}
+
+.logo-container p {
+	margin: 0;
+}
+
+.logo-container img {
+	height: 100%;
+}
+
+.logo-text-container {
+	display: none;
+	height: auto;
+	line-height: 1;
+	flex-direction: column;
+	justify-content: center;
+}
+
+/* Large devices (desktops, 992px and up) */
+@media (min-width: 992px) {
+	.logo-text-container {
+		display: flex;
+	}
 }
