@@ -6,6 +6,8 @@ import {
 	Input,
 	Output,
 	EventEmitter,
+	OnChanges,
+	SimpleChanges,
 } from "@angular/core";
 import { fromEvent } from "rxjs";
 import _ from "lodash";
@@ -19,8 +21,8 @@ enum Order {
 @Directive({
 	selector: "[sort]",
 })
-export class SortDirective implements AfterViewInit {
-	@Input() data: any[] = [];
+export class SortDirective<T> implements AfterViewInit, OnChanges {
+	@Input() data: T[] = [];
 	@Output() updateData = new EventEmitter();
 
 	private readonly icons = {
@@ -34,23 +36,33 @@ export class SortDirective implements AfterViewInit {
 	currentSortingIcon?: HTMLElement;
 	currentSortingOrder: Order = Order.NONE;
 
+	defaultSorted: boolean = false;
+	defaultSortColumn?: HTMLElement;
+
 	constructor(private element: ElementRef, private renderer: Renderer2) {}
 
 	ngAfterViewInit(): void {
 		this.initEventListeners();
 	}
 
+	ngOnChanges(changes: SimpleChanges): void {
+		if (this.defaultSortColumn && !this.defaultSorted) {
+			this.initSort(this.defaultSortColumn);
+			this.defaultSorted = true;
+		}
+	}
+
 	initEventListeners(): void {
 		this.tableColumns = this.element.nativeElement.querySelectorAll("th");
 
 		this.tableColumns.forEach((column: HTMLElement) => {
-			fromEvent(column, "click").subscribe(() => {
-				this.updateSortOrder(!this.isSortingByCurrentColumn(column));
+			if (column.classList.contains("default-sort")) {
+				this.currentSortingByColumn = column.id;
+				this.defaultSortColumn = column;
+			}
 
-				this.currentSortingByColumn = column.id || "";
-				this.removeCurrentSortingColumnIcon();
-				this.updateSortingIcon();
-				this.sortData();
+			fromEvent(column, "click").subscribe(() => {
+				this.initSort(column);
 			});
 
 			fromEvent(column, "mouseenter").subscribe(() => {
@@ -61,6 +73,15 @@ export class SortDirective implements AfterViewInit {
 				this.removeSortingIcon(column);
 			});
 		});
+	}
+
+	initSort(column: HTMLElement): void {
+		this.updateSortOrder(!this.isSortingByCurrentColumn(column));
+
+		this.currentSortingByColumn = column.id || "";
+		this.removeCurrentSortingColumnIcon();
+		this.updateSortingIcon();
+		this.sortData();
 	}
 
 	sortData(): void {

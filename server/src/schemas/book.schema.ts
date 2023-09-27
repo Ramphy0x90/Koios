@@ -15,7 +15,7 @@ export class Book {
 		required: false,
 		default: undefined,
 	})
-	author: Author;
+	authors: Author[];
 
 	@Prop({ required: true })
 	title: string;

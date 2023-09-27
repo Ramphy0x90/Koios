@@ -3,7 +3,13 @@
 		<thead>
 			<tr>
 				<ng-container *ngFor="let column of tableColumns">
-					<th scope="col" [id]="column.id">{{ column.title }}</th>
+					<th
+						scope="col"
+						[id]="column.id"
+						[class.default-sort]="column.defaultSort"
+					>
+						{{ column.title }}
+					</th>
 				</ng-container>
 			</tr>
 		</thead>
@@ -11,7 +17,9 @@
 			<tr
 				*ngFor="let item of data"
 				(click)="select(item)"
-				[class.active]="item?._id == selectedItem?._id || ''"
+				[class.active]="
+					(selectedItem && item?._id == selectedItem._id) || ''
+				"
 			>
 				<ng-container *ngIf="isBook(item)">
 					<td>{{ item.requestor }}</td>

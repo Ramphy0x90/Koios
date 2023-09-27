@@ -6,6 +6,12 @@ import { DBData } from "src/app/models/dbData";
 import { Book } from "src/app/models/book";
 import { Author } from "src/app/models/author";
 
+interface TableColumn {
+	id: string;
+	title: string;
+	defaultSort?: boolean;
+}
+
 @Component({
 	selector: "app-table",
 	templateUrl: "./table.component.html",
@@ -18,13 +24,12 @@ export class TableComponent<T extends DBData> implements OnInit {
 	constructor(private route: ActivatedRoute, private router: Router) {}
 
 	selectedItem: T = this.data[0];
-
-	tableColumns: { id: string; title: string }[] = [];
+	tableColumns: TableColumn[] = [];
 
 	bookColumns = [
 		{ id: "requestor", title: "Richiedenti" },
 		{ id: "author", title: "Autore" },
-		{ id: "title", title: "Titolo" },
+		{ id: "title", title: "Titolo", defaultSort: true },
 		{ id: "year", title: "Anno" },
 		{ id: "topic", title: "Argomento" },
 		{ id: "place", title: "Luogo" },
@@ -32,7 +37,7 @@ export class TableComponent<T extends DBData> implements OnInit {
 	];
 
 	authorColumns = [
-		{ id: "name", title: "Nome" },
+		{ id: "name", title: "Nome", defaultSort: true },
 		{ id: "surname", title: "Cognome" },
 		{ id: "books", title: "# Libri" },
 	];
@@ -65,6 +70,8 @@ export class TableComponent<T extends DBData> implements OnInit {
 
 	updateData(data: T[]): void {
 		this.data = data;
+		console.log("SIII");
+		console.log(data);
 	}
 
 	setCurrentItemFromUrl(): void {
