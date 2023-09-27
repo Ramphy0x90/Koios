@@ -5,10 +5,10 @@
 	flex-grow: 1;
 	max-width: 100%;
 	cursor: pointer;
+	background-color: var(--color-light);
 	-webkit-box-shadow: 0px 7px 12px -1px rgba(0, 0, 0, 0.28);
 	-moz-box-shadow: 0px 7px 12px -1px rgba(0, 0, 0, 0.28);
 	box-shadow: 0px 7px 12px -1px rgba(0, 0, 0, 0.28);
-	border: 1px solid var(--color-blue);
 	border-left: 8px solid var(--color-blue);
 }
 
