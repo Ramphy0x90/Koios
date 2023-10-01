@@ -34,7 +34,8 @@ export class SortDirective<T> implements AfterViewInit, OnChanges {
 	tableColumns: HTMLElement[] = [];
 	currentSortingByColumn: string = "";
 	currentSortingIcon?: HTMLElement;
-	currentSortingOrder: Order = Order.NONE;
+	currentSortingOrder: Order = Order.ASCENDING;
+	tempHoverIcon?: HTMLElement;
 
 	defaultSorted: boolean = false;
 	defaultSortColumn?: HTMLElement;
@@ -47,8 +48,8 @@ export class SortDirective<T> implements AfterViewInit, OnChanges {
 
 	ngOnChanges(changes: SimpleChanges): void {
 		if (this.defaultSortColumn && !this.defaultSorted) {
-			this.initSort(this.defaultSortColumn);
 			this.defaultSorted = true;
+			this.initSort(this.defaultSortColumn, true);
 		}
 	}
 
@@ -66,21 +67,38 @@ export class SortDirective<T> implements AfterViewInit, OnChanges {
 			});
 
 			fromEvent(column, "mouseenter").subscribe(() => {
-				this.addSortingIcon(column);
+				this.addSortingIcon(column, true);
 			});
 
 			fromEvent(column, "mouseout").subscribe(() => {
-				this.removeSortingIcon(column);
+				this.removeSortingIcon(column, true);
 			});
 		});
 	}
 
-	initSort(column: HTMLElement): void {
-		this.updateSortOrder(!this.isSortingByCurrentColumn(column));
+	initSort(column: HTMLElement, initDefault: boolean = false): void {
+		if (initDefault) {
+			this.addSortingIcon(column);
+		} else {
+			const initial = !this.isSortingByCurrentColumn(column);
 
-		this.currentSortingByColumn = column.id || "";
-		this.removeCurrentSortingColumnIcon();
-		this.updateSortingIcon();
+			this.removeSortingIcon(column);
+			this.currentSortingByColumn = column.id;
+
+			this.addSortingIcon(column);
+			this.updateSortOrder(initial);
+			this.updateSortingIcon();
+
+			// Order is none, set sort icon with temporary
+			if (
+				this.currentSortingIcon &&
+				this.currentSortingOrder == Order.NONE
+			) {
+				this.removeSortingIcon(column);
+				this.addSortingIcon(column, true);
+			}
+		}
+
 		this.sortData();
 	}
 
@@ -110,8 +128,19 @@ export class SortDirective<T> implements AfterViewInit, OnChanges {
 		return this.currentSortingByColumn == column.id;
 	}
 
-	addSortingIcon(column: HTMLElement): void {
-		if (!this.isSortingByCurrentColumn(column)) {
+	addSortingIcon(column: HTMLElement, temp: boolean = false): void {
+		// Icon temp hover
+		if (!this.isSortingByCurrentColumn(column) && temp) {
+			this.tempHoverIcon = this.renderer.createElement("i");
+
+			if (this.tempHoverIcon) {
+				this.tempHoverIcon.className = this.icons[Order.NONE];
+				this.renderer.appendChild(column, this.tempHoverIcon);
+			}
+		}
+		// First time icon add
+		else if (!this.currentSortingIcon) {
+			this.removeSortingIcon(column, true);
 			this.currentSortingIcon = this.renderer.createElement("i");
 
 			if (this.currentSortingIcon) {
@@ -129,19 +158,16 @@ export class SortDirective<T> implements AfterViewInit, OnChanges {
 		}
 	}
 
-	removeSortingIcon(column: HTMLElement): void {
-		if (this.currentSortingIcon) {
-			if (
-				!this.isSortingByCurrentColumn(column) ||
-				this.currentSortingOrder == Order.NONE
-			) {
-				this.renderer.removeChild(column, this.currentSortingIcon);
-				this.currentSortingIcon = undefined;
+	removeSortingIcon(column: HTMLElement, temp: boolean = false): void {
+		if (temp) {
+			if (this.tempHoverIcon) {
+				this.renderer.removeChild(column, this.tempHoverIcon);
+				this.tempHoverIcon = undefined;
 			}
-
-			if (this.currentSortingOrder == Order.NONE) {
-				this.currentSortingByColumn = "";
-			}
+		} else if (this.currentSortingIcon) {
+			this.renderer.removeChild(column, this.currentSortingIcon);
+			this.currentSortingIcon = undefined;
+			this.currentSortingByColumn = "";
 		}
 	}
 
