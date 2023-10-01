@@ -1,9 +1,0 @@
-.app-main-container {
-	display: grid;
-	grid-template-rows: 56px auto;
-	height: 100%;
-}
-
-.content {
-	min-height: 100px;
-}

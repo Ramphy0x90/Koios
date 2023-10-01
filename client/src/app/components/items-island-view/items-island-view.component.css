@@ -1,7 +1,7 @@
 .items-island-view-main-container {
 	display: grid;
 	grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
-	grid-template-rows: repeat(auto-fill, minmax(100px, 1fr));
+	grid-template-rows: repeat(auto-fill, minmax(100px, 112px));
 	gap: var(--space-6);
 	height: 100%;
 }

@@ -1,5 +1,5 @@
 <div class="page-main-container authors-main-container">
-	<div class="content-container">
+	<div class="body-container d-flex flex-column">
 		<app-table-actions
 			[userMode]="mode"
 			(mode)="updateMode($event)"
@@ -8,8 +8,12 @@
 			(restore)="fetchAuthors()"
 		></app-table-actions>
 
-		<app-table [data]="authors" (updateItem)="setAuthor($event)">
-		</app-table>
+		<div class="content-container">
+			<app-table
+				[data]="authors"
+				(updateItem)="setAuthor($event)"
+			></app-table>
+		</div>
 	</div>
 
 	<div class="inspector-container">

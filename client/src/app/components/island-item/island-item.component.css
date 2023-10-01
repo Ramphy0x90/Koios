@@ -1,11 +1,9 @@
 .island-item-main-container {
 	position: relative;
-	display: grid;
-	grid-template-columns: auto 100px;
 	flex-grow: 1;
 	max-width: 100%;
 	cursor: pointer;
-	background-color: var(--color-light);
+	background-color: var(--color-blue);
 	-webkit-box-shadow: 0px 7px 12px -1px rgba(0, 0, 0, 0.28);
 	-moz-box-shadow: 0px 7px 12px -1px rgba(0, 0, 0, 0.28);
 	box-shadow: 0px 7px 12px -1px rgba(0, 0, 0, 0.28);
@@ -14,44 +12,41 @@
 
 .island-item-main-container .content {
 	padding: var(--space-6);
+	border-radius: 0 69px 0 0;
+	background-color: var(--color-light-1);
 }
 
-.island-item-main-container .marker {
-	width: 100px;
-	height: 100px;
-	overflow: hidden;
-	position: relative;
+.island-item-main-container .content-book {
+	gap: var(--space-6);
 }
 
-.island-item-main-container .marker:before {
-	content: "";
-	display: block;
-	width: 200%;
-	height: 200%;
-	position: absolute;
-	border-radius: 50%;
-	top: 0;
-	right: 0;
-	box-shadow: 50px -50px 0 0 var(--color-blue);
+.island-item-main-container .column-left {
+	align-items: center;
+	justify-content: center;
+	padding-right: var(--space-6);
+	flex: 0 0 25%;
+	border-right: 2px solid var(--color-light-2);
+}
+
+.island-item-main-container .column-left div:nth-child(2) {
+	font-weight: bold;
+	font-size: 15px;
 }
 
 .island-item-main-container.active {
 	border-color: var(--color-green);
 }
 
-.island-item-main-container.active .marker:before {
-	box-shadow: 50px -50px 0 0 var(--color-green);
-}
-
 .island-item-main-container i {
 	position: absolute;
+	font-size: 12px;
 	right: 0;
 	color: var(--color-light);
 	margin: var(--space-4) var(--space-4) 0 0;
 	z-index: 1000;
 }
 
-.island-item-main-container:hover {
+.island-item-main-container .content:hover {
 	color: var(--color-dark);
 	background-color: var(--color-light);
 	border-color: var(--color-green);
@@ -62,6 +57,6 @@
 }
 
 .island-item-main-container .sub {
-	color: var(--color-light-1);
+	color: var(--color-light-2);
 	font-size: 14px;
 }

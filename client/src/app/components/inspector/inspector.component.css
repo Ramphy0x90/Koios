@@ -31,7 +31,7 @@
 	padding: var(--space-6);
 	font-size: 14px;
 	height: auto;
-	border: 1px solid var(--color-light-1);
+	border: 1px solid var(--color-light-2);
 	border-radius: 6px;
 	margin-top: var(--space-6);
 }
@@ -52,7 +52,7 @@
 .readOnly .inspector-field input,
 .readOnly .inspector-field textarea,
 .readOnly .inspector-field select {
-	border: 1px solid var(--color-light-1);
+	border: 1px solid var(--color-light-2);
 	background-color: var(--color-light);
 }
 
@@ -61,7 +61,7 @@
 	display: flex;
 	justify-content: end;
 	align-items: center;
-	color: var(--color-light-1);
+	color: var(--color-green);
 	cursor: pointer;
 	text-align: right;
 	overflow: hidden;

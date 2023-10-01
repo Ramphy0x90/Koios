@@ -1,5 +1,5 @@
 <div class="page-main-container books-main-container">
-	<div class="content-container">
+	<div class="body-container d-flex flex-column">
 		<app-table-actions
 			[userMode]="mode"
 			(mode)="updateMode($event)"
@@ -8,10 +8,18 @@
 			(restore)="fetchBooks()"
 		></app-table-actions>
 
-		<app-table [data]="books" (updateItem)="setBook($event)"></app-table>
+		<div class="content-container">
+			<app-table
+				[data]="books"
+				(updateItem)="setBook($event)"
+			></app-table>
 
-		<app-items-island-view [data]="books" (updateItem)="setBook($event)">
-		</app-items-island-view>
+			<app-items-island-view
+				[data]="books"
+				(updateItem)="setBook($event)"
+			>
+			</app-items-island-view>
+		</div>
 	</div>
 
 	<div class="inspector-container">

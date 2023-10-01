@@ -13,7 +13,7 @@
 }
 
 .navbar-nav a:hover {
-	color: var(--color-light-1);
+	color: var(--color-light-2);
 }
 
 .navbar-nav {
@@ -27,7 +27,7 @@
 .logo-container {
 	position: relative;
 	max-width: 70vw;
-	color: var(--color-light-1);
+	color: var(--color-light-2);
 	font-family: "GillSans";
 	font-size: 17px;
 }

@@ -2,7 +2,8 @@
 	--color-dark: #353535;
 	--color-green: #3c6e71;
 	--color-light: #e8e8e8;
-	--color-light-1: #81929e;
+	--color-light-1: #f3f3f3;
+	--color-light-2: #81929e;
 	--color-blue: #284b63;
 	--color-blue-1: #4d9fd5;
 
@@ -15,6 +16,8 @@
 	--space-7: 21px;
 	--space-8: 34px;
 	--space-9: 55px;
+
+	--nav-height: 50px;
 }
 
 @font-face {
@@ -69,7 +72,7 @@ table td {
 	display: flex;
 	flex-direction: column;
 	position: relative;
-	height: 100%;
+	height: calc(100% - var(--nav-height));
 }
 
 .icon-delete:hover {
@@ -98,7 +101,7 @@ table td {
 
 .table-main-container tr th:hover {
 	color: var(--color-light);
-	background-color: var(--color-light-1) !important;
+	background-color: var(--color-light-2) !important;
 }
 
 .table-main-container tr:hover td {

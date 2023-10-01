@@ -1,4 +1,12 @@
-import { Component, Input, Output, EventEmitter, OnInit } from "@angular/core";
+import {
+	Component,
+	Input,
+	Output,
+	EventEmitter,
+	OnInit,
+	OnChanges,
+	SimpleChanges,
+} from "@angular/core";
 import { ActivatedRoute, Router } from "@angular/router";
 import { take } from "rxjs";
 import _ from "lodash";
@@ -17,7 +25,7 @@ interface TableColumn {
 	templateUrl: "./table.component.html",
 	styleUrls: ["./table.component.css"],
 })
-export class TableComponent<T extends DBData> implements OnInit {
+export class TableComponent<T extends DBData> implements OnInit, OnChanges {
 	@Input() data: T[] = [];
 	@Output() updateItem: EventEmitter<T> = new EventEmitter();
 
@@ -52,6 +60,10 @@ export class TableComponent<T extends DBData> implements OnInit {
 		this.setCurrentItemFromUrl();
 	}
 
+	ngOnChanges(changes: SimpleChanges): void {
+		this.setCurrentItemFromUrl();
+	}
+
 	isBook(item: unknown): item is Book {
 		return _.has(item, "title") || this.router.url.includes("book");
 	}
@@ -70,8 +82,6 @@ export class TableComponent<T extends DBData> implements OnInit {
 
 	updateData(data: T[]): void {
 		this.data = data;
-		console.log("SIII");
-		console.log(data);
 	}
 
 	setCurrentItemFromUrl(): void {

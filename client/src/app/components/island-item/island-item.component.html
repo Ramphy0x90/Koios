@@ -3,9 +3,18 @@
 
 	<div class="content">
 		<ng-container *ngIf="isBook(item)">
-			<div class="main">{{ item.title }}</div>
-			<div class="body">{{ item.topic }}</div>
-			<div class="sub">{{ item.year }}</div>
+			<div class="content-book d-flex flex-row">
+				<div class="column-left d-flex flex-column">
+					<div>Richiedenti</div>
+					<div>{{ item.requestor.length }}</div>
+				</div>
+
+				<div class="column-right">
+					<div class="main">{{ item.title }}</div>
+					<div class="body">{{ item.topic }}</div>
+					<div class="sub">{{ item.year }}</div>
+				</div>
+			</div>
 		</ng-container>
 
 		<ng-container *ngIf="isAuthor(item)">
@@ -13,6 +22,4 @@
 			<div># Libri: {{ item.books?.length }}</div>
 		</ng-container>
 	</div>
-
-	<div class="marker"></div>
 </div>

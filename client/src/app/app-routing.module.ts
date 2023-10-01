@@ -9,13 +9,40 @@ import { AdminComponent } from "./containers/admin/admin.component";
 
 const routes: Routes = [
 	{ path: "", pathMatch: "full", redirectTo: "books" },
-	{ path: "books", component: BooksComponent },
-	{ path: "books/:id", component: BooksComponent },
-	{ path: "authors", component: AuthorsComponent },
-	{ path: "authors/:id", component: AuthorsComponent },
-	{ path: "logs", component: LogComponent, canActivate: [authGuard] },
-	{ path: "admin", component: AdminComponent, canActivate: [authGuard] },
-	{ path: "login", component: LoginComponent },
+	{
+		path: "books",
+		component: BooksComponent,
+		canActivate: [authGuard],
+	},
+	{
+		path: "books/:id",
+		component: BooksComponent,
+		canActivate: [authGuard],
+	},
+	{
+		path: "authors",
+		component: AuthorsComponent,
+		canActivate: [authGuard],
+	},
+	{
+		path: "authors/:id",
+		component: AuthorsComponent,
+		canActivate: [authGuard],
+	},
+	{
+		path: "logs",
+		component: LogComponent,
+		canActivate: [authGuard],
+	},
+	{
+		path: "admin",
+		component: AdminComponent,
+		canActivate: [authGuard],
+	},
+	{
+		path: "login",
+		component: LoginComponent,
+	},
 ];
 
 @NgModule({
