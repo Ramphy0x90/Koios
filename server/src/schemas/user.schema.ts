@@ -9,10 +9,10 @@ export class User {
 	@Prop()
 	surname: string;
 
-	@Prop()
+	@Prop({ unique: true })
 	email: string;
 
-	@Prop({ unique: true })
+	@Prop()
 	password: string;
 
 	@Prop({ default: mongoose.now() })

@@ -1,15 +1,76 @@
 .admin-main-container {
-	flex-direction: row;
+	gap: var(--space-8);
+	padding: var(--space-6);
+}
+
+.admin-main-container .dashboard {
+	flex-direction: column;
 	gap: var(--space-6);
-	padding: var(--space-6);
+	width: 100%;
 }
 
-.admin-section {
+.admin-main-container .dashboard app-admin-info-card {
+	flex: 0 1 calc(80% / 3);
+}
+
+.admin-main-container .accordion-button:not(.collapsed) {
+	color: var(--color-light);
+	background-color: var(--color-blue);
+}
+
+.accordion-item.users .accordion-body {
+	gap: var(--space-6);
+}
+
+.accordion-item.users .accordion-body .users-list {
 	flex: 1 1 50%;
-	background-color: var(--color-light);
-	padding: var(--space-6);
 }
 
-.admin-section h1 {
-	border-bottom: 1px solid var(--color-dark);
+.accordion-item.users .accordion-body * {
+	transition: unset;
+}
+
+.accordion-item.users .accordion-body {
+	flex-direction: column-reverse;
+}
+
+.accordion-item.users .accordion-body .users-list .user {
+	cursor: pointer;
+	padding: var(--space-4) var(--space-6);
+	border-bottom: 1px solid var(--color-blue);
+	transition: background 120ms linear;
+}
+
+.users-list .user.active {
+	background: var(--color-green);
+	color: var(--color-light);
+}
+
+.accordion-item.users .accordion-body .actions {
+	flex: 1 1 50%;
+	padding: var(--space-6);
+	background-color: var(--color-light);
+	box-shadow: 0px 10px 15px -3px rgba(0, 0, 0, 0.1);
+	border-radius: 6px;
+}
+
+.accordion-item.users .accordion-body .actions .options button {
+	font-size: 14px;
+	padding: var(--space-3) var(--space-6);
+}
+
+.accordion-item.users .accordion-body .actions div:nth-child(1) {
+	gap: var(--space-6);
+}
+
+/* Large devices (desktops, 992px and up) */
+@media (min-width: 992px) {
+	.admin-main-container .dashboard {
+		flex-direction: row;
+		gap: var(--space-9);
+	}
+
+	.accordion-item.users .accordion-body {
+		flex-direction: row;
+	}
 }

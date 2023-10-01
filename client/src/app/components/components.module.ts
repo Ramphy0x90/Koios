@@ -11,6 +11,7 @@ import { TableActionsComponent } from "./table-actions/table-actions.component";
 import { LogsTableComponent } from "./logs-table/logs-table.component";
 import { ItemsIslandViewComponent } from "./items-island-view/items-island-view.component";
 import { IslandItemComponent } from "./island-item/island-item.component";
+import { AdminInfoCardComponent } from "./admin-info-card/admin-info-card.component";
 
 @NgModule({
 	declarations: [
@@ -21,6 +22,7 @@ import { IslandItemComponent } from "./island-item/island-item.component";
 		LogsTableComponent,
 		ItemsIslandViewComponent,
 		IslandItemComponent,
+		AdminInfoCardComponent,
 	],
 	imports: [
 		CommonModule,
@@ -39,6 +41,7 @@ import { IslandItemComponent } from "./island-item/island-item.component";
 		LogsTableComponent,
 		ItemsIslandViewComponent,
 		IslandItemComponent,
+		AdminInfoCardComponent,
 	],
 })
 export class ComponentsModule {}

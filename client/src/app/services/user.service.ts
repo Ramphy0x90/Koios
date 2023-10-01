@@ -27,6 +27,12 @@ export class UserService {
 		});
 	}
 
+	getAll(): Observable<User[]> {
+		return this.httpClient.get<User[]>(
+			`${environment.server}/${this.API_URI}`
+		);
+	}
+
 	login(user: UserLogin): Observable<LoginResponse> {
 		return this.httpClient
 			.post<LoginResponse>(

@@ -53,6 +53,7 @@ export class BooksComponent implements OnInit {
 				break;
 			case UserMode.NEW:
 				this.selectedBook = { ...this.bookTemplate };
+				this.status = this.inspectorStatus.OPEN;
 				break;
 			case UserMode.EDIT:
 				this.draftBookVersion = { ...this.selectedBook };

@@ -1,13 +1,175 @@
 <div class="page-main-container admin-main-container">
-	<div class="admin-section user-manage-section">
-		<h1 class="display-6">Utenti</h1>
+	<div class="dashboard d-flex justify-content-center">
+		<app-admin-info-card
+			[icon]="'bi bi-people-fill'"
+			[title]="'Utenti'"
+			[value]="users.length"
+		></app-admin-info-card>
 
-		<div class="content"></div>
+		<app-admin-info-card
+			[icon]="'bi bi-share-fill'"
+			[title]="'Link attivi'"
+		></app-admin-info-card>
+
+		<app-admin-info-card
+			[icon]="'bi bi-book-fill'"
+			[title]="'Libri'"
+			[value]="books.length"
+		></app-admin-info-card>
 	</div>
 
-	<div class="admin-section book-manage-section">
-		<h1 class="display-6">Libri</h1>
+	<div class="sections">
+		<div class="accordion" id="admin-accordion">
+			<div class="accordion-item users">
+				<h2 class="accordion-header">
+					<button
+						class="accordion-button"
+						type="button"
+						data-bs-toggle="collapse"
+						data-bs-target="#collapseOne"
+						aria-expanded="true"
+						aria-controls="collapseOne"
+					>
+						Utenti
+					</button>
+				</h2>
+				<div
+					id="collapseOne"
+					class="accordion-collapse collapse show"
+					data-bs-parent="#admin-accordion"
+				>
+					<div class="accordion-body d-flex">
+						<div class="users-list">
+							<div
+								class="user"
+								[class.active]="user._id == selectedUser?._id"
+								*ngFor="let user of users"
+								(click)="selectUser(user)"
+							>
+								<div>
+									<div>
+										{{ user.name }} {{ user.surname }}
+									</div>
 
-		<div class="content"></div>
+									<div>
+										{{ user.email }}
+									</div>
+								</div>
+							</div>
+						</div>
+
+						<div class="actions">
+							<div
+								*ngIf="mode == modeEnum.READ"
+								class="options d-flex flex-row justify-content-end"
+							>
+								<button
+									class="btn btn-new btn-secondary"
+									(click)="createUser()"
+								>
+									Crea
+								</button>
+
+								<button class="btn btn-new btn-secondary">
+									Modifica
+								</button>
+
+								<i
+									class="bi bi-trash3 pointer"
+									title="Elimina"
+								></i>
+							</div>
+
+							<div
+								*ngIf="mode != modeEnum.READ"
+								class="options d-flex flex-row justify-content-between"
+							>
+								<button
+									class="btn btn-new btn-secondary"
+									(click)="saveUser()"
+								>
+									Salva
+								</button>
+
+								<button
+									class="btn btn-new btn-secondary"
+									(click)="cancel()"
+								>
+									Annulla
+								</button>
+							</div>
+
+							<div
+								*ngIf="selectedUser"
+								class="d-flex flex-column"
+							>
+								<div>
+									<label>Nome</label>
+									<input
+										type="text"
+										class="form-control"
+										[(ngModel)]="selectedUser.name"
+									/>
+								</div>
+
+								<div>
+									<label>Cognome</label>
+									<input
+										type="text"
+										class="form-control"
+										[(ngModel)]="selectedUser.surname"
+									/>
+								</div>
+
+								<div>
+									<label>Email</label>
+									<input
+										type="text"
+										class="form-control"
+										[(ngModel)]="selectedUser.email"
+									/>
+								</div>
+
+								<div
+									*ngIf="
+										mode == modeEnum.NEW &&
+										isOnNewUser(selectedUser)
+									"
+								>
+									<label>Password</label>
+									<input
+										type="text"
+										class="form-control"
+										[(ngModel)]="selectedUser.password"
+									/>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+
+			<div class="accordion-item">
+				<h2 class="accordion-header">
+					<button
+						class="accordion-button collapsed"
+						type="button"
+						data-bs-toggle="collapse"
+						data-bs-target="#collapseTwo"
+						aria-expanded="false"
+						aria-controls="collapseTwo"
+					>
+						Links
+					</button>
+				</h2>
+				<div
+					id="collapseTwo"
+					class="accordion-collapse collapse"
+					data-bs-parent="#admin-accordion"
+				>
+					<div class="accordion-body"></div>
+				</div>
+			</div>
+		</div>
 	</div>
 </div>
