@@ -13,6 +13,7 @@ async function bootstrap() {
 			"http://localhost:4200",
 			"http://koios.devracom.ch",
 			"http://cde-lista-doppioni.ch",
+			"https://cde-lista-doppioni.ch",
 		],
 		methods: ["GET", "POST", "PUT", "DELETE"],
 		credentials: true,
