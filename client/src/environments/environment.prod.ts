@@ -1,4 +1,4 @@
 export const environment = {
 	production: true,
-	server: "http://devracom.ch:3000",
+	server: "https://cde-lista-doppioni.ch:3000",
 };
