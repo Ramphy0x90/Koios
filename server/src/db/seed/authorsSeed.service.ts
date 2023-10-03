@@ -3,8 +3,8 @@ import { InjectModel } from "@nestjs/mongoose";
 import { Model } from "mongoose";
 import { Author } from "src/schemas/author.schema";
 import * as path from "path";
-import { Cell, Row, Worksheet } from "exceljs";
-import _ from "lodash";
+import { Row, Worksheet } from "exceljs";
+
 const ExcelJS = require("exceljs");
 
 @Injectable()
@@ -17,18 +17,18 @@ export class AuthorSeedService {
 		const content = await workbook.xlsx.readFile(filePath);
 		const worksheet: Worksheet = content.worksheets[1];
 
-		const authorsDirtySet: Set<string> = new Set();
+		const authorsDirtySet: { [key: string]: string } = {};
 		let authors: Author[] = [];
 
 		worksheet.eachRow((row: Row) => {
 			const author = row.getCell(2).value?.toString() || "";
 
 			author.split(";").forEach((subAuthor) => {
-				authorsDirtySet.add(subAuthor.replace(/\s+/g, " ").trim());
+				authorsDirtySet[author] = subAuthor.replace(/\s+/g, " ").trim();
 			});
 		});
 
-		authorsDirtySet.forEach((author) => {
+		Object.entries(authorsDirtySet).forEach(([oldRef, author]) => {
 			const names = author.split(",");
 			let name = names[1] || "";
 			let surname = names[0] || "";
@@ -39,6 +39,7 @@ export class AuthorSeedService {
 			}
 
 			authors.push(<Author>{
+				oldSourceRef: oldRef,
 				name: name.replace(/\s+/g, " ").trim(),
 				surname: surname.replace(/\s+/g, " ").trim(),
 			});

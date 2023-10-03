@@ -26,7 +26,7 @@ export class BooksComponent implements OnInit {
 	books: Book[] = [];
 	bookTemplate: Book = {
 		requestor: [],
-		author: "",
+		authors: [],
 		title: "",
 		year: new Date().getFullYear(),
 		topic: "",

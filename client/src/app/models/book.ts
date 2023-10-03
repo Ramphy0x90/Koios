@@ -3,8 +3,8 @@ import { DBData } from "./dbData";
 
 export interface Book extends DBData {
 	requestor: string[];
-	author: string;
-	authorInfo?: Author;
+	authors: string[];
+	authorInfo?: Author[];
 	title: string;
 	year: number;
 	topic: string;

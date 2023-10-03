@@ -3,6 +3,12 @@ import mongoose, { HydratedDocument } from "mongoose";
 
 @Schema({ timestamps: true })
 export class Author {
+	@Prop({
+		required: false,
+		default: "",
+	})
+	oldSourceRef: string;
+
 	@Prop()
 	name: string;
 

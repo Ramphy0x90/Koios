@@ -12,6 +12,7 @@ import { LogsTableComponent } from "./logs-table/logs-table.component";
 import { ItemsIslandViewComponent } from "./items-island-view/items-island-view.component";
 import { IslandItemComponent } from "./island-item/island-item.component";
 import { AdminInfoCardComponent } from "./admin-info-card/admin-info-card.component";
+import { PipesModule } from "../pipes/pipes.module";
 
 @NgModule({
 	declarations: [
@@ -32,6 +33,7 @@ import { AdminInfoCardComponent } from "./admin-info-card/admin-info-card.compon
 		DirectivesModule,
 		FormsModule,
 		ReactiveFormsModule,
+		PipesModule,
 	],
 	exports: [
 		NavBarComponent,

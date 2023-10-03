@@ -10,7 +10,7 @@ export class Book {
 	requestor: string[];
 
 	@Prop({
-		type: mongoose.Schema.Types.ObjectId,
+		type: [mongoose.Schema.Types.ObjectId],
 		ref: "Author",
 		required: false,
 		default: undefined,
@@ -52,7 +52,6 @@ BookSchema.set("toJSON", { virtuals: true });
 
 BookSchema.virtual("authorInfo", {
 	ref: "Author",
-	localField: "author",
+	localField: "authors",
 	foreignField: "_id",
-	justOne: true,
 });

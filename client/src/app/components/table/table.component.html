@@ -23,10 +23,7 @@
 			>
 				<ng-container *ngIf="isBook(item)">
 					<td>{{ item.requestor }}</td>
-					<td>
-						{{ item.authorInfo?.name }}
-						{{ item.authorInfo?.surname }}
-					</td>
+					<td>{{ item.authorInfo || [] | authorsFormat }}</td>
 					<td>{{ item.title }}</td>
 					<td>{{ item.year }}</td>
 					<td>{{ item.topic }}</td>

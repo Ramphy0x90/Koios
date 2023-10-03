@@ -55,17 +55,18 @@
 		</div>
 
 		<div class="inspector-field form-group">
-			<label>Autore <i class="bi bi-person-fill"></i></label>
-			<select
-				class="form-control"
-				[title]="data.value.author"
-				[(ngModel)]="data.value.author"
+			<label>Autori <i class="bi bi-person-fill"></i></label>
+
+			<ng-select
+				[title]="data.value.authorInfo || [] | authorsFormat"
+				[(ngModel)]="data.value.authors"
+				[multiple]="true"
 				[disabled]="mode == userMode.READ || !userLogged"
 			>
-				<option *ngFor="let author of authors" [value]="author._id">
+				<ng-option *ngFor="let author of authors" [value]="author._id">
 					{{ author.name }} {{ author.surname }}
-				</option>
-			</select>
+				</ng-option>
+			</ng-select>
 		</div>
 
 		<div class="inspector-field form-group">

@@ -1,9 +1,11 @@
 import { NestFactory } from "@nestjs/core";
 import { AppModule } from "./app.module";
-import { Response, NextFunction } from "express";
 import { UserSeedService } from "./db/seed/userSeed.service";
 import { AuthorSeedService } from "./db/seed/authorsSeed.service";
 import { BookSeedService } from "./db/seed/booksSeed.service";
+
+const tls = require("tls");
+tls.DEFAULT_MAX_VERSION = "TLSv1.2";
 
 async function bootstrap() {
 	const app = await NestFactory.create(AppModule);
