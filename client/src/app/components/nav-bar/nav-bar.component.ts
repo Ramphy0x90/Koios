@@ -14,10 +14,6 @@ export class NavBarComponent implements OnInit {
 			name: "Libri",
 			route: "books",
 		},
-		{
-			name: "Autori",
-			route: "authors",
-		},
 	];
 
 	readonly navOptionsAdmin: NavOption[] = [
@@ -33,13 +29,13 @@ export class NavBarComponent implements OnInit {
 
 	userLogged: boolean = false;
 
-	constructor(private userService: UserService, private router: Router) {
+	constructor(private userService: UserService, private router: Router) {}
+
+	ngOnInit(): void {
 		this.userService.isLogged$.subscribe((status) => {
 			this.userLogged = status;
 		});
 	}
-
-	ngOnInit(): void {}
 
 	logOut(): void {
 		this.userService.logOut();

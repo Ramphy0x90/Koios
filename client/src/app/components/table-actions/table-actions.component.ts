@@ -6,6 +6,7 @@ import {
 	EventEmitter,
 	OnChanges,
 	SimpleChanges,
+	OnInit,
 } from "@angular/core";
 import { FormControl, FormGroup } from "@angular/forms";
 import { UserService } from "src/app/services/user.service";
@@ -28,7 +29,7 @@ export enum Action {
 	templateUrl: "./table-actions.component.html",
 	styleUrls: ["./table-actions.component.css"],
 })
-export class TableActionsComponent implements OnChanges, AfterViewInit {
+export class TableActionsComponent implements OnInit, OnChanges, AfterViewInit {
 	@Input() userMode: UserMode = UserMode.READ;
 	@Output() mode: EventEmitter<UserMode> = new EventEmitter();
 	@Output() action: EventEmitter<Action> = new EventEmitter();
@@ -46,7 +47,9 @@ export class TableActionsComponent implements OnChanges, AfterViewInit {
 	onSearch: boolean = false;
 	userLogged: boolean = false;
 
-	constructor(private userService: UserService) {
+	constructor(private userService: UserService) {}
+
+	ngOnInit(): void {
 		this.userService.isLogged$.subscribe((status) => {
 			this.userLogged = status;
 		});

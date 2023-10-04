@@ -1,21 +1,14 @@
 import { Schema, Prop, SchemaFactory } from "@nestjs/mongoose";
 import { HydratedDocument } from "mongoose";
 import * as mongoose from "mongoose";
-import { Author } from "./author.schema";
-import { Place } from "./place.schema";
 
 @Schema({ timestamps: true })
 export class Book {
 	@Prop()
 	requestor: string[];
 
-	@Prop({
-		type: [mongoose.Schema.Types.ObjectId],
-		ref: "Author",
-		required: false,
-		default: undefined,
-	})
-	authors: Author[];
+	@Prop()
+	authors: string;
 
 	@Prop({ required: true })
 	title: string;
@@ -26,13 +19,8 @@ export class Book {
 	@Prop()
 	topic: string;
 
-	@Prop({
-		type: mongoose.Schema.Types.ObjectId,
-		ref: "Place",
-		required: false,
-		default: undefined,
-	})
-	place: Place;
+	@Prop()
+	place: string;
 
 	@Prop()
 	notes: string;
@@ -49,9 +37,3 @@ export const BookSchema = SchemaFactory.createForClass(Book);
 
 BookSchema.set("toObject", { virtuals: true });
 BookSchema.set("toJSON", { virtuals: true });
-
-BookSchema.virtual("authorInfo", {
-	ref: "Author",
-	localField: "authors",
-	foreignField: "_id",
-});

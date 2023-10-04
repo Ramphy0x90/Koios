@@ -1,7 +1,6 @@
 import { NestFactory } from "@nestjs/core";
 import { AppModule } from "./app.module";
 import { UserSeedService } from "./db/seed/userSeed.service";
-import { AuthorSeedService } from "./db/seed/authorsSeed.service";
 import { BookSeedService } from "./db/seed/booksSeed.service";
 
 const tls = require("tls");
@@ -23,9 +22,6 @@ async function bootstrap() {
 
 	const userSeedService = app.get(UserSeedService);
 	await userSeedService.seedData();
-
-	const authorsSeedService = app.get(AuthorSeedService);
-	await authorsSeedService.seedData();
 
 	const booksSeedService = app.get(BookSeedService);
 	await booksSeedService.seedData();

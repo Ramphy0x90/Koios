@@ -14,7 +14,7 @@ export class BookService {
 	) {}
 
 	async getAll(): Promise<Book[]> {
-		return await this.bookModel.find().populate("authorInfo").exec();
+		return await this.bookModel.find().exec();
 	}
 
 	async search(term: string): Promise<Book[]> {
@@ -24,6 +24,7 @@ export class BookService {
 		result.where({
 			$or: [
 				{ requestor: { $in: [regex] } },
+				{ authors: regex },
 				{ title: regex },
 				{ topic: regex },
 				{ notes: regex },
@@ -34,9 +35,7 @@ export class BookService {
 	}
 
 	async getById(id: string): Promise<Book> {
-		return await (await this.bookModel.findById(id))
-			.populated("authorInfo")
-			.exec();
+		return await this.bookModel.findById(id).exec();
 	}
 
 	async create(bookDto): Promise<Book> {

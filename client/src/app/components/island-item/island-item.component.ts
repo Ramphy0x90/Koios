@@ -1,7 +1,6 @@
 import { Component, Input } from "@angular/core";
 import { Book } from "src/app/models/book";
 import _ from "lodash";
-import { Author } from "src/app/models/author";
 
 @Component({
 	selector: "app-island-item",
@@ -14,9 +13,5 @@ export class IslandItemComponent<T> {
 
 	isBook(item: unknown): item is Book {
 		return _.has(item, "title");
-	}
-
-	isAuthor(item: unknown): item is Author {
-		return _.has(item, "name");
 	}
 }

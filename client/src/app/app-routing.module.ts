@@ -1,7 +1,6 @@
 import { NgModule } from "@angular/core";
 import { RouterModule, Routes } from "@angular/router";
 import { BooksComponent } from "./containers/books/books.component";
-import { AuthorsComponent } from "./containers/authors/authors.component";
 import { LogComponent } from "./containers/log/log.component";
 import { LoginComponent } from "./containers/login/login.component";
 import { authGuard } from "./guards/auth.guard";
@@ -17,16 +16,6 @@ const routes: Routes = [
 	{
 		path: "books/:id",
 		component: BooksComponent,
-		canActivate: [authGuard],
-	},
-	{
-		path: "authors",
-		component: AuthorsComponent,
-		canActivate: [authGuard],
-	},
-	{
-		path: "authors/:id",
-		component: AuthorsComponent,
 		canActivate: [authGuard],
 	},
 	{

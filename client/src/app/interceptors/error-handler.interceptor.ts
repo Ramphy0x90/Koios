@@ -8,7 +8,6 @@ import {
 } from "@angular/common/http";
 import { Observable, catchError, throwError } from "rxjs";
 import { ToastrService } from "ngx-toastr";
-import { AuthorService } from "../services/author.service";
 import { UserService } from "../services/user.service";
 
 @Injectable()

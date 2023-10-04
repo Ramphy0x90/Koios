@@ -3,28 +3,64 @@
 	align-items: center;
 }
 
-.form-container {
+.login-main-container .content-container {
 	flex-direction: column;
 	justify-content: center;
 	align-items: center;
 	width: 90%;
-	height: 400px;
-	max-width: 350px;
-	background-color: var(--color-blue);
-	padding: var(--space-7);
-	margin-bottom: 150px;
+	height: 500px;
+	max-width: 900px;
 	border-radius: 5px;
+	margin-bottom: 100px;
+	background-color: var(--color-blue);
 	-webkit-box-shadow: 0px 7px 12px -1px rgba(0, 0, 0, 0.28);
 	-moz-box-shadow: 0px 7px 12px -1px rgba(0, 0, 0, 0.28);
 	box-shadow: 0px 7px 12px -1px rgba(0, 0, 0, 0.28);
+	overflow: hidden;
 }
 
-.form-container svg {
+.content-container .img-container,
+.content-container .form-container {
+	width: 100%;
+}
+
+.content-container .img-container {
+	display: none;
+}
+
+.content-container .form-container {
+	position: relative;
+	height: 100%;
+}
+
+.content-container .img-container img {
+	height: 100%;
+	width: 100%;
+	object-fit: cover;
+}
+
+.content-container .form-container {
+	justify-content: center;
+	align-items: center;
+	padding: var(--space-7);
+}
+
+.content-container .form-container .info-msg {
+	position: absolute;
+	top: 0;
+	width: 100%;
+	text-align: center;
+	padding: var(--space-6);
+	color: var(--color-dark);
+	background-color: var(--color-orange);
+}
+
+.content-container .form-container svg {
 	color: var(--color-light);
 	margin-bottom: var(--space-6);
 }
 
-.form-container form {
+.content-container .form-container form {
 	display: flex;
 	flex-direction: column;
 	width: 100%;
@@ -32,12 +68,29 @@
 	gap: var(--space-7);
 }
 
-.form-container form label {
+.content-container .form-container form label {
 	color: var(--color-light);
 }
 
-.form-container form button {
+.content-container .form-container form button {
 	cursor: pointer;
 	color: var(--color-light);
 	background-color: var(--color-green);
+}
+
+/* Medium devices (tablets, 768px and up) */
+@media (min-width: 768px) {
+	.login-main-container .content-container {
+		flex-direction: row;
+	}
+
+	.content-container .img-container {
+		display: block;
+	}
+
+	.content-container .img-container,
+	.content-container .form-container {
+		width: 50%;
+		height: 100%;
+	}
 }

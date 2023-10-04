@@ -25,14 +25,17 @@
 	box-shadow: 0px 10px 9px -7px rgba(0, 0, 0, 0.1);
 }
 
-.actions-main-container .btn-new,
-.actions-main-container .btn-edit,
 .actions-main-container .btn-export {
 	background-color: var(--color-light-2);
 }
 
+.actions-main-container .btn-new,
 .actions-main-container .btn-save {
 	background-color: var(--color-green);
+}
+
+.actions-main-container .btn-edit {
+	background-color: var(--color-yellow);
 }
 
 .actions-main-container .btn-new:hover,

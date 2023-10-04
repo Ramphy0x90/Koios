@@ -4,16 +4,12 @@ import { Model } from "mongoose";
 import { Book } from "src/schemas/book.schema";
 import * as path from "path";
 import { Worksheet } from "exceljs";
-import { Author } from "src/schemas/author.schema";
 
 const ExcelJS = require("exceljs");
 
 @Injectable()
 export class BookSeedService {
-	constructor(
-		@InjectModel(Book.name) private bookModel: Model<Book>,
-		@InjectModel(Author.name) private authorModel: Model<Author>
-	) {}
+	constructor(@InjectModel(Book.name) private bookModel: Model<Book>) {}
 
 	async seedData() {
 		const filePath = path.join(process.cwd(), "src/db/DoppioniCDE.xlsx");
@@ -25,11 +21,7 @@ export class BookSeedService {
 		let books: Book[] = [];
 
 		for (const row of worksheet.getRows(1, totalRows)) {
-			const authors = await this.authorModel
-				.find({ oldSourceRef: row.getCell(2).value?.toString() || "" })
-				.exec();
-
-			let authorsIds = authors.map((author) => author.id);
+			let authors = row.getCell(2).value?.toString() || "-";
 			let title = row.getCell(3).value?.toString() || "-";
 			let year = row.getCell(4).value?.valueOf();
 			let topic = row.getCell(5).value?.toString() || "";
@@ -38,11 +30,9 @@ export class BookSeedService {
 				"\n" +
 				(row.getCell(8).value?.toString() || "");
 
-			console.log(authorsIds);
-
 			const book = {
 				requestor: [],
-				authors: authorsIds,
+				authors: authors,
 				title: title,
 				year: !Number.isNaN(Number(year)) ? Number(year) : null,
 				topic: topic,

@@ -30,7 +30,6 @@
 			<div
 				class="d-flex flex-column requestors-list"
 				[class.limited]="data.value.requestor.length > 5"
-				*ngIf="data.value.requestor?.length || 0 > 0"
 			>
 				<ng-container
 					*ngFor="
@@ -57,16 +56,12 @@
 		<div class="inspector-field form-group">
 			<label>Autori <i class="bi bi-person-fill"></i></label>
 
-			<ng-select
-				[title]="data.value.authorInfo || [] | authorsFormat"
+			<textarea
+				class="form-control"
+				[title]="data.value.authors"
 				[(ngModel)]="data.value.authors"
-				[multiple]="true"
 				[disabled]="mode == userMode.READ || !userLogged"
-			>
-				<ng-option *ngFor="let author of authors" [value]="author._id">
-					{{ author.name }} {{ author.surname }}
-				</ng-option>
-			</ng-select>
+			></textarea>
 		</div>
 
 		<div class="inspector-field form-group">
@@ -101,53 +96,13 @@
 			></textarea>
 		</div>
 
-		<div class="inspector-field form-group">
+		<div class="inspector-field form-group" *ngIf="userLogged">
 			<label>Note <i class="bi bi-justify-left"></i></label>
 			<textarea
 				class="form-control"
 				[(ngModel)]="data.value.notes"
-				[disabled]="mode == userMode.READ || !userLogged"
+				[disabled]="mode == userMode.READ"
 			></textarea>
-		</div>
-	</ng-container>
-
-	<ng-container *ngIf="isAuthor(data.value)">
-		<div class="inspector-field form-group">
-			<label>Nome</label>
-			<input
-				type="text"
-				class="form-control"
-				[title]="data.value.name"
-				[(ngModel)]="data.value.name"
-				[disabled]="mode == userMode.READ || !userLogged"
-			/>
-		</div>
-
-		<div class="inspector-field form-group">
-			<label>Cognome</label>
-			<input
-				type="text"
-				class="form-control"
-				[title]="data.value.surname"
-				[(ngModel)]="data.value.surname"
-				[disabled]="mode == userMode.READ || !userLogged"
-			/>
-		</div>
-
-		<div
-			class="inspector-field form-group"
-			*ngIf="data.value.books?.length || 0 > 0"
-		>
-			<label>Libri</label>
-
-			<ng-container *ngFor="let book of data.value.books">
-				<div class="d-flex flex-row item">
-					<span>
-						<i class="bi bi-stop-fill"></i>
-						{{ book.title }}</span
-					>
-				</div>
-			</ng-container>
 		</div>
 	</ng-container>
 </div>

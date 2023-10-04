@@ -3,11 +3,6 @@ import { BookController } from "./controllers/book/book.controller";
 import { BookService } from "./services/book/book.service";
 import { MongooseModule } from "@nestjs/mongoose";
 import { Book, BookSchema } from "./schemas/book.schema";
-import { AuthorController } from "./controllers/author/author.controller";
-import { PlaceController } from "./controllers/place/place.controller";
-import { AuthorService } from "./services/author/author.service";
-import { PlaceService } from "./services/place/place.service";
-import { Author, AuthorSchema } from "./schemas/author.schema";
 import { ConfigModule } from "@nestjs/config";
 import { UserService } from "./services/user/user.service";
 import { AuthModule } from "./auth/auth.module";
@@ -27,23 +22,10 @@ import { LogController } from "./controllers/log/log.controller";
 		MongooseModule.forFeature([
 			{ name: User.name, schema: UserSchema },
 			{ name: Book.name, schema: BookSchema },
-			{ name: Author.name, schema: AuthorSchema },
 			{ name: Log.name, schema: LogSchema },
 		]),
 	],
-	controllers: [
-		BookController,
-		AuthorController,
-		PlaceController,
-		UserController,
-		LogController,
-	],
-	providers: [
-		BookService,
-		AuthorService,
-		PlaceService,
-		UserService,
-		LogService,
-	],
+	controllers: [BookController, UserController, LogController],
+	providers: [BookService, UserService, LogService],
 })
 export class AppModule {}

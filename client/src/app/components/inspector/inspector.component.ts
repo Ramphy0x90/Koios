@@ -14,9 +14,7 @@ import {
 import { Book } from "src/app/models/book";
 import _ from "lodash";
 import { InspectorData } from "src/app/models/inspectorData";
-import { Author } from "src/app/models/author";
 import { UserMode } from "../table-actions/table-actions.component";
-import { AuthorService } from "src/app/services/author.service";
 import { UserService } from "src/app/services/user.service";
 
 export enum InpectorMode {
@@ -52,12 +50,8 @@ export class InspectorComponent<T> implements OnInit, AfterViewInit, OnChanges {
 	getScreenHeight: number = 0;
 
 	userLogged: boolean = false;
-	authors: Author[] = [];
 
-	constructor(
-		private userService: UserService,
-		private authorService: AuthorService
-	) {
+	constructor(private userService: UserService) {
 		this.userService.isLogged$.subscribe((status) => {
 			this.userLogged = status;
 		});
@@ -66,10 +60,6 @@ export class InspectorComponent<T> implements OnInit, AfterViewInit, OnChanges {
 	ngOnInit() {
 		this.getScreenWidth = window.innerWidth;
 		this.getScreenHeight = window.innerHeight;
-
-		if (this.isBook(this.data.value)) {
-			this.getAuthors();
-		}
 	}
 
 	ngAfterViewInit(): void {
@@ -98,10 +88,6 @@ export class InspectorComponent<T> implements OnInit, AfterViewInit, OnChanges {
 
 	isBook(item: unknown): item is Book {
 		return this.data.type == "Book";
-	}
-
-	isAuthor(item: unknown): item is Author {
-		return this.data.type == "Author";
 	}
 
 	@HostListener("window:resize", ["$event"])
@@ -156,11 +142,5 @@ export class InspectorComponent<T> implements OnInit, AfterViewInit, OnChanges {
 				return requestor == name;
 			});
 		}
-	}
-
-	getAuthors(): void {
-		this.authorService.getAll().subscribe((data) => {
-			this.authors = data;
-		});
 	}
 }

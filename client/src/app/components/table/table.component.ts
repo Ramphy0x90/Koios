@@ -12,12 +12,13 @@ import { take } from "rxjs";
 import _ from "lodash";
 import { DBData } from "src/app/models/dbData";
 import { Book } from "src/app/models/book";
-import { Author } from "src/app/models/author";
+import { UserService } from "src/app/services/user.service";
 
 interface TableColumn {
 	id: string;
 	title: string;
 	defaultSort?: boolean;
+	auth: boolean;
 }
 
 @Component({
@@ -29,32 +30,34 @@ export class TableComponent<T extends DBData> implements OnInit, OnChanges {
 	@Input() data: T[] = [];
 	@Output() updateItem: EventEmitter<T> = new EventEmitter();
 
-	constructor(private route: ActivatedRoute, private router: Router) {}
-
 	selectedItem: T = this.data[0];
 	tableColumns: TableColumn[] = [];
 
 	bookColumns = [
-		{ id: "requestor", title: "Richiedenti" },
-		{ id: "author", title: "Autore" },
-		{ id: "title", title: "Titolo", defaultSort: true },
-		{ id: "year", title: "Anno" },
-		{ id: "topic", title: "Argomento" },
-		{ id: "place", title: "Luogo" },
-		{ id: "notes", title: "Note" },
+		{ id: "requestor", title: "Richiedenti", auth: false },
+		{ id: "authors", title: "Autore", auth: false },
+		{ id: "title", title: "Titolo", defaultSort: true, auth: false },
+		{ id: "year", title: "Anno", auth: false },
+		{ id: "topic", title: "Argomento", auth: false },
+		{ id: "place", title: "Luogo", auth: false },
+		{ id: "notes", title: "Note", auth: true },
 	];
 
-	authorColumns = [
-		{ id: "name", title: "Nome", defaultSort: true },
-		{ id: "surname", title: "Cognome" },
-		{ id: "books", title: "# Libri" },
-	];
+	userLogged: boolean = false;
+
+	constructor(
+		private route: ActivatedRoute,
+		private router: Router,
+		private userService: UserService
+	) {}
 
 	ngOnInit(): void {
+		this.userService.isLogged$.subscribe((status) => {
+			this.userLogged = status;
+		});
+
 		if (this.isBook(this.data[0])) {
 			this.tableColumns = this.bookColumns;
-		} else if (this.isAuthor(this.data[0])) {
-			this.tableColumns = this.authorColumns;
 		}
 
 		this.setCurrentItemFromUrl();
@@ -66,10 +69,6 @@ export class TableComponent<T extends DBData> implements OnInit, OnChanges {
 
 	isBook(item: unknown): item is Book {
 		return _.has(item, "title") || this.router.url.includes("book");
-	}
-
-	isAuthor(item: unknown): item is Author {
-		return _.has(item, "name") || this.router.url.includes("author");
 	}
 
 	select(item: T): void {
