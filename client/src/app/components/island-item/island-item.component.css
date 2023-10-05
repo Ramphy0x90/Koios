@@ -3,11 +3,11 @@
 	flex-grow: 1;
 	max-width: 100%;
 	cursor: pointer;
+	border-radius: 12px;
 	background-color: var(--color-blue);
-	-webkit-box-shadow: 0px 7px 12px -1px rgba(0, 0, 0, 0.28);
-	-moz-box-shadow: 0px 7px 12px -1px rgba(0, 0, 0, 0.28);
-	box-shadow: 0px 7px 12px -1px rgba(0, 0, 0, 0.28);
+	box-shadow: 0px 0px 10px -3px rgba(0, 0, 0, 0.5);
 	border-left: 8px solid var(--color-blue);
+	overflow: hidden;
 }
 
 .island-item-main-container .content {
@@ -54,6 +54,10 @@
 
 .island-item-main-container .main {
 	font-weight: 600;
+	width: 200px;
+	white-space: nowrap;
+	overflow: hidden;
+	text-overflow: ellipsis;
 }
 
 .island-item-main-container .sub {
