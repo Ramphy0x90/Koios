@@ -25,6 +25,7 @@ export class BookSeedService {
 			let title = row.getCell(3).value?.toString() || "-";
 			let year = row.getCell(4).value?.valueOf();
 			let topic = row.getCell(5).value?.toString() || "";
+			let place = row.getCell(6).value?.toString() || "";
 			let notes =
 				(row.getCell(7).value?.toString() || "") +
 				"\n" +
@@ -36,7 +37,7 @@ export class BookSeedService {
 				title: title,
 				year: !Number.isNaN(Number(year)) ? Number(year) : null,
 				topic: topic,
-				place: undefined,
+				place: place,
 				notes: notes,
 			};
 

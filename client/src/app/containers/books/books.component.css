@@ -9,7 +9,7 @@
 .content-container {
 	width: 100%;
 	height: 100%;
-	padding: var(--space-4);
+	padding: var(--space-6);
 	overflow-y: auto;
 }
 
@@ -25,5 +25,9 @@ app-table {
 
 	app-items-island-view {
 		display: none;
+	}
+
+	.content-container {
+		padding: var(--space-4);
 	}
 }

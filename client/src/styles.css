@@ -3,11 +3,17 @@
 	--color-green: #3c6e71;
 	--color-light: #e8e8e8;
 	--color-light-1: #f3f3f3;
+	--color-light-1-1: #f1f1f1;
 	--color-light-2: #81929e;
 	--color-blue: #284b63;
 	--color-blue-1: #4d9fd5;
 	--color-yellow: #a5a85c;
 	--color-orange: #e67929;
+
+	--color-btn-success: #81b29a;
+	--color-btn-warning: #f6bd60;
+	--color-btn-danger: #f28482;
+	--color-btn-info: #118ab2;
 
 	--space-1: 1px;
 	--space-2: 2px;
@@ -116,19 +122,9 @@ table td {
 	background-color: var(--color-green) !important;
 }
 
-.inspector-container {
-	position: absolute;
-	height: 100%;
-	background-color: var(--color-light);
-}
-
 /* Large devices (desktops, 992px and up) */
 @media (min-width: 992px) {
 	table {
 		table-layout: fixed;
-	}
-
-	.inspector-container {
-		position: inherit;
 	}
 }

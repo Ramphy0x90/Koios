@@ -31,17 +31,12 @@
 				class="d-flex flex-column requestors-list"
 				[class.limited]="data.value.requestor.length > 5"
 			>
-				<ng-container
-					*ngFor="
-						let requestor of data.value.requestor;
-						let index = index
-					"
-				>
+				<ng-container *ngFor="let requestor of data.value.requestor">
 					<div class="d-flex flex-row item">
 						<span>
 							<i class="bi bi-stop-fill"></i>
-							{{ requestor }}</span
-						>
+							{{ requestor }}
+						</span>
 						<i
 							class="bi bi-trash3 icon-delete"
 							title="Rimuovi richiedente"
@@ -50,6 +45,16 @@
 						></i>
 					</div>
 				</ng-container>
+
+				<div
+					class="d-flex flex-row item"
+					*ngIf="data.value.requestor.length == 0"
+				>
+					<span>
+						<i class="bi bi-stop-fill"></i>
+						Nessun richiedente
+					</span>
+				</div>
 			</div>
 		</div>
 

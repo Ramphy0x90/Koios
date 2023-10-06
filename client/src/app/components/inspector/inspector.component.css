@@ -1,4 +1,7 @@
 .inspector-main-container {
+	position: absolute;
+	top: 0;
+	right: -360px;
 	gap: var(--space-7);
 	width: 360px;
 	height: 100%;
@@ -73,7 +76,4 @@
 
 /* Large devices (desktops, 992px and up) */
 @media (min-width: 992px) {
-	.inspector-actions-container {
-		display: none !important;
-	}
 }
