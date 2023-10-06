@@ -51,20 +51,4 @@
 			</div>
 		</div>
 	</ng-container>
-
-	<ng-container
-		*ngIf="
-			currentMode == userModeEnum.NEW || currentMode == userModeEnum.EDIT
-		"
-	>
-		<div class="d-flex container-edit">
-			<button
-				class="btn btn-save btn-secondary"
-				(click)="execAction(actionEnum.SAVE)"
-			>
-				Salva
-			</button>
-			<div (click)="setMode(userModeEnum.READ)">Annulla</div>
-		</div>
-	</ng-container>
 </div>
