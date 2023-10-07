@@ -9,7 +9,7 @@
 			(booking)="booking($event)"
 		></app-table-actions>
 
-		<div class="content-container">
+		<div #content class="content-container">
 			<app-table
 				[data]="books"
 				(updateItem)="setBook($event)"

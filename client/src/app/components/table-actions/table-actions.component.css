@@ -75,6 +75,10 @@
 	outline: none;
 }
 
+.modal .modal-header {
+	color: var(--color-blue);
+}
+
 .modal .book-field {
 	gap: var(--space-6);
 }
@@ -89,6 +93,14 @@
 	overflow: hidden;
 	text-overflow: ellipsis;
 	color: var(--color-light-2);
+}
+
+.modal button.cancel {
+	background-color: var(--color-light-2);
+}
+
+.modal button.booking {
+	background-color: var(--color-btn-success);
 }
 
 /* Large devices (desktops, 992px and up) */

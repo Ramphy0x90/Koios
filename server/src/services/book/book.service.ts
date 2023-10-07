@@ -13,8 +13,14 @@ export class BookService {
 		private logService: LogService
 	) {}
 
-	async getAll(): Promise<Book[]> {
-		return await this.bookModel.find().exec();
+	async getAll(from: number, limit: number): Promise<Book[]> {
+		const query = this.bookModel.find();
+
+		if (limit > 0) {
+			query.skip(from).limit(limit);
+		}
+
+		return await query.exec();
 	}
 
 	async search(term: string): Promise<Book[]> {

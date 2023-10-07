@@ -19,10 +19,14 @@ import { BookService } from "src/services/book/book.service";
 export class BookController {
 	constructor(private bookService: BookService) {}
 
-	@Get()
-	fetchAll(@Res({ passthrough: true }) res: Response): Promise<Book[]> {
+	@Get("all/:from?/:limit?")
+	fetchAll(
+		@Res({ passthrough: true }) res: Response,
+		@Param("from") from: number = 0,
+		@Param("limit") limit: number = -1
+	): Promise<Book[]> {
 		res.status(HttpStatus.OK);
-		return this.bookService.getAll();
+		return this.bookService.getAll(from, limit);
 	}
 
 	@Get("search/:term")

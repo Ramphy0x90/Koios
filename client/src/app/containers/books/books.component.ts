@@ -1,5 +1,13 @@
-import { Component, OnInit, Inject } from "@angular/core";
-import { take } from "rxjs";
+import {
+	Component,
+	OnInit,
+	Inject,
+	HostListener,
+	ViewChild,
+	ElementRef,
+	AfterViewInit,
+} from "@angular/core";
+import { fromEvent, take } from "rxjs";
 import { InspectorStatus } from "src/app/components/inspector/inspector.component";
 import { Book } from "src/app/models/book";
 import { BookService } from "src/app/services/book.service";
@@ -16,12 +24,19 @@ import {
 	templateUrl: "./books.component.html",
 	styleUrls: ["./books.component.css"],
 })
-export class BooksComponent implements OnInit {
+export class BooksComponent implements OnInit, AfterViewInit {
+	@ViewChild("content") contentContainer?: ElementRef;
+
 	inspectorStatus = InspectorStatus;
 	userMode = UserMode;
 
 	mode = UserMode.READ;
 	status = this.inspectorStatus.CLOSED;
+
+	BOOKS_INCREMENT: number = 20;
+	booksFrom: number = 0;
+	booksLimit: number = this.BOOKS_INCREMENT;
+	isSearching: boolean = false;
 
 	books: Book[] = [];
 	bookTemplate: Book = {
@@ -44,6 +59,29 @@ export class BooksComponent implements OnInit {
 
 	ngOnInit(): void {
 		this.fetchBooks();
+	}
+
+	ngAfterViewInit(): void {
+		this.contentContainerScroll();
+	}
+
+	contentContainerScroll(): void {
+		const contentContainerEl = this.contentContainer?.nativeElement;
+		fromEvent(contentContainerEl, "scroll", { capture: true }).subscribe(
+			() => {
+				const scrolled =
+					contentContainerEl.offsetHeight +
+					contentContainerEl.scrollTop;
+
+				if (
+					scrolled >= contentContainerEl.scrollHeight &&
+					!this.isSearching
+				) {
+					this.booksFrom += this.BOOKS_INCREMENT;
+					this.fetchBooks(true);
+				}
+			}
+		);
 	}
 
 	updateMode(mode: UserMode): void {
@@ -83,6 +121,7 @@ export class BooksComponent implements OnInit {
 
 	search(term: string): void {
 		this.bookService.searchBook(term).subscribe((data) => {
+			this.isSearching = true;
 			this.books = data;
 		});
 	}
@@ -103,12 +142,18 @@ export class BooksComponent implements OnInit {
 		return book;
 	}
 
-	fetchBooks(): void {
+	fetchBooks(append: boolean = false): void {
+		this.isSearching = false;
 		this.bookService
-			.getAll()
+			.getAll(this.booksFrom, this.booksLimit)
 			.pipe(take(1))
 			.subscribe((data) => {
-				this.books = data;
+				if (append) {
+					this.books = [...this.books, ...data];
+				} else {
+					this.books = data;
+				}
+
 				this.selectedBook =
 					this.books.length > 0 ? this.books[0] : this.bookTemplate;
 			});

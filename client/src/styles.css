@@ -95,7 +95,6 @@ table td {
 .table-main-container {
 	width: 100%;
 	height: 100%;
-	overflow-y: auto;
 }
 
 .table-main-container tr {

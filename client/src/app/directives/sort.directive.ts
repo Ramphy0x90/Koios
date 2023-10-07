@@ -62,6 +62,8 @@ export class SortDirective<T> implements AfterViewInit, OnChanges {
 				this.defaultSortColumn = column;
 			}
 
+			column.style.position = "relative";
+
 			fromEvent(column, "click").subscribe(() => {
 				this.initSort(column);
 			});

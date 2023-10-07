@@ -53,6 +53,7 @@ export class TableActionsComponent implements OnInit, OnChanges, AfterViewInit {
 	onSearch: boolean = false;
 	userLogged: boolean = false;
 
+	selectedBookId?: string;
 	selectedBook?: Book;
 	possibleRequestor: string = "";
 
@@ -69,16 +70,8 @@ export class TableActionsComponent implements OnInit, OnChanges, AfterViewInit {
 		});
 
 		this.route.params.subscribe((params) => {
-			const bookId = params["id"];
-
-			if (bookId) {
-				this.bookService
-					.getBookById(bookId)
-					.pipe(take(1))
-					.subscribe((book) => {
-						this.selectedBook = book;
-					});
-			}
+			this.selectedBookId = params["id"];
+			this.fetchCurrentBook();
 		});
 	}
 
@@ -116,6 +109,17 @@ export class TableActionsComponent implements OnInit, OnChanges, AfterViewInit {
 		this.onSearch = false;
 		this.searchFormGroup.get("search")?.setValue("");
 		this.restore.emit(true);
+	}
+
+	fetchCurrentBook(): void {
+		if (this.selectedBookId) {
+			this.bookService
+				.getBookById(this.selectedBookId)
+				.pipe(take(1))
+				.subscribe((book) => {
+					this.selectedBook = book;
+				});
+		}
 	}
 
 	bookBooking(): void {
