@@ -9,6 +9,11 @@ import {
 	OnInit,
 } from "@angular/core";
 import { FormControl, FormGroup } from "@angular/forms";
+import { ActivatedRoute } from "@angular/router";
+import { ToastrService } from "ngx-toastr";
+import { take } from "rxjs";
+import { Book } from "src/app/models/book";
+import { BookService } from "src/app/services/book.service";
 import { UserService } from "src/app/services/user.service";
 
 export enum UserMode {
@@ -35,6 +40,7 @@ export class TableActionsComponent implements OnInit, OnChanges, AfterViewInit {
 	@Output() action: EventEmitter<Action> = new EventEmitter();
 	@Output() search: EventEmitter<string> = new EventEmitter();
 	@Output() restore: EventEmitter<boolean> = new EventEmitter();
+	@Output() booking: EventEmitter<string> = new EventEmitter();
 
 	searchFormGroup: FormGroup = new FormGroup({
 		search: new FormControl(),
@@ -47,11 +53,32 @@ export class TableActionsComponent implements OnInit, OnChanges, AfterViewInit {
 	onSearch: boolean = false;
 	userLogged: boolean = false;
 
-	constructor(private userService: UserService) {}
+	selectedBook?: Book;
+	possibleRequestor: string = "";
+
+	constructor(
+		private userService: UserService,
+		private bookService: BookService,
+		private route: ActivatedRoute,
+		private toastr: ToastrService
+	) {}
 
 	ngOnInit(): void {
 		this.userService.isLogged$.subscribe((status) => {
 			this.userLogged = status;
+		});
+
+		this.route.params.subscribe((params) => {
+			const bookId = params["id"];
+
+			if (bookId) {
+				this.bookService
+					.getBookById(bookId)
+					.pipe(take(1))
+					.subscribe((book) => {
+						this.selectedBook = book;
+					});
+			}
 		});
 	}
 
@@ -89,5 +116,14 @@ export class TableActionsComponent implements OnInit, OnChanges, AfterViewInit {
 		this.onSearch = false;
 		this.searchFormGroup.get("search")?.setValue("");
 		this.restore.emit(true);
+	}
+
+	bookBooking(): void {
+		if (this.possibleRequestor.length == 0) {
+			this.toastr.warning("Il campo richiedente non può essere vuoto");
+		} else {
+			this.booking.emit(this.possibleRequestor);
+			this.possibleRequestor = "";
+		}
 	}
 }

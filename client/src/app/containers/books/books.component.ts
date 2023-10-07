@@ -147,6 +147,12 @@ export class BooksComponent implements OnInit {
 		this.bookService.deleteBook(bookId).subscribe(() => this.fetchBooks());
 	}
 
+	booking(requestor: string): void {
+		this.draftBookVersion = { ...this.selectedBook };
+		this.draftBookVersion.requestor.push(requestor);
+		this.updateBook();
+	}
+
 	export(): void {
 		let elt = this.document.querySelector("app-table table");
 		let wb = XLSX.utils.table_to_book(elt, { sheet: "sheet1" });

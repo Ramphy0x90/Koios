@@ -22,7 +22,8 @@
 			<button
 				*ngIf="!userLogged"
 				class="btn btn-booking btn-secondary"
-				(click)="execAction(actionEnum.EXPORT)"
+				data-bs-toggle="modal"
+				data-bs-target="#bookingModal"
 			>
 				Prenota
 			</button>
@@ -51,4 +52,85 @@
 			</div>
 		</div>
 	</ng-container>
+
+	<!-- Modal -->
+	<div
+		class="modal fade"
+		id="bookingModal"
+		tabindex="-1"
+		aria-labelledby="bookingModelLabel"
+		aria-hidden="true"
+	>
+		<div class="modal-dialog">
+			<div class="modal-content">
+				<div class="modal-header">
+					<h5 class="modal-title" id="bookingModelLabel">
+						Prenotazione libro
+					</h5>
+					<button
+						type="button"
+						class="btn-close"
+						data-bs-dismiss="modal"
+						aria-label="Close"
+					></button>
+				</div>
+				<div class="modal-body">
+					<div class="book-info">
+						<div class="book-field d-flex flex-row">
+							<div class="field-title">Libro:</div>
+							<div class="field-value">
+								{{ selectedBook?.title }}
+							</div>
+						</div>
+						<div class="book-field d-flex flex-row">
+							<div class="field-title">Argomento:</div>
+							<div class="field-value">
+								{{ selectedBook?.topic }}
+							</div>
+						</div>
+						<div class="book-field d-flex flex-row">
+							<div class="field-title">Anno:</div>
+							<div class="field-value">
+								{{ selectedBook?.year }}
+							</div>
+						</div>
+						<div class="book-field d-flex flex-row">
+							<div class="field-title">Totale richiedenti:</div>
+							<div class="field-value">
+								{{ selectedBook?.requestor?.length }}
+							</div>
+						</div>
+					</div>
+
+					<hr />
+
+					<div class="requestor-info d-flex flex-column">
+						<label class="field-title">Nome richiedente</label>
+						<input
+							type="text"
+							class="form-control"
+							[(ngModel)]="possibleRequestor"
+						/>
+					</div>
+				</div>
+				<div class="modal-footer">
+					<button
+						type="button"
+						class="btn btn-secondary"
+						data-bs-dismiss="modal"
+					>
+						Anulla
+					</button>
+					<button
+						type="button"
+						class="btn btn-primary"
+						data-bs-dismiss="modal"
+						(click)="bookBooking()"
+					>
+						Prenota
+					</button>
+				</div>
+			</div>
+		</div>
+	</div>
 </div>
