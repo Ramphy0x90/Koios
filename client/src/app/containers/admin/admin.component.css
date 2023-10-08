@@ -1,6 +1,7 @@
 .admin-main-container {
-	gap: var(--space-8);
+	gap: var(--space-4);
 	padding: var(--space-6);
+	overflow-y: auto;
 }
 
 .admin-main-container .dashboard {
@@ -13,20 +14,47 @@
 	flex: 0 1 100%;
 }
 
-.admin-main-container .sections {
-	gap: var(--space-6);
+.admin-main-container .dashboard app-admin-info-card:nth-child(1) ::ng-deep i {
+	color: var(--color-btn-success);
 }
 
-.sections .user-section,
-.sections .links-section {
-	flex: 0 1 50%;
-	width: 100%;
+.admin-main-container .dashboard app-admin-info-card:nth-child(2) ::ng-deep i {
+	color: var(--color-btn-warning);
+}
+
+.admin-main-container .dashboard app-admin-info-card:nth-child(3) ::ng-deep i {
+	color: var(--color-btn-danger);
+}
+
+.admin-main-container .sections {
+	display: grid;
+	box-sizing: border-box;
+	grid-template-columns: repeat(auto-fill, minmax(50%, 1fr));
+	grid-gap: var(--space-6);
+}
+
+.sections .lead {
+	color: var(--color-light);
+	background-color: var(--color-blue);
 	padding: var(--space-6);
-	border-radius: 6px;
+}
+
+.sections .section {
 	background-color: var(--color-light);
-	-webkit-box-shadow: 0px 7px 12px -1px rgba(0, 0, 0, 0.28);
-	-moz-box-shadow: 0px 7px 12px -1px rgba(0, 0, 0, 0.28);
-	box-shadow: 0px 7px 12px -1px rgba(0, 0, 0, 0.28);
+}
+
+.sections .section .actions button {
+	font-size: 14px;
+	padding: var(--space-3) var(--space-6);
+	background-color: var(--color-light-2);
+	border: none;
+	border-radius: 0;
+}
+
+.user-section .content {
+	padding: var(--space-6);
+	gap: var(--space-6);
+	flex-direction: column-reverse;
 }
 
 .user-section .users-list {
@@ -35,11 +63,6 @@
 
 .user-section * {
 	transition: unset;
-}
-
-.user-section {
-	gap: var(--space-6);
-	flex-direction: column-reverse;
 }
 
 .user-section .users-list .user {
@@ -59,10 +82,9 @@
 	padding: var(--space-6);
 	gap: var(--space-6);
 	font-size: 15px;
-	color: var(--color-light);
-	background-color: var(--color-blue);
+	color: var(--color-blue);
+	background-color: var(--color-light-1-1);
 	box-shadow: 0px 10px 15px -3px rgba(0, 0, 0, 0.1);
-	border-radius: 6px;
 }
 
 .user-section .actions .fields-container {
@@ -73,23 +95,34 @@
 	gap: var(--space-6);
 }
 
-.user-section .actions .options button {
-	font-size: 14px;
-	padding: var(--space-3) var(--space-6);
+.user-section .actions .options i {
+	cursor: pointer;
 }
 
 .user-section .actions .options .delete {
 	margin-left: auto;
 }
 
+.links-section .actions {
+	padding: var(--space-6) var(--space-6) 0 var(--space-6);
+}
+
+.links-section .table-container {
+	padding: 0 var(--space-6);
+	overflow-y: auto;
+}
+
 /* Large devices (desktops, 992px and up) */
 @media (min-width: 992px) {
 	.admin-main-container .dashboard {
 		flex-direction: row;
-		gap: var(--space-8);
 	}
 
-	.user-section {
+	.admin-main-container .sections {
+		grid-template-columns: 1fr 1fr;
+	}
+
+	.user-section .content {
 		flex-direction: row;
 	}
 }

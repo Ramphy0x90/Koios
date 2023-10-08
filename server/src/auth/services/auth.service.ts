@@ -4,6 +4,7 @@ import { User } from "src/schemas/user.schema";
 import * as bcrypt from "bcrypt";
 import { BehaviorSubject, Observable } from "rxjs";
 import { ExpiredTokenException } from "../exceptions/expiredToken.exception";
+import { GuestTokenRequest } from "src/schemas/dto/guestTokenRequest";
 
 @Injectable()
 export class AuthService {
@@ -14,6 +15,18 @@ export class AuthService {
 
 	async generateJwtToken(user: User): Promise<string> {
 		return this.jwtService.signAsync({ user });
+	}
+
+	async generateGuestJwtToken(guest: GuestTokenRequest): Promise<string> {
+		const currentDate = new Date();
+		const expiresInMilliseconds =
+			new Date(guest.expirationDate).getTime() - currentDate.getTime();
+		const expiresInSeconds = Math.floor(expiresInMilliseconds / 1000);
+
+		return await this.jwtService.signAsync(
+			{ guest: guest.guest, generation: currentDate },
+			{ expiresIn: expiresInSeconds }
+		);
 	}
 
 	async hashPassword(password: string): Promise<string> {

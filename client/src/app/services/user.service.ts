@@ -54,6 +54,21 @@ export class UserService {
 		);
 	}
 
+	updateUser(user: User): Observable<User> {
+		const userId = user._id;
+
+		return this.httpClient.put<User>(
+			`${environment.server}/${this.API_URI}/${userId}`,
+			user
+		);
+	}
+
+	deleteUser(id: string): Observable<object> {
+		return this.httpClient.delete(
+			`${environment.server}/${this.API_URI}/${id}`
+		);
+	}
+
 	logOut(): void {
 		localStorage.removeItem("token");
 		this.logged$.next(false);

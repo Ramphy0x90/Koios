@@ -8,6 +8,7 @@ import { FormsModule, ReactiveFormsModule } from "@angular/forms";
 import { LoginComponent } from "./login/login.component";
 import { RegisterComponent } from "./register/register.component";
 import { AdminComponent } from "./admin/admin.component";
+import { DirectivesModule } from "../directives/directives.module";
 
 @NgModule({
 	declarations: [
@@ -23,6 +24,7 @@ import { AdminComponent } from "./admin/admin.component";
 		ServicesModule,
 		FormsModule,
 		ReactiveFormsModule,
+		DirectivesModule,
 	],
 	exports: [BooksComponent, LogComponent],
 })

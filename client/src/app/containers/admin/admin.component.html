@@ -8,7 +8,8 @@
 
 		<app-admin-info-card
 			[icon]="'bi bi-share-fill'"
-			[title]="'Link attivi'"
+			[title]="'Guest attivi'"
+			[value]="guests.length"
 		></app-admin-info-card>
 
 		<app-admin-info-card
@@ -18,110 +19,255 @@
 		></app-admin-info-card>
 	</div>
 
-	<div class="sections d-flex">
-		<div class="user-section d-flex">
-			<div class="users-list">
-				<div
-					class="user"
-					[class.active]="user._id == selectedUser?._id"
-					*ngFor="let user of users"
-					(click)="selectUser(user)"
-				>
-					<div>
-						<div>{{ user.name }} {{ user.surname }}</div>
+	<hr />
 
+	<div class="sections">
+		<div class="user-section section d-flex flex-column">
+			<div class="lead">Gestione utenti</div>
+
+			<div class="content d-flex">
+				<div class="users-list">
+					<div
+						class="user"
+						[class.active]="user._id == selectedUser?._id"
+						*ngFor="let user of users"
+						(click)="selectUser(user)"
+					>
 						<div>
-							{{ user.email }}
+							<div>{{ user.name }} {{ user.surname }}</div>
+
+							<div>
+								{{ user.email }}
+							</div>
 						</div>
 					</div>
 				</div>
-			</div>
 
-			<div class="actions d-flex flex-column">
-				<div
-					*ngIf="mode == modeEnum.READ"
-					class="options d-flex flex-row"
-				>
-					<button
-						class="btn btn-new btn-secondary create"
-						(click)="createUser()"
+				<div class="actions d-flex flex-column">
+					<div
+						*ngIf="mode == modeEnum.READ"
+						class="options d-flex flex-row"
 					>
-						Crea
-					</button>
+						<button
+							class="btn btn-new btn-secondary create"
+							(click)="createUser()"
+						>
+							Crea
+						</button>
 
-					<button class="btn btn-new btn-secondary edit">
-						Modifica
-					</button>
+						<button
+							class="btn btn-new btn-secondary edit"
+							(click)="editUser()"
+						>
+							Modifica
+						</button>
 
-					<i class="bi bi-trash3 pointer delete" title="Elimina"></i>
-				</div>
-
-				<div
-					*ngIf="mode != modeEnum.READ"
-					class="options d-flex flex-row justify-content-between"
-				>
-					<button
-						class="btn btn-new btn-secondary save"
-						(click)="saveUser()"
-					>
-						Salva
-					</button>
-
-					<button
-						class="btn btn-new btn-secondary cancel"
-						(click)="cancel()"
-					>
-						Annulla
-					</button>
-				</div>
-
-				<div
-					*ngIf="selectedUser"
-					class="d-flex flex-column fields-container"
-				>
-					<div>
-						<label>Nome</label>
-						<input
-							type="text"
-							class="form-control"
-							[(ngModel)]="selectedUser.name"
-						/>
-					</div>
-
-					<div>
-						<label>Cognome</label>
-						<input
-							type="text"
-							class="form-control"
-							[(ngModel)]="selectedUser.surname"
-						/>
-					</div>
-
-					<div>
-						<label>Email</label>
-						<input
-							type="text"
-							class="form-control"
-							[(ngModel)]="selectedUser.email"
-						/>
+						<i
+							class="bi bi-trash3 pointer delete"
+							title="Elimina"
+							(click)="deleteUser()"
+						></i>
 					</div>
 
 					<div
-						*ngIf="
-							mode == modeEnum.NEW && isOnNewUser(selectedUser)
-						"
+						*ngIf="mode != modeEnum.READ"
+						class="options d-flex flex-row justify-content-between"
 					>
-						<label>Password</label>
-						<input
-							type="text"
-							class="form-control"
-							[(ngModel)]="selectedUser.password"
-						/>
+						<button
+							class="btn btn-new btn-secondary save"
+							(click)="saveUser()"
+						>
+							Salva
+						</button>
+
+						<button
+							class="btn btn-new btn-secondary cancel"
+							(click)="cancel()"
+						>
+							Annulla
+						</button>
+					</div>
+
+					<div
+						*ngIf="selectedUser"
+						class="d-flex flex-column fields-container"
+					>
+						<div>
+							<label>Nome</label>
+							<input
+								type="text"
+								class="form-control"
+								[(ngModel)]="selectedUser.name"
+								[disabled]="mode == modeEnum.READ"
+							/>
+						</div>
+
+						<div>
+							<label>Cognome</label>
+							<input
+								type="text"
+								class="form-control"
+								[(ngModel)]="selectedUser.surname"
+								[disabled]="mode == modeEnum.READ"
+							/>
+						</div>
+
+						<div>
+							<label>Email</label>
+							<input
+								type="text"
+								class="form-control"
+								[(ngModel)]="selectedUser.email"
+								[disabled]="mode != modeEnum.NEW"
+							/>
+						</div>
+
+						<div
+							*ngIf="
+								mode == modeEnum.NEW &&
+								isOnNewUser(selectedUser)
+							"
+						>
+							<label>Password</label>
+							<input
+								type="text"
+								class="form-control"
+								[(ngModel)]="selectedUser.password"
+							/>
+						</div>
 					</div>
 				</div>
 			</div>
 		</div>
 
-		<div class="links-section">a</div>
+		<div class="links-section section">
+			<div class="lead">Gestione link</div>
+
+			<div class="content">
+				<div class="actions d-flex justify-content-between">
+					<button
+						class="btn btn-new btn-secondary create"
+						data-bs-toggle="modal"
+						data-bs-target="#guestCreation"
+					>
+						Crea
+					</button>
+
+					<button
+						class="btn btn-new btn-secondary edit"
+						(click)="editUser()"
+					>
+						Elimina
+					</button>
+				</div>
+
+				<hr />
+
+				<div class="table-container">
+					<table
+						class="table"
+						sort
+						[data]="guests"
+						(updateData)="updateLinksData($event)"
+					>
+						<thead>
+							<tr>
+								<th scope="col" id="guest">Guest</th>
+								<th scope="col" id="link">Link</th>
+								<th scope="col" id="created">Data creazione</th>
+								<th scope="col" id="expire">Data scadenza</th>
+							</tr>
+						</thead>
+						<tbody *ngIf="guests">
+							<tr
+								*ngFor="let guest of guests"
+								(click)="selectGuest(guest)"
+								[class.active]="
+									(selectedGuest &&
+										guest.token == selectedGuest.token) ||
+									''
+								"
+							>
+								<td>{{ guest.guest }}</td>
+								<td>{{ guest }}</td>
+								<td>
+									{{ guest.createdAt | date : "dd/MM/yyyy" }}
+								</td>
+								<td>
+									{{ guest.expiration | date : "dd/MM/yyyy" }}
+								</td>
+							</tr>
+						</tbody>
+					</table>
+				</div>
+			</div>
+
+			<!-- Modal -->
+			<div
+				class="modal fade"
+				id="guestCreation"
+				tabindex="-1"
+				aria-labelledby="guestCreationLabel"
+				aria-hidden="true"
+			>
+				<div class="modal-dialog">
+					<div class="modal-content">
+						<div class="modal-header">
+							<h5 class="modal-title" id="guestCreationLabel">
+								Creazione link per guest
+							</h5>
+							<button
+								type="button"
+								class="btn-close"
+								data-bs-dismiss="modal"
+								aria-label="Close"
+							></button>
+						</div>
+						<div class="modal-body">
+							<div class="requestor-info d-flex flex-column">
+								<label class="field-title">Nome guest</label>
+								<input
+									type="text"
+									class="form-control"
+									[(ngModel)]="guestTemplate.guest"
+								/>
+							</div>
+
+							<div class="requestor-info d-flex flex-column">
+								<label class="field-title">Data scadenza</label>
+								<input
+									type="date"
+									class="form-control"
+									[(ngModel)]="guestTemplate.expirationDate"
+								/>
+							</div>
+						</div>
+						<div class="modal-footer">
+							<button
+								type="button"
+								class="btn btn-secondary cancel"
+								data-bs-dismiss="modal"
+							>
+								Anulla
+							</button>
+							<button
+								type="button"
+								class="btn btn-primary submit"
+								data-bs-dismiss="modal"
+								(click)="saveGuest()"
+							>
+								Crea
+							</button>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+
+		<div class="links-section section">
+			<div class="lead">Gestione libri</div>
+
+			<div class="content"></div>
+		</div>
 	</div>
 </div>

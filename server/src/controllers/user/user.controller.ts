@@ -73,7 +73,7 @@ export class UserController {
 		@Res({ passthrough: true }) res: Response,
 		@Body() user
 	): Promise<LoginResponse> {
-		res.status(HttpStatus.CREATED);
+		res.status(HttpStatus.OK);
 		return this.userService.login(user);
 	}
 

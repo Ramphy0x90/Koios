@@ -12,6 +12,9 @@ import { SeederModule } from "./db/seed/seed.module";
 import { LogService } from "./services/log/log.service";
 import { Log, LogSchema } from "./schemas/log.schema";
 import { LogController } from "./controllers/log/log.controller";
+import { GuestController } from "./controllers/guest/guest.controller";
+import { GuestService } from "./services/guest/guest.service";
+import { Guest, GuestSchema } from "./schemas/guest";
 
 @Module({
 	imports: [
@@ -21,11 +24,17 @@ import { LogController } from "./controllers/log/log.controller";
 		MongooseModule.forRoot(process.env.MONGO_URL),
 		MongooseModule.forFeature([
 			{ name: User.name, schema: UserSchema },
+			{ name: Guest.name, schema: GuestSchema },
 			{ name: Book.name, schema: BookSchema },
 			{ name: Log.name, schema: LogSchema },
 		]),
 	],
-	controllers: [BookController, UserController, LogController],
-	providers: [BookService, UserService, LogService],
+	controllers: [
+		BookController,
+		UserController,
+		LogController,
+		GuestController,
+	],
+	providers: [BookService, UserService, LogService, GuestService],
 })
 export class AppModule {}

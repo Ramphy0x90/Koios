@@ -3,6 +3,7 @@ import { Injectable } from "@angular/core";
 import { Observable } from "rxjs";
 import { GuestTempAuthResponse } from "../models/guestTempAuthResponse";
 import { environment } from "src/environments/environment";
+import { GuestTokenRequest } from "../models/guestTokenRequest";
 
 @Injectable({
 	providedIn: "root",
@@ -12,9 +13,16 @@ export class GuestService {
 
 	constructor(private httpClient: HttpClient) {}
 
-	generateToken(): Observable<GuestTempAuthResponse> {
-		return this.httpClient.get<GuestTempAuthResponse>(
-			`${environment.server}/${this.API_URI}/token`
+	getAll(): Observable<GuestTempAuthResponse[]> {
+		return this.httpClient.get<GuestTempAuthResponse[]>(
+			`${environment.server}/${this.API_URI}`
+		);
+	}
+
+	generateToken(guest: GuestTokenRequest): Observable<GuestTempAuthResponse> {
+		return this.httpClient.post<GuestTempAuthResponse>(
+			`${environment.server}/${this.API_URI}/token`,
+			guest
 		);
 	}
 

@@ -121,6 +121,26 @@ table td {
 	background-color: var(--color-green) !important;
 }
 
+.modal .modal-header {
+	color: var(--color-blue);
+}
+
+.modal button {
+	padding: var(--space-3) var(--space-6);
+	border: none;
+	border-radius: 6px;
+	font-size: 14px;
+	box-shadow: 0px 10px 9px -7px rgba(0, 0, 0, 0.1);
+}
+
+.modal button.cancel {
+	background-color: var(--color-light-2);
+}
+
+.modal button.submit {
+	background-color: var(--color-btn-success);
+}
+
 /* Large devices (desktops, 992px and up) */
 @media (min-width: 992px) {
 	table {

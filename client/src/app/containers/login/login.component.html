@@ -31,9 +31,6 @@
 						class="form-control"
 						formControlName="email"
 					/>
-					<div *ngIf="email?.touched && email?.hasError('required')">
-						Email è obbligatoria
-					</div>
 				</div>
 
 				<div class="form-field form-group">
@@ -43,13 +40,6 @@
 						class="form-control"
 						formControlName="password"
 					/>
-					<div
-						*ngIf="
-							password?.touched && password?.hasError('required')
-						"
-					>
-						Password è obbligatoria
-					</div>
 				</div>
 
 				<button type="submit" class="btn btn-secondary">Invia</button>
