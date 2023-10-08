@@ -71,13 +71,13 @@
 
 		<div class="inspector-field form-group">
 			<label>Titolo <i class="bi bi-justify-left"></i></label>
-			<input
-				type="text"
+			<textarea
 				class="form-control"
 				[title]="data.value.title"
 				[(ngModel)]="data.value.title"
 				[disabled]="mode == userMode.READ || !userLogged"
-			/>
+			>
+			</textarea>
 		</div>
 
 		<div class="inspector-field form-group">

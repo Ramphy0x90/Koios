@@ -2,7 +2,6 @@ import {
 	Component,
 	OnInit,
 	Inject,
-	HostListener,
 	ViewChild,
 	ElementRef,
 	AfterViewInit,
@@ -18,6 +17,7 @@ import {
 	Action,
 	UserMode,
 } from "src/app/components/table-actions/table-actions.component";
+import _ from "lodash";
 
 @Component({
 	selector: "app-books",
@@ -166,8 +166,14 @@ export class BooksComponent implements OnInit, AfterViewInit {
 			.updateBook(bookId, this.draftBookVersion)
 			.pipe(take(1))
 			.subscribe((data) => {
-				this.fetchBooks();
-				this.selectedBook = data;
+				const selectedBookIndex = _.findIndex(
+					this.books,
+					(book) => book._id == this.selectedBook._id
+				);
+
+				this.books[selectedBookIndex] = data;
+				this.selectedBook = this.books[selectedBookIndex];
+				this.books = [...this.books];
 				this.mode = UserMode.READ;
 			});
 	}

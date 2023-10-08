@@ -8,24 +8,30 @@
 
 .island-item-main-container .content {
 	padding: var(--space-6);
-	border-bottom: 1px solid var(--color-light-2);
+	border-bottom: 2px solid var(--color-light);
 }
 
 .island-item-main-container .content-book {
 	gap: var(--space-6);
 }
 
+.island-item-main-container .column-right {
+	overflow: hidden;
+}
+
 .island-item-main-container .column-left {
 	align-items: center;
 	justify-content: center;
 	padding-right: var(--space-6);
-	flex: 0 0 25%;
+	flex: 0 0 85px;
+	font-size: 14px;
 	border-right: 2px solid var(--color-light-2);
 }
 
 .island-item-main-container .column-left div:nth-child(2) {
 	font-weight: bold;
-	font-size: 15px;
+	font-size: 16px;
+	color: var(--color-light-2);
 }
 
 .island-item-main-container.active {
@@ -40,12 +46,17 @@
 	margin: var(--space-4) var(--space-4) 0 0;
 }
 
-.island-item-main-container .main {
-	font-weight: 600;
-	width: 200px;
+.island-item-main-container .main,
+.island-item-main-container .body {
+	width: 100%;
 	white-space: nowrap;
 	overflow: hidden;
 	text-overflow: ellipsis;
+}
+
+.island-item-main-container .main {
+	font-weight: 600;
+	color: var(--color-blue);
 }
 
 .island-item-main-container .sub {
@@ -56,10 +67,8 @@
 /* Small devices (landscape phones, less than 768px) */
 @media (min-width: 767.98px) {
 	.island-item-main-container {
-		border-radius: 12px;
 		background-color: var(--color-blue);
 		box-shadow: 0px 0px 10px -3px rgba(0, 0, 0, 0.5);
-		border-left: 8px solid var(--color-blue);
 	}
 
 	.island-item-main-container .content {

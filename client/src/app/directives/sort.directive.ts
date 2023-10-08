@@ -37,7 +37,6 @@ export class SortDirective<T> implements AfterViewInit, OnChanges {
 	currentSortingOrder: Order = Order.ASCENDING;
 	tempHoverIcon?: HTMLElement;
 
-	defaultSorted: boolean = false;
 	defaultSortColumn?: HTMLElement;
 
 	constructor(private element: ElementRef, private renderer: Renderer2) {}
@@ -47,8 +46,7 @@ export class SortDirective<T> implements AfterViewInit, OnChanges {
 	}
 
 	ngOnChanges(changes: SimpleChanges): void {
-		if (this.defaultSortColumn && !this.defaultSorted) {
-			this.defaultSorted = true;
+		if (this.defaultSortColumn) {
 			this.initSort(this.defaultSortColumn, true);
 		}
 	}

@@ -8,6 +8,7 @@
 						*ngIf="!column.auth || userLogged"
 						[id]="column.id"
 						[class.default-sort]="column.defaultSort"
+						[ngStyle]="{ width: column.width || 'auto' }"
 					>
 						{{ column.title }}
 					</th>

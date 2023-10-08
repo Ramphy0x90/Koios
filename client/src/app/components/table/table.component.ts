@@ -18,6 +18,7 @@ interface TableColumn {
 	id: string;
 	title: string;
 	defaultSort?: boolean;
+	width?: string;
 	auth: boolean;
 }
 
@@ -37,7 +38,7 @@ export class TableComponent<T extends DBData> implements OnInit, OnChanges {
 		{ id: "requestor", title: "Richiedenti", auth: false },
 		{ id: "authors", title: "Autore", auth: false },
 		{ id: "title", title: "Titolo", defaultSort: true, auth: false },
-		{ id: "year", title: "Anno", auth: false },
+		{ id: "year", title: "Anno", width: "100px", auth: false },
 		{ id: "topic", title: "Argomento", auth: false },
 		{ id: "place", title: "Luogo", auth: false },
 		{ id: "notes", title: "Note", auth: true },
