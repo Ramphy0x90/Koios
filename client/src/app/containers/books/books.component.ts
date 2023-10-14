@@ -19,6 +19,19 @@ import {
 } from "src/app/components/table-actions/table-actions.component";
 import _ from "lodash";
 
+export enum FilterBooks {
+	NONE = "none",
+	BOOKS_NO_REQUESTORS = "booksNoRequestors",
+	BOOKS_REQUESTORS = "booksRequestor",
+	BOOKS_DISABLED = "booksDisabled",
+}
+
+export enum OrderBooks {
+	TITLE = "title",
+	AUTHOR = "authors",
+	PLACE = "place",
+}
+
 @Component({
 	selector: "app-books",
 	templateUrl: "./books.component.html",
@@ -27,19 +40,24 @@ import _ from "lodash";
 export class BooksComponent implements OnInit, AfterViewInit {
 	@ViewChild("content") contentContainer?: ElementRef;
 
+	readonly BOOKS_INCREMENT: number = 20;
 	inspectorStatus = InspectorStatus;
 	userMode = UserMode;
 
 	mode = UserMode.READ;
 	status = this.inspectorStatus.CLOSED;
+	islandOrder = OrderBooks.TITLE;
 
-	BOOKS_INCREMENT: number = 20;
 	booksFrom: number = 0;
 	booksLimit: number = this.BOOKS_INCREMENT;
-	isSearching: boolean = false;
 
+	isSearching: boolean = false;
+	isFiltering: boolean = false;
+
+	itemsStatus: boolean = true;
 	books: Book[] = [];
 	bookTemplate: Book = {
+		status: false,
 		requestor: [],
 		authors: "",
 		title: "",
@@ -49,8 +67,8 @@ export class BooksComponent implements OnInit, AfterViewInit {
 		notes: "",
 	};
 
-	selectedBook: Book = this.bookTemplate;
-	draftBookVersion: Book = this.selectedBook;
+	selectedBooks: Book[] = [];
+	draftBookVersion: Book = this.selectedBooks[0];
 
 	constructor(
 		private bookService: BookService,
@@ -75,7 +93,8 @@ export class BooksComponent implements OnInit, AfterViewInit {
 
 				if (
 					scrolled >= contentContainerEl.scrollHeight &&
-					!this.isSearching
+					!this.isSearching &&
+					!this.isFiltering
 				) {
 					this.booksFrom += this.BOOKS_INCREMENT;
 					this.fetchBooks(true);
@@ -90,11 +109,11 @@ export class BooksComponent implements OnInit, AfterViewInit {
 				this.cancelOperation();
 				break;
 			case UserMode.NEW:
-				this.selectedBook = { ...this.bookTemplate };
+				this.selectedBooks = [{ ...this.bookTemplate }];
 				this.status = this.inspectorStatus.OPEN;
 				break;
 			case UserMode.EDIT:
-				this.draftBookVersion = { ...this.selectedBook };
+				this.draftBookVersion = { ...this.selectedBooks[0] };
 				this.status = this.inspectorStatus.OPEN;
 				break;
 		}
@@ -126,24 +145,64 @@ export class BooksComponent implements OnInit, AfterViewInit {
 		});
 	}
 
-	setBook(book: Book): void {
-		this.selectedBook = book || this.bookTemplate;
+	filter(filter: FilterBooks) {
+		if (filter == FilterBooks.NONE) {
+			this.fetchBooks();
+		} else {
+			this.bookService.filterBooks(filter).subscribe((data) => {
+				this.isFiltering = true;
+				this.books = data;
+			});
+		}
 	}
 
-	getBook(): InspectorData<Book> {
-		let book: InspectorData<Book> = {
-			type: "Book",
-			value:
-				this.mode == this.userMode.EDIT
-					? this.draftBookVersion
-					: this.selectedBook,
-		};
+	order(order: OrderBooks) {
+		this.islandOrder = order;
+	}
 
-		return book;
+	updateItemsStatus(status: boolean): void {
+		this.itemsStatus = status;
+	}
+
+	setItemsStatus(): void {
+		if (this.selectedBooks.length > 1) {
+			this.selectedBooks.forEach((book) => {
+				book.status = this.itemsStatus;
+			});
+		} else {
+			this.draftBookVersion.status = this.itemsStatus;
+		}
+	}
+
+	setBook(book: Book): void {
+		this.selectedBooks = [book];
+	}
+
+	setBooks(books: Book[]): void {
+		this.selectedBooks = [...books];
+		this.draftBookVersion = { ...this.selectedBooks[0] };
+	}
+
+	getBooks(): InspectorData<Book>[] {
+		let books: InspectorData<Book>[] = [];
+
+		this.selectedBooks.forEach((book) => {
+			books.push({
+				type: "Book",
+				value:
+					this.selectedBooks.length == 1
+						? this.draftBookVersion
+						: book,
+			});
+		});
+
+		return books;
 	}
 
 	fetchBooks(append: boolean = false): void {
 		this.isSearching = false;
+		this.isFiltering = false;
+
 		this.bookService
 			.getAll(this.booksFrom, this.booksLimit)
 			.pipe(take(1))
@@ -154,38 +213,60 @@ export class BooksComponent implements OnInit, AfterViewInit {
 					this.books = data;
 				}
 
-				this.selectedBook =
-					this.books.length > 0 ? this.books[0] : this.bookTemplate;
+				this.selectedBooks =
+					this.books.length > 0
+						? [this.books[0]]
+						: [this.bookTemplate];
 			});
 	}
 
 	updateBook(): void {
-		const bookId = this.draftBookVersion?._id || "";
+		if (this.selectedBooks.length > 1) {
+			for (let book of this.selectedBooks) {
+				const bookId = this.draftBookVersion?._id || "";
 
-		this.bookService
-			.updateBook(bookId, this.draftBookVersion)
-			.pipe(take(1))
-			.subscribe((data) => {
-				const selectedBookIndex = _.findIndex(
-					this.books,
-					(book) => book._id == this.selectedBook._id
-				);
+				this.bookService
+					.updateBook(book)
+					.pipe(take(1))
+					.subscribe((data) => {
+						const selectedBookIndex = _.findIndex(
+							this.books,
+							(book) => book._id == this.selectedBooks[0]._id
+						);
 
-				this.books[selectedBookIndex] = data;
-				this.selectedBook = this.books[selectedBookIndex];
-				this.books = [...this.books];
-				this.mode = UserMode.READ;
-			});
+						this.books[selectedBookIndex] = data;
+						this.books = [...this.books];
+						this.mode = UserMode.READ;
+					});
+			}
+		} else {
+			this.bookService
+				.updateBook(this.draftBookVersion)
+				.pipe(take(1))
+				.subscribe((data) => {
+					const selectedBookIndex = _.findIndex(
+						this.books,
+						(book) => book._id == this.selectedBooks[0]._id
+					);
+
+					this.books[selectedBookIndex] = data;
+					this.selectedBooks = [this.books[selectedBookIndex]];
+					this.books = [...this.books];
+					this.mode = UserMode.READ;
+				});
+		}
 	}
 
 	saveBook(): void {
+		this.setItemsStatus();
+
 		if (this.mode == UserMode.NEW) {
 			this.bookService
-				.createBook(this.selectedBook)
+				.createBook(this.selectedBooks[0])
 				.pipe(take(1))
 				.subscribe((data) => {
 					this.mode = UserMode.READ;
-					this.selectedBook = { ...data };
+					this.selectedBooks = [{ ...data }];
 					this.fetchBooks();
 				});
 		} else if (this.mode == UserMode.EDIT) {
@@ -194,12 +275,19 @@ export class BooksComponent implements OnInit, AfterViewInit {
 	}
 
 	deleteBook(): void {
-		const bookId = this.selectedBook?._id || "";
-		this.bookService.deleteBook(bookId).subscribe(() => this.fetchBooks());
+		this.selectedBooks.forEach((book) => {
+			const bookId = book._id;
+
+			if (bookId) {
+				this.bookService
+					.deleteBook(bookId)
+					.subscribe(() => this.fetchBooks());
+			}
+		});
 	}
 
 	booking(requestor: string): void {
-		this.draftBookVersion = { ...this.selectedBook };
+		this.draftBookVersion = { ...this.selectedBooks[0] };
 		this.draftBookVersion.requestor.push(requestor);
 		this.updateBook();
 	}
@@ -212,9 +300,9 @@ export class BooksComponent implements OnInit, AfterViewInit {
 
 	cancelOperation(): void {
 		if (this.mode == UserMode.EDIT) {
-			this.draftBookVersion = this.selectedBook;
+			this.draftBookVersion = this.selectedBooks[0];
 		} else if (this.mode == UserMode.NEW) {
-			this.selectedBook = { ...this.books[0] };
+			this.selectedBooks = [{ ...this.books[0] }];
 		}
 
 		this.mode = UserMode.READ;

@@ -76,6 +76,14 @@ table td {
 	gap: var(--space-4);
 }
 
+.ml-auto {
+	margin-left: auto;
+}
+
+.mr-auto {
+	margin-right: auto;
+}
+
 .page-main-container {
 	display: flex;
 	flex-direction: column;
@@ -99,26 +107,6 @@ table td {
 
 .table-main-container tr {
 	cursor: pointer;
-}
-
-.table-main-container tr th {
-	color: var(--color-light);
-	background-color: var(--color-blue) !important;
-}
-
-.table-main-container tr th:hover {
-	color: var(--color-light);
-	background-color: var(--color-light-2) !important;
-}
-
-.table-main-container tr:hover td {
-	color: var(--color-dark);
-	background-color: var(--color-light) !important;
-}
-
-.table-main-container tr.active td {
-	color: var(--color-light);
-	background-color: var(--color-green) !important;
 }
 
 .modal .modal-header {

@@ -19,6 +19,42 @@
 				<i class="bi bi-search" *ngIf="!onSearch"></i>
 			</div>
 
+			<div class="filers-container" [class.no-logged]="!userLogged">
+				<select
+					class="form-select form-select-sm filter-by"
+					aria-label="Small select example"
+					*ngIf="userLogged"
+					[(ngModel)]="currentFilter"
+					(ngModelChange)="setFilterBy($event)"
+				>
+					<option selected [value]="filterBooksEnum.NONE">
+						Filtra per
+					</option>
+					<option [value]="filterBooksEnum.BOOKS_NO_REQUESTORS">
+						Libri senza richiedenti
+					</option>
+					<option [value]="filterBooksEnum.BOOKS_REQUESTORS">
+						Libri con richiedenti
+					</option>
+					<option [value]="filterBooksEnum.BOOKS_DISABLED">
+						Libri disabilitati
+					</option>
+				</select>
+
+				<select
+					class="form-select form-select-sm filter-by"
+					aria-label="Small select example"
+					[(ngModel)]="currentOrder"
+					(ngModelChange)="setOrderBy($event)"
+				>
+					<option selected [value]="orderBooksEnum.TITLE">
+						Titolo
+					</option>
+					<option [value]="orderBooksEnum.AUTHOR">Autore</option>
+					<option [value]="orderBooksEnum.PLACE">Luogo</option>
+				</select>
+			</div>
+
 			<button
 				*ngIf="!userLogged"
 				class="btn btn-booking btn-secondary"
@@ -34,6 +70,14 @@
 					(click)="setMode(userModeEnum.NEW)"
 				>
 					Crea
+				</button>
+
+				<button
+					class="btn btn-edit btn-secondary"
+					(click)="setMode(userModeEnum.MANAGE)"
+					*ngIf="false"
+				>
+					Gestisci
 				</button>
 
 				<button
@@ -77,9 +121,15 @@
 				<div class="modal-body">
 					<div class="book-info">
 						<div class="book-field d-flex flex-row">
-							<div class="field-title">Libro:</div>
+							<div class="field-title">Titolo:</div>
 							<div class="field-value">
 								{{ selectedBook?.title }}
+							</div>
+						</div>
+						<div class="book-field d-flex flex-row">
+							<div class="field-title">Autore:</div>
+							<div class="field-value">
+								{{ selectedBook?.authors }}
 							</div>
 						</div>
 						<div class="book-field d-flex flex-row">
@@ -105,7 +155,9 @@
 					<hr />
 
 					<div class="requestor-info d-flex flex-column">
-						<label class="field-title">Nome richiedente</label>
+						<label class="field-title"
+							>Cognome, Nome richiedente</label
+						>
 						<input
 							type="text"
 							class="form-control"

@@ -1,0 +1,23 @@
+.table-main-container tr th {
+	color: var(--color-light);
+	background-color: var(--color-blue) !important;
+}
+
+.table-main-container tr th:hover {
+	color: var(--color-light);
+	background-color: var(--color-light-2) !important;
+}
+
+.table-main-container tr:hover td {
+	color: var(--color-dark);
+	background-color: var(--color-light) !important;
+}
+
+.table-main-container tr.active td {
+	color: var(--color-light);
+	background-color: var(--color-green) !important;
+}
+
+.table-main-container tr.disabled td {
+	background-color: var(--color-btn-danger) !important;
+}

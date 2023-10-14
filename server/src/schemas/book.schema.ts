@@ -5,6 +5,9 @@ import * as mongoose from "mongoose";
 @Schema({ timestamps: true })
 export class Book {
 	@Prop()
+	status: boolean;
+
+	@Prop()
 	requestor: string[];
 
 	@Prop()

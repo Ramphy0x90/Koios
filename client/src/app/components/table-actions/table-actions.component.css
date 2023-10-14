@@ -17,7 +17,7 @@
 .actions-main-container .action-buttons-container {
 	display: grid;
 	width: 100%;
-	grid-template-columns: repeat(3, 85px);
+	grid-template-columns: repeat(4, 85px);
 	align-items: center;
 	gap: var(--space-4);
 }
@@ -49,12 +49,15 @@
 
 .actions-main-container .btn-booking {
 	width: 120px;
-	background-color: var(--color-btn-info);
-	border-radius: 0px;
+	background-color: var(--color-btn-danger);
 }
 
 .actions-main-container .icon-delete {
 	margin-left: auto;
+}
+
+.actions-main-container button.cancel {
+	background-color: var(--color-light-2);
 }
 
 .actions-main-container .search {
@@ -73,6 +76,15 @@
 
 .actions-main-container .search input:focus {
 	outline: none;
+}
+
+.actions-main-container .filers-container {
+	display: grid;
+	grid-template-columns: repeat(2, minmax(auto, 1fr));
+}
+
+.actions-main-container .filers-container.no-logged {
+	grid-template-columns: 1fr;
 }
 
 .modal .book-field {
@@ -99,5 +111,17 @@
 
 	.actions-main-container .action-buttons-container {
 		justify-content: start;
+	}
+}
+
+/* Large devices (desktops, 992px and up) */
+@media (min-width: 992px) {
+	.actions-main-container .filers-container {
+		grid-template-columns: 1fr;
+	}
+
+	.actions-main-container .filers-container.no-logged select:nth-child(1),
+	.actions-main-container .filers-container select:nth-child(2) {
+		display: none;
 	}
 }

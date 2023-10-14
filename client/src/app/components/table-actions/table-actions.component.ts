@@ -12,6 +12,10 @@ import { FormControl, FormGroup } from "@angular/forms";
 import { ActivatedRoute } from "@angular/router";
 import { ToastrService } from "ngx-toastr";
 import { take } from "rxjs";
+import {
+	FilterBooks,
+	OrderBooks,
+} from "src/app/containers/books/books.component";
 import { Book } from "src/app/models/book";
 import { BookService } from "src/app/services/book.service";
 import { UserService } from "src/app/services/user.service";
@@ -20,6 +24,7 @@ export enum UserMode {
 	READ,
 	NEW,
 	EDIT,
+	MANAGE,
 }
 
 export enum Action {
@@ -41,15 +46,22 @@ export class TableActionsComponent implements OnInit, OnChanges, AfterViewInit {
 	@Output() search: EventEmitter<string> = new EventEmitter();
 	@Output() restore: EventEmitter<boolean> = new EventEmitter();
 	@Output() booking: EventEmitter<string> = new EventEmitter();
+	@Output() filterBy: EventEmitter<FilterBooks> = new EventEmitter();
+	@Output() orderBy: EventEmitter<OrderBooks> = new EventEmitter();
 
 	searchFormGroup: FormGroup = new FormGroup({
 		search: new FormControl(),
 	});
 
+	filterBooksEnum = FilterBooks;
+	orderBooksEnum = OrderBooks;
 	userModeEnum = UserMode;
 	actionEnum = Action;
 
 	currentMode = UserMode.READ;
+	currentFilter = FilterBooks.NONE;
+	currentOrder = OrderBooks.TITLE;
+
 	onSearch: boolean = false;
 	userLogged: boolean = false;
 
@@ -99,6 +111,14 @@ export class TableActionsComponent implements OnInit, OnChanges, AfterViewInit {
 	setMode(mode: UserMode): void {
 		this.currentMode = mode;
 		this.mode.emit(this.currentMode);
+	}
+
+	setFilterBy(filter: FilterBooks): void {
+		this.filterBy.emit(filter);
+	}
+
+	setOrderBy(order: OrderBooks): void {
+		this.orderBy.emit(order);
 	}
 
 	execAction(action: Action): void {

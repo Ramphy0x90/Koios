@@ -13,6 +13,7 @@ import _ from "lodash";
 import { DBData } from "src/app/models/dbData";
 import { Book } from "src/app/models/book";
 import { UserService } from "src/app/services/user.service";
+import { UserMode } from "../table-actions/table-actions.component";
 
 interface TableColumn {
 	id: string;
@@ -29,9 +30,14 @@ interface TableColumn {
 })
 export class TableComponent<T extends DBData> implements OnInit, OnChanges {
 	@Input() data: T[] = [];
-	@Output() updateItem: EventEmitter<T> = new EventEmitter();
+	@Input() mode: UserMode = UserMode.READ;
 
-	selectedItem: T = this.data[0];
+	@Output() updateItem: EventEmitter<T> = new EventEmitter();
+	@Output() updateItems: EventEmitter<T[]> = new EventEmitter();
+
+	userModeEnum = UserMode;
+	selectedItem: T | undefined = this.data[0];
+	selectedItems: T[] = [];
 	tableColumns: TableColumn[] = [];
 
 	bookColumns = [
@@ -65,6 +71,10 @@ export class TableComponent<T extends DBData> implements OnInit, OnChanges {
 	}
 
 	ngOnChanges(changes: SimpleChanges): void {
+		if (changes["mode"]?.currentValue == this.userModeEnum.READ) {
+			this.selectedItems = [];
+		}
+
 		this.setCurrentItemFromUrl();
 	}
 
@@ -75,9 +85,24 @@ export class TableComponent<T extends DBData> implements OnInit, OnChanges {
 	select(item: T): void {
 		const path = this.isBook(this.data[0]) ? "books" : "authors";
 
-		this.selectedItem = item;
-		item && this.router.navigate([path, item?._id]);
-		this.updateItem.emit(item);
+		if (!this.isSelected(item)) {
+			if (this.mode == this.userModeEnum.READ) {
+				this.selectedItems = [item];
+			} else if (this.mode == this.userModeEnum.EDIT) {
+				this.selectedItems.push(item);
+			}
+		} else {
+			if (this.selectedItems.length > 1) {
+				_.remove(this.selectedItems, (i) => i._id == item._id);
+			}
+		}
+
+		this.updateItems.emit(this.selectedItems);
+		item && this.router.navigate([path, item?._id || ""]);
+	}
+
+	isSelected(item: T): boolean {
+		return this.selectedItems.includes(item);
 	}
 
 	updateData(data: T[]): void {
@@ -90,10 +115,8 @@ export class TableComponent<T extends DBData> implements OnInit, OnChanges {
 			const item = _.find(this.data, (item) => item._id == itemId);
 
 			if (item) {
-				this.selectedItem = item;
-				this.updateItem.emit(item);
-			} else {
-				this.select(this.data[0]);
+				this.selectedItems = [item];
+				this.updateItems.emit(this.selectedItems);
 			}
 		});
 	}

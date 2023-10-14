@@ -9,6 +9,7 @@ import { ActivatedRoute, Router } from "@angular/router";
 import { DBData } from "src/app/models/dbData";
 import { take } from "rxjs";
 import _ from "lodash";
+import { OrderBooks } from "src/app/containers/books/books.component";
 
 @Component({
 	selector: "app-items-island-view",
@@ -17,6 +18,7 @@ import _ from "lodash";
 })
 export class ItemsIslandViewComponent<T extends DBData> {
 	@Input() data: T[] = [];
+	@Input() order: OrderBooks = OrderBooks.TITLE;
 	@Output() updateItem: EventEmitter<T> = new EventEmitter();
 
 	selectedItem?: T;
@@ -26,6 +28,11 @@ export class ItemsIslandViewComponent<T extends DBData> {
 	ngOnChanges(changes: SimpleChanges): void {
 		if (changes["data"]?.currentValue) {
 			this.setCurrentItemFromUrl();
+			this.orderItems();
+		}
+
+		if (changes["order"]?.currentValue) {
+			this.orderItems();
 		}
 	}
 
@@ -33,6 +40,11 @@ export class ItemsIslandViewComponent<T extends DBData> {
 		this.selectedItem = item;
 		item && this.router.navigate(["books", item?._id]);
 		this.updateItem.emit(item);
+	}
+
+	orderItems(): void {
+		this.data = _.orderBy(this.data, this.order, "asc");
+		this.data = [...this.data];
 	}
 
 	setCurrentItemFromUrl(): void {

@@ -8,7 +8,20 @@
 		<i class="bi bi-x" title="Chiudi" (click)="closeInspector()"></i>
 	</div>
 
-	<ng-container *ngIf="isBook(data.value)">
+	<div class="inspector-field form-group">
+		<label>Stato <i class="bi bi-eye"></i></label>
+
+		<select
+			class="form-control"
+			[(ngModel)]="itemStatus"
+			(ngModelChange)="onItemStatusChange($event)"
+		>
+			<option value="true">Visibile</option>
+			<option value="false">Non visibile</option>
+		</select>
+	</div>
+
+	<ng-container *ngIf="data.length == 1 && isBook(data[0].value)">
 		<div class="inspector-field form-group">
 			<label>Richiedenti <i class="bi bi-people-fill"></i></label>
 
@@ -29,9 +42,9 @@
 
 			<div
 				class="d-flex flex-column requestors-list"
-				[class.limited]="data.value.requestor.length > 5"
+				[class.limited]="data[0].value.requestor.length > 5"
 			>
-				<ng-container *ngFor="let requestor of data.value.requestor">
+				<ng-container *ngFor="let requestor of data[0].value.requestor">
 					<div class="d-flex flex-row item">
 						<span>
 							<i class="bi bi-stop-fill"></i>
@@ -48,7 +61,7 @@
 
 				<div
 					class="d-flex flex-row item"
-					*ngIf="data.value.requestor.length == 0"
+					*ngIf="data[0].value.requestor.length == 0"
 				>
 					<span>
 						<i class="bi bi-stop-fill"></i>
@@ -63,8 +76,8 @@
 
 			<textarea
 				class="form-control"
-				[title]="data.value.authors"
-				[(ngModel)]="data.value.authors"
+				[title]="data[0].value.authors"
+				[(ngModel)]="data[0].value.authors"
 				[disabled]="mode == userMode.READ || !userLogged"
 			></textarea>
 		</div>
@@ -73,8 +86,8 @@
 			<label>Titolo <i class="bi bi-justify-left"></i></label>
 			<textarea
 				class="form-control"
-				[title]="data.value.title"
-				[(ngModel)]="data.value.title"
+				[title]="data[0].value.title"
+				[(ngModel)]="data[0].value.title"
 				[disabled]="mode == userMode.READ || !userLogged"
 			>
 			</textarea>
@@ -85,8 +98,8 @@
 			<input
 				type="number"
 				class="form-control"
-				[title]="data.value.year"
-				[(ngModel)]="data.value.year"
+				[title]="data[0].value.year"
+				[(ngModel)]="data[0].value.year"
 				[disabled]="mode == userMode.READ || !userLogged"
 			/>
 		</div>
@@ -95,8 +108,8 @@
 			<label>Argomento <i class="bi bi-justify-left"></i></label>
 			<textarea
 				class="form-control"
-				[title]="data.value.topic"
-				[(ngModel)]="data.value.topic"
+				[title]="data[0].value.topic"
+				[(ngModel)]="data[0].value.topic"
 				[disabled]="mode == userMode.READ || !userLogged"
 			></textarea>
 		</div>
@@ -105,7 +118,7 @@
 			<label>Note <i class="bi bi-justify-left"></i></label>
 			<textarea
 				class="form-control"
-				[(ngModel)]="data.value.notes"
+				[(ngModel)]="data[0].value.notes"
 				[disabled]="mode == userMode.READ"
 			></textarea>
 		</div>

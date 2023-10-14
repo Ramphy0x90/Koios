@@ -32,6 +32,7 @@ export class BookSeedService {
 				(row.getCell(8).value?.toString() || "");
 
 			const book = {
+				status: true,
 				requestor: [],
 				authors: authors,
 				title: title,

@@ -5,6 +5,8 @@
 			(mode)="updateMode($event)"
 			(action)="handleTableAction($event)"
 			(search)="search($event)"
+			(filterBy)="filter($event)"
+			(orderBy)="order($event)"
 			(restore)="fetchBooks()"
 			(booking)="booking($event)"
 		></app-table-actions>
@@ -12,11 +14,13 @@
 		<div #content class="content-container">
 			<app-table
 				[data]="books"
-				(updateItem)="setBook($event)"
+				[mode]="mode"
+				(updateItems)="setBooks($event)"
 			></app-table>
 
 			<app-items-island-view
 				[data]="books"
+				[order]="islandOrder"
 				(updateItem)="setBook($event)"
 			>
 			</app-items-island-view>
@@ -26,7 +30,8 @@
 	<app-inspector
 		[mode]="mode"
 		[status]="status"
-		[data]="getBook()"
+		[data]="getBooks()"
+		(itemsSstatus)="updateItemsStatus($event)"
 		(save)="saveBook()"
 		(closed)="cancelOperation()"
 	></app-inspector>

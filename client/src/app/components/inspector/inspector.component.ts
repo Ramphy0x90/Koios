@@ -5,11 +5,9 @@ import {
 	SimpleChanges,
 	ViewChild,
 	ElementRef,
-	HostListener,
 	OnInit,
 	Output,
 	EventEmitter,
-	AfterViewInit,
 } from "@angular/core";
 import { Book } from "src/app/models/book";
 import _ from "lodash";
@@ -38,10 +36,11 @@ export class InspectorComponent<T> implements OnInit, OnChanges {
 
 	@Input() mode: UserMode = UserMode.READ;
 	@Input() status: InspectorStatus = InspectorStatus.CLOSED;
-	@Input() data!: InspectorData<T>;
+	@Input() data: InspectorData<T>[] = [];
 
 	@Output() save: EventEmitter<boolean> = new EventEmitter();
 	@Output() closed: EventEmitter<boolean> = new EventEmitter();
+	@Output() itemsSstatus: EventEmitter<boolean> = new EventEmitter();
 
 	userMode = UserMode;
 	requestorsInputRef: string = "";
@@ -50,6 +49,7 @@ export class InspectorComponent<T> implements OnInit, OnChanges {
 	getScreenHeight: number = 0;
 
 	userLogged: boolean = false;
+	itemStatus: boolean = true;
 
 	constructor(private userService: UserService) {
 		this.userService.isLogged$.subscribe((status) => {
@@ -77,11 +77,21 @@ export class InspectorComponent<T> implements OnInit, OnChanges {
 
 		if (changes["data"]?.currentValue) {
 			this.data = changes["data"].currentValue;
+
+			if (this.data.length == 1 && this.isBook(this.data[0].value)) {
+				this.itemStatus = this.data[0].value.status;
+			} else {
+				this.itemStatus = true;
+			}
 		}
 	}
 
+	onItemStatusChange(status: boolean): void {
+		this.itemsSstatus.emit(status);
+	}
+
 	isBook(item: unknown): item is Book {
-		return this.data.type == "Book";
+		return _.has(this.data[0].value, "title");
 	}
 
 	openInspector(): void {
@@ -104,15 +114,15 @@ export class InspectorComponent<T> implements OnInit, OnChanges {
 	}
 
 	insertRequestor(): void {
-		if (this.isBook(this.data.value)) {
-			this.data.value.requestor.push(this.requestorsInputRef);
+		if (this.isBook(this.data[0].value) && this.data.length == 1) {
+			this.data[0].value.requestor.push(this.requestorsInputRef);
 			this.requestorsInputRef = "";
 		}
 	}
 
 	deleteRequestor(name: string): void {
-		if (this.isBook(this.data.value)) {
-			_.remove(this.data.value.requestor, (requestor) => {
+		if (this.isBook(this.data[0].value) && this.data.length == 1) {
+			_.remove(this.data[0].value.requestor, (requestor) => {
 				return requestor == name;
 			});
 		}

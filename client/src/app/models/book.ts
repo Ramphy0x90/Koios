@@ -1,6 +1,7 @@
 import { DBData } from "./dbData";
 
 export interface Book extends DBData {
+	status: boolean;
 	requestor: string[];
 	authors: string;
 	title: string;

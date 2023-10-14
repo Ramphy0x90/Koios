@@ -40,6 +40,20 @@ export class BookService {
 		return await result.exec();
 	}
 
+	async filter(term: string): Promise<Book[]> {
+		let result = this.bookModel.find();
+
+		if (term == "booksNoRequestors") {
+			result.where({ requestor: { $size: 0 } });
+		} else if (term == "booksRequestor") {
+			result.where({ requestor: { $not: { $size: 0 } } });
+		} else if (term == "booksDisabled") {
+			result.where({ status: false });
+		}
+
+		return await result.exec();
+	}
+
 	async getById(id: string): Promise<Book> {
 		return await this.bookModel.findById(id).exec();
 	}

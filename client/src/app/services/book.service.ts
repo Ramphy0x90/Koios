@@ -22,6 +22,12 @@ export class BookService {
 		);
 	}
 
+	filterBooks(term: string): Observable<Book[]> {
+		return this.httpClient.get<Book[]>(
+			`${environment.server}/${this.API_URI}/filter/${term}`
+		);
+	}
+
 	getBookById(id: string): Observable<Book> {
 		return this.httpClient.get<Book>(
 			`${environment.server}/${this.API_URI}/${id}`
@@ -35,9 +41,11 @@ export class BookService {
 		);
 	}
 
-	updateBook(id: string, book: Book): Observable<Book> {
+	updateBook(book: Book): Observable<Book> {
+		const bookId = book._id;
+
 		return this.httpClient.put<Book>(
-			`${environment.server}/${this.API_URI}/${id}`,
+			`${environment.server}/${this.API_URI}/${bookId}`,
 			book
 		);
 	}

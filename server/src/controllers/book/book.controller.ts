@@ -38,6 +38,15 @@ export class BookController {
 		return this.bookService.search(term);
 	}
 
+	@Get("filter/:term")
+	filterBooks(
+		@Res({ passthrough: true }) res: Response,
+		@Param("term") term: string
+	): Promise<Book[]> {
+		res.status(HttpStatus.OK);
+		return this.bookService.filter(term);
+	}
+
 	@Get(":id")
 	getBookById(
 		@Res({ passthrough: true }) res: Response,
