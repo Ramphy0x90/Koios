@@ -31,3 +31,17 @@ app-table {
 		padding: var(--space-4);
 	}
 }
+
+@media print {
+	app-table {
+		display: initial;
+	}
+
+	app-items-island-view {
+		display: none;
+	}
+
+	.content-container {
+		padding: var(--space-4);
+	}
+}
