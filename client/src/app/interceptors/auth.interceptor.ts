@@ -7,12 +7,16 @@ import {
 } from "@angular/common/http";
 import { Observable } from "rxjs";
 import { UserService } from "../services/user.service";
+import { GuestService } from "../services/guest.service";
 
 @Injectable()
 export class AuthInterceptor implements HttpInterceptor {
 	userLogged: boolean = false;
 
-	constructor(private userService: UserService) {
+	constructor(
+		private userService: UserService,
+		private guestService: GuestService
+	) {
 		this.userService.isLogged$.subscribe((status) => {
 			this.userLogged = status;
 		});
@@ -22,12 +26,13 @@ export class AuthInterceptor implements HttpInterceptor {
 		request: HttpRequest<unknown>,
 		next: HttpHandler
 	): Observable<HttpEvent<unknown>> {
-		let userToken = this.userService.getUserToken();
+		const userToken = this.userService.getUserToken();
+		const guestToken = this.guestService.getCurrentToken();
 
 		if (this.userLogged && userToken) {
 			request = request.clone({
 				setHeaders: {
-					Authorization: `Bearer ${userToken}`,
+					Authorization: `Bearer ${userToken || guestToken}`,
 				},
 			});
 		}

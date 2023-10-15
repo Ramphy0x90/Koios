@@ -55,6 +55,7 @@ export class TableComponent<T extends DBData> implements OnInit, OnChanges {
 	constructor(
 		private route: ActivatedRoute,
 		private router: Router,
+		private activeRoute: ActivatedRoute,
 		private userService: UserService
 	) {}
 
@@ -83,7 +84,10 @@ export class TableComponent<T extends DBData> implements OnInit, OnChanges {
 	}
 
 	select(item: T): void {
-		const path = this.isBook(this.data[0]) ? "books" : "authors";
+		const urlParts = this.router.url.split("/");
+		const path = urlParts.includes("guest")
+			? `guest/${urlParts[urlParts.indexOf("guest") + 1]}/books`
+			: "books";
 
 		if (!this.isSelected(item)) {
 			if (this.mode == this.userModeEnum.READ) {

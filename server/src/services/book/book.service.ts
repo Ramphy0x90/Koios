@@ -78,7 +78,7 @@ export class BookService {
 			entity: "Book",
 			target: id,
 			operation: "UPDATE",
-			changes: "??",
+			changes: "",
 		});
 
 		return await this.bookModel.findByIdAndUpdate(id, book, { new: true });

@@ -145,17 +145,29 @@
 
 			<div class="content">
 				<div class="actions d-flex justify-content-between">
-					<button
-						class="btn btn-new btn-secondary create"
-						data-bs-toggle="modal"
-						data-bs-target="#guestCreation"
-					>
-						Crea
-					</button>
+					<div class="d-flex gap-1">
+						<button
+							class="btn btn-new btn-secondary create"
+							data-bs-toggle="modal"
+							data-bs-target="#guestCreation"
+						>
+							Crea
+						</button>
+
+						<button
+							class="btn btn-new btn-secondary create"
+							data-bs-toggle="modal"
+							data-bs-target="#guestShare"
+							*ngIf="selectedGuest?._id"
+						>
+							Condividi
+						</button>
+					</div>
 
 					<button
 						class="btn btn-new btn-secondary edit"
-						(click)="editUser()"
+						(click)="deleteGuest()"
+						*ngIf="selectedGuest?._id"
 					>
 						Elimina
 					</button>
@@ -173,7 +185,6 @@
 						<thead>
 							<tr>
 								<th scope="col" id="guest">Guest</th>
-								<th scope="col" id="link">Link</th>
 								<th scope="col" id="created">Data creazione</th>
 								<th scope="col" id="expire">Data scadenza</th>
 							</tr>
@@ -184,12 +195,11 @@
 								(click)="selectGuest(guest)"
 								[class.active]="
 									(selectedGuest &&
-										guest.token == selectedGuest.token) ||
+										guest._id == selectedGuest._id) ||
 									''
 								"
 							>
 								<td>{{ guest.guest }}</td>
-								<td>{{ guest }}</td>
 								<td>
 									{{ guest.createdAt | date : "dd/MM/yyyy" }}
 								</td>
@@ -202,7 +212,7 @@
 				</div>
 			</div>
 
-			<!-- Modal -->
+			<!-- Modal create guest-->
 			<div
 				class="modal fade"
 				id="guestCreation"
@@ -223,9 +233,9 @@
 								aria-label="Close"
 							></button>
 						</div>
-						<div class="modal-body">
+						<div class="modal-body d-flex flex-column gap-2">
 							<div class="requestor-info d-flex flex-column">
-								<label class="field-title">Nome guest</label>
+								<label class="field-title">Guest</label>
 								<input
 									type="text"
 									class="form-control"
@@ -262,12 +272,56 @@
 					</div>
 				</div>
 			</div>
-		</div>
 
-		<div class="links-section section">
-			<div class="lead">Gestione libri</div>
-
-			<div class="content"></div>
+			<!-- Modal share guest -->
+			<div
+				class="modal fade"
+				id="guestShare"
+				tabindex="-1"
+				aria-labelledby="guestShareLabel"
+				aria-hidden="true"
+			>
+				<div class="modal-dialog">
+					<div class="modal-content">
+						<div class="modal-header">
+							<h5 class="modal-title" id="guestShareLabel">
+								Condivisione link per guest
+							</h5>
+							<button
+								type="button"
+								class="btn-close"
+								data-bs-dismiss="modal"
+								aria-label="Close"
+							></button>
+						</div>
+						<div class="modal-body">
+							<div class="requestor-info d-flex flex-column">
+								<label class="field-title">Link</label>
+								<input
+									type="text"
+									class="form-control"
+									readonly
+									[value]="
+										urlBase +
+										'/#/guest/' +
+										selectedGuest?._id +
+										'/books'
+									"
+								/>
+							</div>
+						</div>
+						<div class="modal-footer">
+							<button
+								type="button"
+								class="btn btn-secondary cancel"
+								data-bs-dismiss="modal"
+							>
+								Chiudi
+							</button>
+						</div>
+					</div>
+				</div>
+			</div>
 		</div>
 	</div>
 </div>

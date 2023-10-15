@@ -14,7 +14,7 @@ import { Log, LogSchema } from "./schemas/log.schema";
 import { LogController } from "./controllers/log/log.controller";
 import { GuestController } from "./controllers/guest/guest.controller";
 import { GuestService } from "./services/guest/guest.service";
-import { Guest, GuestSchema } from "./schemas/guest";
+import { Guest, GuestSchema } from "./schemas/guest.schema";
 
 @Module({
 	imports: [

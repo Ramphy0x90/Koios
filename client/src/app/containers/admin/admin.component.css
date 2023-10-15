@@ -112,6 +112,17 @@
 	overflow-y: auto;
 }
 
+.table-container tr:hover td {
+	cursor: pointer;
+	color: var(--color-dark);
+	background-color: var(--color-light) !important;
+}
+
+.table-container tr.active td {
+	color: var(--color-light);
+	background-color: var(--color-green) !important;
+}
+
 /* Large devices (desktops, 992px and up) */
 @media (min-width: 992px) {
 	.admin-main-container .dashboard {

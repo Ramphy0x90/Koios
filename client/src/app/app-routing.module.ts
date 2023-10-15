@@ -5,9 +5,18 @@ import { LogComponent } from "./containers/log/log.component";
 import { LoginComponent } from "./containers/login/login.component";
 import { authGuard } from "./guards/auth.guard";
 import { AdminComponent } from "./containers/admin/admin.component";
+import { guestGuard } from "./guards/guest.guard";
 
 const routes: Routes = [
-	{ path: "", pathMatch: "full", redirectTo: "books" },
+	{ path: "", pathMatch: "full", redirectTo: "login" },
+	{
+		path: "guest/:token",
+		canActivate: [guestGuard],
+		children: [
+			{ path: "books", component: BooksComponent },
+			{ path: "books/:id", component: BooksComponent },
+		],
+	},
 	{
 		path: "books",
 		component: BooksComponent,

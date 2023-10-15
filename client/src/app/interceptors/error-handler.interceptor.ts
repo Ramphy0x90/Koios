@@ -9,12 +9,14 @@ import {
 import { Observable, catchError, throwError } from "rxjs";
 import { ToastrService } from "ngx-toastr";
 import { UserService } from "../services/user.service";
+import { Router } from "@angular/router";
 
 @Injectable()
 export class ErrorHandlerInterceptor implements HttpInterceptor {
 	constructor(
 		private userService: UserService,
-		private toastr: ToastrService
+		private toastr: ToastrService,
+		private router: Router
 	) {}
 
 	intercept(
@@ -37,6 +39,7 @@ export class ErrorHandlerInterceptor implements HttpInterceptor {
 
 				if (error.status == 401) {
 					this.userService.logOut();
+					this.router.navigate(["login"]);
 				}
 
 				this.toastr.warning(msg);

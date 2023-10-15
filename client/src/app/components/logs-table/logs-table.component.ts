@@ -15,7 +15,6 @@ export class LogsTableComponent {
 		{ id: "target", title: "Soggetto" },
 		{ id: "operation", title: "Operazione" },
 		{ id: "executer", title: "Esecutore" },
-		{ id: "changes", title: "Modifiche" },
 		{ id: "updatedAt", title: "Data" },
 	];
 

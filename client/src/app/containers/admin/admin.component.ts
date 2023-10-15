@@ -9,6 +9,7 @@ import _ from "lodash";
 import { GuestService } from "src/app/services/guest.service";
 import { GuestTempAuthResponse } from "src/app/models/guestTempAuthResponse";
 import { GuestTokenRequest } from "src/app/models/guestTokenRequest";
+import { environment } from "src/environments/environment";
 
 export enum Mode {
 	READ,
@@ -24,6 +25,7 @@ export enum Mode {
 export class AdminComponent implements OnInit {
 	modeEnum = Mode;
 	mode: Mode = Mode.READ;
+	urlBase: string = environment.serverBase;
 
 	selectedUser?: User;
 	users: User[] = [];
@@ -142,11 +144,23 @@ export class AdminComponent implements OnInit {
 		});
 	}
 
+	deleteGuest(): void {
+		const guestId = this.selectedGuest?._id;
+
+		if (guestId) {
+			this.guestService.deleteToken(guestId).subscribe(() => {
+				this.fetchGuests();
+			});
+		}
+	}
+
 	cancel(): void {
 		this.fetchUsers();
 		this.mode = Mode.READ;
 		this.selectedUser = this.users[0];
 	}
 
-	updateLinksData(data: any): void {}
+	updateLinksData(guests: GuestTempAuthResponse[]): void {
+		this.guests = [...guests];
+	}
 }

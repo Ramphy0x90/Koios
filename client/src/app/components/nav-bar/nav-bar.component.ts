@@ -9,14 +9,11 @@ import { UserService } from "src/app/services/user.service";
 	styleUrls: ["./nav-bar.component.css"],
 })
 export class NavBarComponent implements OnInit {
-	readonly navOptions: NavOption[] = [
+	readonly navOptionsAdmin: NavOption[] = [
 		{
 			name: "Libri",
 			route: "books",
 		},
-	];
-
-	readonly navOptionsAdmin: NavOption[] = [
 		{
 			name: "Admin",
 			route: "admin",

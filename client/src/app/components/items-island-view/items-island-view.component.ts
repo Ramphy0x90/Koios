@@ -37,8 +37,13 @@ export class ItemsIslandViewComponent<T extends DBData> {
 	}
 
 	select(item: T): void {
+		const urlParts = this.router.url.split("/");
+		const path = urlParts.includes("guest")
+			? `guest/${urlParts[urlParts.indexOf("guest") + 1]}/books`
+			: "books";
+
 		this.selectedItem = item;
-		item && this.router.navigate(["books", item?._id]);
+		item && this.router.navigate([path, item?._id]);
 		this.updateItem.emit(item);
 	}
 

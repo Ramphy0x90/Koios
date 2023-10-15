@@ -91,11 +91,6 @@
 	gap: var(--space-6);
 }
 
-.modal .field-title {
-	font-weight: bold;
-	color: var(--color-dark);
-}
-
 .modal .field-value {
 	white-space: nowrap;
 	overflow: hidden;

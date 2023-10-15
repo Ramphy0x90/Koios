@@ -113,6 +113,11 @@ table td {
 	color: var(--color-blue);
 }
 
+.modal .field-title {
+	font-weight: bold;
+	color: var(--color-dark);
+}
+
 .modal button {
 	padding: var(--space-3) var(--space-6);
 	border: none;
