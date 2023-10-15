@@ -149,6 +149,7 @@ export class AdminComponent implements OnInit {
 
 		if (guestId) {
 			this.guestService.deleteToken(guestId).subscribe(() => {
+				this.selectedGuest = undefined;
 				this.fetchGuests();
 			});
 		}
