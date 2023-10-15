@@ -47,10 +47,12 @@ export class GuestService {
 			throw new InvalidTokenException();
 		}
 
-		const isValid =
-			token && (await this.authService.verifyJwt(token.token));
+		if (token) {
+			const isValid = await this.authService.verifyJwt(token.token);
+			return { token: token.token, isValid: !!isValid };
+		}
 
-		return { token: token.token, isValid: !!isValid };
+		throw new InvalidTokenException();
 	}
 
 	async deleteToken(id: string): Promise<object> {
