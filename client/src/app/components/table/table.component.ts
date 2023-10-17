@@ -43,9 +43,15 @@ export class TableComponent<T extends DBData> implements OnInit, OnChanges {
 	bookColumns = [
 		{ id: "requestor", title: "Richiedenti", auth: false },
 		{ id: "authors", title: "Autore", auth: false },
-		{ id: "title", title: "Titolo", defaultSort: true, auth: false },
+		{
+			id: "title",
+			title: "Titolo",
+			width: "350px",
+			defaultSort: true,
+			auth: false,
+		},
 		{ id: "year", title: "Anno", width: "100px", auth: false },
-		{ id: "topic", title: "Argomento", auth: false },
+		{ id: "topic", title: "Argomento", width: "150px", auth: false },
 		{ id: "place", title: "Luogo", auth: false },
 		{ id: "notes", title: "Note", auth: true },
 	];
