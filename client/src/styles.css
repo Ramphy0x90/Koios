@@ -135,7 +135,7 @@ table td {
 }
 
 /* Large devices (desktops, 992px and up) */
-@media (min-width: 992px), {
+@media (min-width: 992px) {
 	table {
 		table-layout: fixed;
 	}

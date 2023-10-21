@@ -9,6 +9,7 @@ import { LoginComponent } from "./login/login.component";
 import { RegisterComponent } from "./register/register.component";
 import { AdminComponent } from "./admin/admin.component";
 import { DirectivesModule } from "../directives/directives.module";
+import { TutorialComponent } from './tutorial/tutorial.component';
 
 @NgModule({
 	declarations: [
@@ -17,6 +18,7 @@ import { DirectivesModule } from "../directives/directives.module";
 		LoginComponent,
 		RegisterComponent,
 		AdminComponent,
+  TutorialComponent,
 	],
 	imports: [
 		CommonModule,

@@ -1,0 +1,38 @@
+.tutorial-main-container {
+	padding: var(--space-6);
+}
+
+.tutorial-main-container .list-group {
+	width: 100%;
+	padding: var(--space-6) 0;
+}
+
+.tutorial-main-container .list-group-item {
+	padding: var(--space-5) var(--space-8);
+}
+
+.tutorial-main-container .content-0 .example-container {
+	flex-direction: column;
+	width: 100%;
+}
+
+.tutorial-main-container .content-0 .example-container .image-container {
+	display: grid;
+	grid-template-columns: repeat(2, minmax(300px, 1fr));
+}
+
+.tutorial-main-container .content-0 img {
+	width: 100%;
+}
+
+/* Large devices (desktops, 992px and up) */
+@media (min-width: 767.98px) {
+	.tutorial-main-container .list-group {
+		width: fit-content;
+	}
+
+	.tutorial-main-container .content-0 .example-container {
+		flex-direction: row;
+		width: 100%;
+	}
+}

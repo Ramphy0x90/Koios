@@ -38,6 +38,7 @@ export class AdminComponent implements OnInit {
 
 	selectedGuest?: GuestTempAuthResponse;
 	guests: GuestTempAuthResponse[] = [];
+	activeGuests: GuestTempAuthResponse[] = [];
 	guestTemplate: GuestTokenRequest = {
 		guest: "",
 		expirationDate: new Date(),
@@ -86,6 +87,12 @@ export class AdminComponent implements OnInit {
 			.pipe(take(1))
 			.subscribe((guests) => {
 				this.guests = guests;
+
+				this.activeGuests = _.filter(this.guests, (guest) => {
+					const today = new Date();
+					const expiration = new Date(guest.expiration);
+					return expiration.getTime() - today.getTime() > 0;
+				});
 			});
 	}
 

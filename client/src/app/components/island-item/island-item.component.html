@@ -1,18 +1,24 @@
 <div class="island-item-main-container" [class.active]="active">
-	<i class="bi bi-check-circle-fill" *ngIf="active"></i>
+	<i class="bi bi-check-circle-fill icon-check" *ngIf="active"></i>
 
 	<div class="content">
 		<ng-container *ngIf="isBook(item)">
-			<div class="content-book d-flex flex-row">
-				<div class="column-left d-flex flex-column">
-					<div>Richiedenti</div>
-					<div>{{ item.requestor.length }}</div>
-				</div>
-
-				<div class="column-right">
-					<div class="main">{{ item.title }}</div>
-					<div class="body">{{ item.topic }}</div>
-					<div class="sub">{{ item.year }}</div>
+			<div class="content-book">
+				<div class="main">{{ item.title }}</div>
+				<div class="body">{{ item.authors }}</div>
+				<div class="sub">
+					<div class="sub-info">
+						<i class="bi bi-geo-alt"></i>
+						{{ item.place }}
+					</div>
+					<div class="sub-info">
+						<i class="bi bi-calendar4-week"></i>
+						{{ item.year }}
+					</div>
+					<div class="sub-info">
+						<i class="bi bi-people-fill"></i>
+						Richiedenti: {{ item.requestor.length }}
+					</div>
 				</div>
 			</div>
 		</ng-container>

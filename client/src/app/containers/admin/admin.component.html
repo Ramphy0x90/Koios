@@ -9,7 +9,7 @@
 		<app-admin-info-card
 			[icon]="'bi bi-share-fill'"
 			[title]="'Guest attivi'"
-			[value]="guests.length"
+			[value]="activeGuests.length"
 		></app-admin-info-card>
 
 		<app-admin-info-card
@@ -193,6 +193,7 @@
 							<tr
 								*ngFor="let guest of guests"
 								(click)="selectGuest(guest)"
+								[class.valid]="activeGuests.includes(guest)"
 								[class.active]="
 									(selectedGuest &&
 										guest._id == selectedGuest._id) ||
@@ -200,10 +201,10 @@
 								"
 							>
 								<td>{{ guest.guest }}</td>
-								<td>
+								<td class="date creation">
 									{{ guest.createdAt | date : "dd/MM/yyyy" }}
 								</td>
-								<td>
+								<td class="date expiration">
 									{{ guest.expiration | date : "dd/MM/yyyy" }}
 								</td>
 							</tr>

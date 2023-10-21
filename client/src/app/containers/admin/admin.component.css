@@ -123,6 +123,14 @@
 	background-color: var(--color-green) !important;
 }
 
+.table-container .date.expiration {
+	color: var(--color-btn-danger);
+}
+
+.table-container .valid .date.expiration {
+	color: var(--color-btn-success);
+}
+
 /* Large devices (desktops, 992px and up) */
 @media (min-width: 992px) {
 	.admin-main-container .dashboard {

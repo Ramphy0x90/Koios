@@ -6,6 +6,7 @@ import { LoginComponent } from "./containers/login/login.component";
 import { authGuard } from "./guards/auth.guard";
 import { AdminComponent } from "./containers/admin/admin.component";
 import { guestGuard } from "./guards/guest.guard";
+import { TutorialComponent } from "./containers/tutorial/tutorial.component";
 
 const routes: Routes = [
 	{ path: "", pathMatch: "full", redirectTo: "login" },
@@ -40,6 +41,10 @@ const routes: Routes = [
 	{
 		path: "login",
 		component: LoginComponent,
+	},
+	{
+		path: "tutorial",
+		component: TutorialComponent,
 	},
 ];
 
