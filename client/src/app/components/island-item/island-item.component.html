@@ -4,8 +4,6 @@
 	<div class="content">
 		<ng-container *ngIf="isBook(item)">
 			<div class="content-book">
-				<div class="main">{{ item.title }}</div>
-				<div class="body">{{ item.authors }}</div>
 				<div class="sub">
 					<div class="sub-info">
 						<i class="bi bi-geo-alt"></i>
@@ -20,6 +18,8 @@
 						Richiedenti: {{ item.requestor.length }}
 					</div>
 				</div>
+				<div class="main">{{ item.title }}</div>
+				<div class="body">{{ item.authors }}</div>
 			</div>
 		</ng-container>
 	</div>
