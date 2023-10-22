@@ -14,7 +14,7 @@ import _ from "lodash";
 export class GuestService {
 	private readonly API_URI = "api/v1/guest";
 
-	constructor(private httpClient: HttpClient, private router: Router) {}
+	constructor(private httpClient: HttpClient) {}
 
 	getAll(): Observable<GuestTempAuthResponse[]> {
 		return this.httpClient.get<GuestTempAuthResponse[]>(
