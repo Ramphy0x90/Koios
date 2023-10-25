@@ -43,7 +43,7 @@
 
 .tutorial-main-container .content-0 .example-container {
 	width: 100%;
-	max-width: 1000px;
+	max-width: 1111px;
 	gap: var(--space-5);
 }
 
@@ -67,7 +67,7 @@
 
 .tutorial-main-container .content-1 .image-container {
 	width: 100%;
-	max-width: 1000px;
+	max-width: 1111px;
 	height: 666px;
 	position: relative;
 	overflow: hidden;

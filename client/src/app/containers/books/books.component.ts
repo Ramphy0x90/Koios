@@ -29,7 +29,8 @@ export enum FilterBooks {
 export enum OrderBooks {
 	TITLE = "title",
 	AUTHOR = "authors",
-	PLACE = "place",
+    TOPIC = "topic",
+    PLACE = "place",
 }
 
 @Component({

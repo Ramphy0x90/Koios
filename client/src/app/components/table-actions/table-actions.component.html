@@ -47,22 +47,27 @@
 					[(ngModel)]="currentOrder"
 					(ngModelChange)="setOrderBy($event)"
 				>
-					<option selected [value]="orderBooksEnum.TITLE">
-						Titolo
-					</option>
+					<option selected [value]="orderBooksEnum.TITLE">Titolo</option>
 					<option [value]="orderBooksEnum.AUTHOR">Autore</option>
+                    <option [value]="orderBooksEnum.TOPIC">Argomento</option>
 					<option [value]="orderBooksEnum.PLACE">Luogo</option>
 				</select>
 			</div>
 
-			<button
-				*ngIf="!userLogged"
-				class="btn btn-booking btn-secondary"
-				data-bs-toggle="modal"
-				data-bs-target="#bookingModal"
-			>
-				Prenota libro
-			</button>
+            <div class="d-flex flex-row gap-1">
+                <a class="btn btn-question d-flex" routerLink="/tutorial">
+                    <i class="bi bi-question-lg"></i>
+                </a>
+    
+                <button
+                    *ngIf="!userLogged"
+                    class="btn btn-booking btn-secondary"
+                    data-bs-toggle="modal"
+                    data-bs-target="#bookingModal"
+                >
+                    Prenota libro
+                </button>
+            </div>
 
 			<div class="action-buttons-container" *ngIf="userLogged">
 				<button
@@ -156,8 +161,8 @@
 
 					<div class="requestor-info d-flex flex-column">
 						<label class="field-title"
-							>Cognome, Nome richiedente</label
-						>
+							>Cognome, Nome del richiedente
+                        </label>
 						<input
 							type="text"
 							class="form-control"

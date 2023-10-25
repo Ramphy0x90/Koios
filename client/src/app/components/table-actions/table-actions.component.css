@@ -22,7 +22,8 @@
 	gap: var(--space-4);
 }
 
-.actions-main-container button {
+.actions-main-container button,
+.actions-main-container .btn-question {
 	padding: var(--space-3) var(--space-6);
 	border: none;
 	border-radius: 6px;
@@ -44,6 +45,14 @@
 }
 
 .actions-main-container .btn-export {
+	background-color: var(--color-btn-info);
+}
+
+.actions-main-container .btn-question { 
+    justify-content: center;
+    align-items: center;
+    font-size: 17px;
+    color: var(--color-light);
 	background-color: var(--color-btn-info);
 }
 

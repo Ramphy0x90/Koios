@@ -46,7 +46,7 @@ export class TableComponent<T extends DBData> implements OnInit, OnChanges {
 		{
 			id: "title",
 			title: "Titolo",
-			width: "350px",
+			width: "400px",
 			defaultSort: true,
 			auth: false,
 		},
