@@ -3,7 +3,8 @@
 
 	<div class="content">
 		<ng-container *ngIf="isBook(item)">
-			<div class="content-book">
+			<div class="content-book"
+            >
 				<div class="main">{{ item.title }}</div>
 				<div class="body">{{ item.authors }}</div>
 				<div class="sub">
@@ -23,4 +24,80 @@
 			</div>
 		</ng-container>
 	</div>
+
+    <!-- Modal -->
+	<div class="modal fade"
+        id="viewModal"
+        tabindex="-1"
+        aria-labelledby="viewModelLabel"
+        aria-hidden="true"
+    >
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="viewModelLabel">
+                    Dettagli libro
+                </h5>
+                <button
+                    type="button"
+                    class="btn-close"
+                    data-bs-dismiss="modal"
+                    aria-label="Close"
+                ></button>
+            </div>
+            <div class="modal-body" *ngIf="isBook(item)">
+                <div class="d-flex flex-column gap-2">
+                    <div class="book-field">
+                        <div class="field-title">Titolo</div>
+                        <div class="field-value">
+                            {{ item.title }}
+                        </div>
+                    </div>
+                    <div class="book-field">
+                        <div class="field-title">Autore</div>
+                        <div class="field-value">
+                            {{ item.authors }}
+                        </div>
+                    </div>
+                    <div class="book-field">
+                        <div class="field-title">Argomento</div>
+                        <div class="field-value">
+                            {{ item.topic }}
+                        </div>
+                    </div>
+                    <div class="book-field">
+                        <div class="field-title">Anno</div>
+                        <div class="field-value">
+                            {{ item.year }}
+                        </div>
+                    </div>
+                    <div class="book-field">
+                        <div class="field-title">Totale richiedenti</div>
+                        <div class="field-value">
+                            {{ item.requestor.length }}
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button
+                    type="button"
+                    class="btn btn-secondary cancel"
+                    data-bs-dismiss="modal"
+                >
+                    Chiudi
+                </button>
+                <button
+                    type="button"
+                    class="btn btn-primary booking submit"
+                    data-bs-toggle="modal"
+                    data-bs-target="#bookingModal"
+  
+                >
+                    Prenota
+                </button>
+            </div>
+        </div>
+    </div>
+</div>
 </div>

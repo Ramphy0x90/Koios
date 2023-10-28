@@ -54,7 +54,7 @@
 				</select>
 			</div>
 
-            <div class="d-flex flex-row gap-1">
+            <div class="d-flex flex-row gap-2">
                 <a class="btn btn-question d-flex" routerLink="/tutorial">
                     <i class="bi bi-question-lg"></i>
                 </a>
@@ -67,38 +67,38 @@
                 >
                     Prenota libro
                 </button>
+
+                <div class="action-buttons-container" *ngIf="userLogged">
+                    <button
+                        class="btn btn-new btn-secondary"
+                        (click)="setMode(userModeEnum.NEW)"
+                    >
+                        Crea
+                    </button>
+    
+                    <button
+                        class="btn btn-edit btn-secondary"
+                        (click)="setMode(userModeEnum.MANAGE)"
+                        *ngIf="false"
+                    >
+                        Gestisci
+                    </button>
+    
+                    <button
+                        class="btn btn-edit btn-secondary"
+                        (click)="setMode(userModeEnum.EDIT)"
+                    >
+                        Modifica
+                    </button>
+    
+                    <button
+                        class="btn btn-export btn-secondary"
+                        (click)="execAction(actionEnum.EXPORT)"
+                    >
+                        Esporta
+                    </button>
+                </div>
             </div>
-
-			<div class="action-buttons-container" *ngIf="userLogged">
-				<button
-					class="btn btn-new btn-secondary"
-					(click)="setMode(userModeEnum.NEW)"
-				>
-					Crea
-				</button>
-
-				<button
-					class="btn btn-edit btn-secondary"
-					(click)="setMode(userModeEnum.MANAGE)"
-					*ngIf="false"
-				>
-					Gestisci
-				</button>
-
-				<button
-					class="btn btn-edit btn-secondary"
-					(click)="setMode(userModeEnum.EDIT)"
-				>
-					Modifica
-				</button>
-
-				<button
-					class="btn btn-export btn-secondary"
-					(click)="execAction(actionEnum.EXPORT)"
-				>
-					Esporta
-				</button>
-			</div>
 		</div>
 	</ng-container>
 
@@ -124,33 +124,33 @@
 					></button>
 				</div>
 				<div class="modal-body">
-					<div class="book-info">
-						<div class="book-field d-flex flex-row">
-							<div class="field-title">Titolo:</div>
+					<div class="book-info d-flex flex-column gap-2">
+						<div class="book-field">
+							<div class="field-title">Titolo</div>
 							<div class="field-value">
 								{{ selectedBook?.title }}
 							</div>
 						</div>
-						<div class="book-field d-flex flex-row">
-							<div class="field-title">Autore:</div>
+						<div class="book-field">
+							<div class="field-title">Autore</div>
 							<div class="field-value">
 								{{ selectedBook?.authors }}
 							</div>
 						</div>
-						<div class="book-field d-flex flex-row">
-							<div class="field-title">Argomento:</div>
+						<div class="book-field">
+							<div class="field-title">Argomento</div>
 							<div class="field-value">
 								{{ selectedBook?.topic }}
 							</div>
 						</div>
-						<div class="book-field d-flex flex-row">
-							<div class="field-title">Anno:</div>
+						<div class="book-field">
+							<div class="field-title">Anno</div>
 							<div class="field-value">
 								{{ selectedBook?.year }}
 							</div>
 						</div>
-						<div class="book-field d-flex flex-row">
-							<div class="field-title">Totale richiedenti:</div>
+						<div class="book-field">
+							<div class="field-title">Totale richiedenti</div>
 							<div class="field-value">
 								{{ selectedBook?.requestor?.length }}
 							</div>
