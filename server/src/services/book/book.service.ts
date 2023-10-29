@@ -5,6 +5,10 @@ import { Book } from "src/schemas/book.schema";
 import _ from "lodash";
 import { LogService } from "../log/log.service";
 import { Log } from "src/schemas/log.schema";
+import * as path from "path";
+import { Worksheet } from "exceljs";
+
+const ExcelJS = require("exceljs");
 
 @Injectable()
 export class BookService {
@@ -93,5 +97,45 @@ export class BookService {
 		});
 
 		return await this.bookModel.deleteOne({ _id: id });
+    }
+    
+    async import(file) {
+        console.log(file)
+		const workbook = new ExcelJS.Workbook();
+        await workbook.xlsx.load(file.buffer);
+		const worksheet: Worksheet = workbook.worksheets[1];
+        const totalRows = worksheet.rowCount;
+        
+        console.log(worksheet)
+
+		let books: Book[] = [];
+
+		for (const row of worksheet.getRows(1, totalRows)) {
+			let authors = row.getCell(2).value?.toString() || "-";
+			let title = row.getCell(3).value?.toString() || "-";
+			let year = row.getCell(4).value?.valueOf();
+			let topic = row.getCell(5).value?.toString() || "";
+			let place = row.getCell(6).value?.toString() || "";
+			let notes =
+				(row.getCell(7).value?.toString() || "") +
+				"\n" +
+				(row.getCell(8).value?.toString() || "");
+
+			const book = {
+				status: true,
+				requestor: [],
+				authors: authors,
+				title: title,
+				year: !Number.isNaN(Number(year)) ? Number(year) : null,
+				topic: topic,
+				place: place,
+				notes: notes,
+			};
+
+			books.push(<Book>book);
+		}
+
+		await this.bookModel.deleteMany({});
+		await this.bookModel.create(books);
 	}
 }

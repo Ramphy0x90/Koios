@@ -7,6 +7,8 @@ import {
 	OnChanges,
 	SimpleChanges,
 	OnInit,
+    ViewChild,
+    ElementRef,
 } from "@angular/core";
 import { FormControl, FormGroup } from "@angular/forms";
 import { ActivatedRoute } from "@angular/router";
@@ -30,7 +32,8 @@ export enum UserMode {
 export enum Action {
 	SAVE,
 	CANCEL,
-	DELETE,
+    DELETE,
+    IMPORT,
 	EXPORT,
 }
 
@@ -47,7 +50,9 @@ export class TableActionsComponent implements OnInit, OnChanges, AfterViewInit {
 	@Output() restore: EventEmitter<boolean> = new EventEmitter();
 	@Output() booking: EventEmitter<string> = new EventEmitter();
 	@Output() filterBy: EventEmitter<FilterBooks> = new EventEmitter();
-	@Output() orderBy: EventEmitter<OrderBooks> = new EventEmitter();
+    @Output() orderBy: EventEmitter<OrderBooks> = new EventEmitter();
+    
+    @ViewChild('fileInput') fileInput?: ElementRef;
 
 	searchFormGroup: FormGroup = new FormGroup({
 		search: new FormControl(),
@@ -66,7 +71,8 @@ export class TableActionsComponent implements OnInit, OnChanges, AfterViewInit {
 	userLogged: boolean = false;
 
 	selectedBookId?: string;
-	selectedBook?: Book;
+    selectedBook?: Book;
+    selectedFile?: File;
 	possibleRequestor: string = "";
 
 	constructor(
@@ -149,5 +155,24 @@ export class TableActionsComponent implements OnInit, OnChanges, AfterViewInit {
 			this.booking.emit(this.possibleRequestor);
 			this.possibleRequestor = "";
 		}
-	}
+    }
+    
+    onFileSelected(event: any) {
+        this.selectedFile = event.target.files[0];
+    }
+    
+    uploadFile() {
+        if (this.selectedFile) {
+            this.bookService.uploadExcelFile(this.selectedFile).subscribe((response) => {
+                this.selectedFile = undefined;
+                
+                if (this.fileInput) {
+                    this.fileInput.nativeElement.value = '';
+                }
+                
+                this.restore.emit(true);
+                this.toastr.success("File Excel importato correttamente");
+            });
+        }
+    }
 }

@@ -90,6 +90,14 @@
                     >
                         Modifica
                     </button>
+
+                    <button
+                        class="btn btn-import btn-secondary"
+                        data-bs-toggle="modal"
+                        data-bs-target="#importModal"
+                    >
+                        Importa
+                    </button>
     
                     <button
                         class="btn btn-export btn-secondary"
@@ -102,7 +110,7 @@
 		</div>
 	</ng-container>
 
-	<!-- Modal -->
+	<!-- Booking Modal -->
 	<div
 		class="modal fade"
 		id="bookingModal"
@@ -190,4 +198,50 @@
 			</div>
 		</div>
 	</div>
+
+    	<!-- Import Modal -->
+	<div
+        class="modal fade"
+        id="importModal"
+        tabindex="-1"
+        aria-labelledby="importModelLabel"
+        aria-hidden="true"
+    >
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="importModelLabel">
+                        Importazione file excel
+                    </h5>
+                    <button
+                        type="button"
+                        class="btn-close"
+                        data-bs-dismiss="modal"
+                        aria-label="Close"
+                    ></button>
+                </div>
+                <div class="modal-body">
+                    <div class="input-group custom-file-button">
+                        <label class="input-group-text" for="inputGroupFile">Clicca per importare</label>
+                        <input type="file" 
+                            #fileInput
+                            id="inputGroupFile" 
+                            class="form-control"
+                            (change)="onFileSelected($event)"
+                        >
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button
+                        type="button"
+                        class="btn btn-secondary submit"
+                        data-bs-dismiss="modal"
+                        (click)="uploadFile()"
+                    >
+                        Importa
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
 </div>

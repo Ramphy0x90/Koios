@@ -9,7 +9,11 @@ import {
 	Res,
 	HttpStatus,
 	UseGuards,
+    UseInterceptors,
+    UploadedFile,
 } from "@nestjs/common";
+import { FileInterceptor } from "@nestjs/platform-express";
+import { MulterField } from "@nestjs/platform-express/multer/interfaces/multer-options.interface";
 import { Response } from "express";
 import { AuthGuard } from "src/auth/guards/auth.guard";
 import { Book } from "src/schemas/book.schema";
@@ -84,5 +88,17 @@ export class BookController {
 	): Promise<object> {
 		res.status(HttpStatus.OK);
 		return this.bookService.delete(id);
+    }
+    
+    @UseGuards(AuthGuard)
+    @Post("upload")
+    @UseInterceptors(FileInterceptor('excelFile'))
+	uploadExcel(
+		@Res({ passthrough: true }) res: Response,
+		@UploadedFile() file
+    ): object {
+        this.bookService.import(file);
+		res.status(HttpStatus.OK);
+		return {};
 	}
 }

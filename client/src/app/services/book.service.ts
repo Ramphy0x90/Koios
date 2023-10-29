@@ -54,5 +54,15 @@ export class BookService {
 		return this.httpClient.delete(
 			`${environment.server}/${this.API_URI}/${id}`
 		);
-	}
+    }
+    
+    uploadExcelFile(file: File) {
+        const formData = new FormData();
+        formData.append('excelFile', file);
+    
+        return this.httpClient.post(
+            `${environment.server}/${this.API_URI}/upload`,
+            formData
+        );
+      }
 }
