@@ -5,7 +5,6 @@ import { GuestTempAuthResponse } from "../models/guestTempAuthResponse";
 import { environment } from "src/environments/environment";
 import { GuestTokenRequest } from "../models/guestTokenRequest";
 import { ValidateTokenResponse } from "../models/validateTokenResponse";
-import { Router } from "@angular/router";
 import _ from "lodash";
 
 @Injectable({
@@ -26,7 +25,7 @@ export class GuestService {
 		return this.httpClient.get<GuestTempAuthResponse>(
 			`${environment.server}/${this.API_URI}/${id}`
 		);
-	}
+    }
 
 	getCurrentToken(): string {
 		return window.localStorage.getItem("guestToken") || "";

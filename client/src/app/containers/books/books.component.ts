@@ -18,6 +18,7 @@ import {
 	UserMode,
 } from "src/app/components/table-actions/table-actions.component";
 import _ from "lodash";
+import { GuestService } from "src/app/services/guest.service";
 
 export enum FilterBooks {
 	NONE = "none",
@@ -72,7 +73,7 @@ export class BooksComponent implements OnInit, AfterViewInit {
 	draftBookVersion: Book = this.selectedBooks[0];
 
 	constructor(
-		private bookService: BookService,
+        private bookService: BookService,
 		@Inject(DOCUMENT) private document: Document
 	) {}
 

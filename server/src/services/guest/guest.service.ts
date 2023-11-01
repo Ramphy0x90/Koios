@@ -49,7 +49,7 @@ export class GuestService {
 
 		if (token) {
 			const isValid = await this.authService.verifyJwt(token.token);
-			return { token: token.token, isValid: !!isValid };
+			return { token: token.id, isValid: !!isValid };
 		}
 
 		throw new InvalidTokenException();

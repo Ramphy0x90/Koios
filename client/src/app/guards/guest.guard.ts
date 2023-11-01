@@ -11,7 +11,7 @@ export const guestGuard: CanActivateFn = (route, state) => {
 		if (!data.isValid) {
 			router.navigate(["login"]);
 		} else {
-			window.localStorage.setItem("guestToken", data.token);
+			window.localStorage.setItem("guestToken", JSON.stringify(data));
 		}
 	});
 

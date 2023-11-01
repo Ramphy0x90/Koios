@@ -1,6 +1,6 @@
 <nav class="navbar navbar-expand-lg shadow-lg">
 	<div class="container-fluid">
-		<a class="navbar-brand" href="#">
+		<a class="navbar-brand" (click)="onClickLogo()">
 			<div class="logo-container d-flex flex-row">
 				<img
 					src="assets/images/logo_short.png"
@@ -56,15 +56,6 @@
 						>Login
 					</a>
 				</ng-container>
-
-				<a
-					class="nav-link"
-					data-bs-toggle="collapse"
-					data-bs-target=".navbar-collapse.show"
-					routerLinkActive="active"
-					routerLink="tutorial"
-					>Tutorial
-				</a>
 
 				<ng-container *ngIf="userLogged">
 					<a

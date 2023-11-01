@@ -26,16 +26,30 @@ export class NavBarComponent implements OnInit {
 
 	userLogged: boolean = false;
 
-	constructor(private userService: UserService, private router: Router) {}
+    constructor(
+        private userService: UserService,
+        private router: Router
+    ) { }
 
 	ngOnInit(): void {
 		this.userService.isLogged$.subscribe((status) => {
 			this.userLogged = status;
 		});
-	}
+    }
+    
+    onClickLogo(): void {
+        const guestToken = window.localStorage.getItem("guestToken");
+
+        if (this.userLogged) {
+            this.router.navigate(["books"]);
+        } else if (guestToken) {
+            const tokenId = JSON.parse(guestToken).token;
+            this.router.navigate(['/guest', tokenId, 'books']);
+        }
+    }
 
 	logOut(): void {
 		this.userService.logOut();
-		this.router.navigate(["books"]);
+		this.router.navigate(["login"]);
 	}
 }
