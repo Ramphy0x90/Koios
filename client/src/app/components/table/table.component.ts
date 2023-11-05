@@ -41,16 +41,16 @@ export class TableComponent<T extends DBData> implements OnInit, OnChanges {
 	tableColumns: TableColumn[] = [];
 
 	bookColumns = [
-		{ id: "requestor", title: "Richiedenti", width: "200px", auth: false },
+		{ id: "requestor", title: "Richiedenti", width: "medium", auth: false },
 		{ id: "authors", title: "Autore", auth: false },
 		{
 			id: "title",
 			title: "Titolo",
-			width: "400px",
+			width: "big",
 			defaultSort: true,
 			auth: false,
 		},
-		{ id: "year", title: "Anno", width: "100px", auth: false },
+		{ id: "year", title: "Anno", width: "small", auth: false },
 		{ id: "topic", title: "Argomento", auth: false },
 		{ id: "place", title: "Luogo", auth: false },
 		{ id: "notes", title: "Note", auth: true },

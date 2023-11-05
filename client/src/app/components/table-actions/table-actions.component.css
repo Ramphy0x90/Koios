@@ -17,7 +17,7 @@
 .actions-main-container .action-buttons-container {
 	display: grid;
 	width: 100%;
-	grid-template-columns: repeat(4, 85px);
+	grid-template-columns: repeat(4, 1fr);
 	align-items: center;
 	gap: var(--space-4);
 }
@@ -92,8 +92,19 @@
 }
 
 .actions-main-container .filers-container {
-	display: grid;
-	grid-template-columns: repeat(2, minmax(auto, 1fr));
+	display: flex;
+    flex-direction: column;
+}
+
+.actions-main-container .filers-container select{
+    padding: var(--space-2) var(--space-8);
+    padding-left: var(--space-3);
+    font-size: 12px;
+}
+
+.actions-main-container .filers-container .filters-title {
+    color: var(--color-blue);
+    font-size: 11px;
 }
 
 .actions-main-container .filers-container.no-logged {
@@ -136,12 +147,16 @@
 	}
 
     .actions-main-container .filers-container {
-		grid-template-columns: 1fr;
+        flex-direction: row;
+    }
+
+    .actions-main-container .filers-container .filters-title {
+		font-size: 11px;
 	}
 
-	.actions-main-container .filers-container.no-logged select:nth-child(1),
-	.actions-main-container .filers-container select:nth-child(2) {
-		display: none;
+	.actions-main-container .filers-container.no-logged div:nth-child(1),
+	.actions-main-container .filers-container div:nth-child(2) {
+		display: none !important;
 	}
 
     .actions-main-container .btn-booking {

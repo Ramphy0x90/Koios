@@ -20,38 +20,63 @@
 			</div>
 
 			<div class="filers-container gap-1" [class.no-logged]="!userLogged">
-				<select
-					class="form-select form-select-sm filter-by"
-					aria-label="Small select example"
-					*ngIf="userLogged"
-					[(ngModel)]="currentFilter"
-					(ngModelChange)="setFilterBy($event)"
-				>
-					<option selected [value]="filterBooksEnum.NONE">
-						Filtra per
-					</option>
-					<option [value]="filterBooksEnum.BOOKS_NO_REQUESTORS">
-						Libri senza richiedenti
-					</option>
-					<option [value]="filterBooksEnum.BOOKS_REQUESTORS">
-						Libri con richiedenti
-					</option>
-					<option [value]="filterBooksEnum.BOOKS_DISABLED">
-						Libri disabilitati
-					</option>
-				</select>
+                <div>
+                    <div class="filters-title">Filtra per</div>
+                    <select
+                        class="form-select form-select-sm filter-by"
+                        aria-label="Small select example"
+                        *ngIf="userLogged"
+                        [(ngModel)]="currentFilter"
+                        (ngModelChange)="setFilterBy($event)"
+                    >
+                        <option selected [value]="filterBooksEnum.NONE">
+                            -
+                        </option>
+                        <option [value]="filterBooksEnum.BOOKS_NO_REQUESTORS">
+                            Libri senza richiedenti
+                        </option>
+                        <option [value]="filterBooksEnum.BOOKS_REQUESTORS">
+                            Libri con richiedenti
+                        </option>
+                        <option [value]="filterBooksEnum.BOOKS_DISABLED">
+                            Libri disabilitati
+                        </option>
+                    </select>
+                </div>
 
-				<select
-					class="form-select form-select-sm filter-by"
-					aria-label="Small select example"
-					[(ngModel)]="currentOrder"
-					(ngModelChange)="setOrderBy($event)"
-				>
-					<option selected [value]="orderBooksEnum.TITLE">Titolo</option>
-					<option [value]="orderBooksEnum.AUTHOR">Autore</option>
-                    <option [value]="orderBooksEnum.TOPIC">Argomento</option>
-					<option [value]="orderBooksEnum.PLACE">Luogo</option>
-				</select>
+                <div class="d-flex flex-row gap-2">
+                    <div class="w-100">
+                        <div class="filters-title">
+                            Ordina per
+                        </div>
+                        <select
+                            class="form-select form-select-sm filter-by"
+                            aria-label="Small select example"
+                            [(ngModel)]="currentOrder"
+                            (ngModelChange)="setOrderBy($event)"
+                        >
+                            <option selected [value]="orderBooksEnum.TITLE">Titolo</option>
+                            <option [value]="orderBooksEnum.AUTHOR">Autore</option>
+                            <option [value]="orderBooksEnum.TOPIC">Argomento</option>
+                            <option [value]="orderBooksEnum.PLACE">Luogo</option>
+                        </select>
+                    </div>
+
+                    <div class="w-100">
+                        <div class="filters-title">
+                            Ordinamento
+                        </div>
+                        <select
+                            class="form-select form-select-sm filter-by"
+                            aria-label="Small select example"
+                            [(ngModel)]="currentSortOrder"
+                            (ngModelChange)="setSortOrder($event)"
+                        >
+                            <option selected [value]="sortOrderEnum.ASC">Ascendente</option>
+                            <option [value]="sortOrderEnum.DESC">Discendente</option>
+                        </select>
+                    </div>
+                </div>
 			</div>
 
             <div class="d-flex flex-row gap-2">

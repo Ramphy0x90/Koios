@@ -17,6 +17,7 @@ import { take } from "rxjs";
 import {
 	FilterBooks,
 	OrderBooks,
+    SortOrder,
 } from "src/app/containers/books/books.component";
 import { Book } from "src/app/models/book";
 import { BookService } from "src/app/services/book.service";
@@ -51,6 +52,7 @@ export class TableActionsComponent implements OnInit, OnChanges, AfterViewInit {
 	@Output() booking: EventEmitter<string> = new EventEmitter();
 	@Output() filterBy: EventEmitter<FilterBooks> = new EventEmitter();
     @Output() orderBy: EventEmitter<OrderBooks> = new EventEmitter();
+    @Output() sortOrder: EventEmitter<SortOrder> = new EventEmitter();
     
     @ViewChild('fileInput') fileInput?: ElementRef;
 
@@ -59,13 +61,15 @@ export class TableActionsComponent implements OnInit, OnChanges, AfterViewInit {
 	});
 
 	filterBooksEnum = FilterBooks;
-	orderBooksEnum = OrderBooks;
+    orderBooksEnum = OrderBooks;
+    sortOrderEnum = SortOrder;
 	userModeEnum = UserMode;
 	actionEnum = Action;
 
 	currentMode = UserMode.READ;
 	currentFilter = FilterBooks.NONE;
-	currentOrder = OrderBooks.TITLE;
+    currentOrder = OrderBooks.TITLE;
+    currentSortOrder = SortOrder.ASC;
 
 	onSearch: boolean = false;
 	userLogged: boolean = false;
@@ -125,7 +129,11 @@ export class TableActionsComponent implements OnInit, OnChanges, AfterViewInit {
 
 	setOrderBy(order: OrderBooks): void {
 		this.orderBy.emit(order);
-	}
+    }
+    
+    setSortOrder(sortOrder: SortOrder): void {
+        this.sortOrder.emit(sortOrder);
+    }
 
 	execAction(action: Action): void {
 		this.action.emit(action);

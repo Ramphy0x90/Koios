@@ -34,6 +34,12 @@ export enum OrderBooks {
     PLACE = "place",
 }
 
+
+export enum SortOrder {
+	ASC = "asc",
+	DESC = "desc",
+}
+
 @Component({
 	selector: "app-books",
 	templateUrl: "./books.component.html",
@@ -48,7 +54,8 @@ export class BooksComponent implements OnInit, AfterViewInit {
 
 	mode = UserMode.READ;
 	status = this.inspectorStatus.CLOSED;
-	islandOrder = OrderBooks.TITLE;
+    islandOrder = OrderBooks.TITLE;
+    islandSortOrder = SortOrder.ASC;
 
 	booksFrom: number = 0;
 	booksLimit: number = this.BOOKS_INCREMENT;
@@ -160,7 +167,11 @@ export class BooksComponent implements OnInit, AfterViewInit {
 
 	order(order: OrderBooks) {
 		this.islandOrder = order;
-	}
+    }
+    
+    sortOrder(sortOrder: SortOrder): void {
+        this.islandSortOrder = sortOrder;
+    }
 
 	updateItemsStatus(status: boolean): void {
 		this.itemsStatus = status;

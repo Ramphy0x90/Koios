@@ -21,3 +21,35 @@
 .table-main-container tr.disabled td {
 	background-color: var(--color-btn-danger) !important;
 }
+
+.table-main-container thead th.small {
+    width: 65px;
+}
+
+.table-main-container thead th.medium {
+    width: 200px;
+}
+
+.table-main-container thead th.big {
+    width: 300px;
+}
+
+@media (min-width: 1200px) {
+    .table-main-container thead th.small {
+        width: 100px;
+    }
+    
+    .table-main-container thead th.medium {
+        width: 200px;
+    }
+    
+    .table-main-container thead th.big {
+        width: 400px;
+    }
+}
+
+@media (min-width: 1400px) {
+    .table-main-container thead th.big {
+        width: 666px;
+    }
+}

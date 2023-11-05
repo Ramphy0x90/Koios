@@ -9,7 +9,7 @@ import { ActivatedRoute, Router } from "@angular/router";
 import { DBData } from "src/app/models/dbData";
 import { take } from "rxjs";
 import _ from "lodash";
-import { OrderBooks } from "src/app/containers/books/books.component";
+import { OrderBooks, SortOrder } from "src/app/containers/books/books.component";
 
 @Component({
 	selector: "app-items-island-view",
@@ -18,7 +18,8 @@ import { OrderBooks } from "src/app/containers/books/books.component";
 })
 export class ItemsIslandViewComponent<T extends DBData> {
 	@Input() data: T[] = [];
-	@Input() order: OrderBooks = OrderBooks.TITLE;
+    @Input() order: OrderBooks = OrderBooks.TITLE;
+    @Input() sortOrder: SortOrder = SortOrder.ASC;
 	@Output() updateItem: EventEmitter<T> = new EventEmitter();
 
 	selectedItem?: T;
@@ -31,9 +32,9 @@ export class ItemsIslandViewComponent<T extends DBData> {
 			this.orderItems();
 		}
 
-		if (changes["order"]?.currentValue) {
+		if (changes["order"]?.currentValue || changes["sortOrder"]?.currentValue) {
 			this.orderItems();
-		}
+        }
 	}
 
 	select(item: T): void {
@@ -48,7 +49,7 @@ export class ItemsIslandViewComponent<T extends DBData> {
 	}
 
 	orderItems(): void {
-		this.data = _.orderBy(this.data, this.order, "asc");
+		this.data = _.orderBy(this.data, this.order, this.sortOrder);
 		this.data = [...this.data];
 	}
 

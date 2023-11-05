@@ -7,6 +7,7 @@
 			(search)="search($event)"
 			(filterBy)="filter($event)"
 			(orderBy)="order($event)"
+            (sortOrder)="sortOrder($event)"
 			(restore)="fetchBooks()"
 			(booking)="booking($event)"
 		></app-table-actions>
@@ -21,6 +22,7 @@
 			<app-items-island-view
 				[data]="books"
 				[order]="islandOrder"
+                [sortOrder]="islandSortOrder"
 				(updateItem)="setBook($event)"
 			>
 			</app-items-island-view>
