@@ -26,10 +26,8 @@ export class BookSeedService {
 			let year = row.getCell(4).value?.valueOf();
 			let topic = row.getCell(5).value?.toString() || "";
 			let place = row.getCell(6).value?.toString() || "";
-			let notes =
-				(row.getCell(7).value?.toString() || "") +
-				"\n" +
-				(row.getCell(8).value?.toString() || "");
+            let notes1 = row.getCell(7).value?.toString() || "";
+            let notes2 = row.getCell(8).value?.toString() || "";
 
 			const book = {
 				status: true,
@@ -39,7 +37,8 @@ export class BookSeedService {
 				year: !Number.isNaN(Number(year)) ? Number(year) : null,
 				topic: topic,
 				place: place,
-				notes: notes,
+                notes1: notes1,
+                notes2: notes2
 			};
 
 			books.push(<Book>book);

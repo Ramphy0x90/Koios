@@ -73,7 +73,8 @@ export class BooksComponent implements OnInit, AfterViewInit {
 		year: new Date().getFullYear(),
 		topic: "",
 		place: "",
-		notes: "",
+        notes1: "",
+        notes2: ""
 	};
 
 	selectedBooks: Book[] = [];

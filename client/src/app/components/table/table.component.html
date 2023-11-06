@@ -30,7 +30,8 @@
 						<td>{{ item.year }}</td>
 						<td>{{ item.topic }}</td>
 						<td>{{ item.place }}</td>
-						<td *ngIf="userLogged">{{ item.notes }}</td>
+						<td *ngIf="userLogged">{{ item.notes1 }}</td>
+                        <td *ngIf="userLogged">{{ item.notes2 }}</td>
 					</ng-container>
 				</tr>
 			</ng-container>

@@ -53,7 +53,8 @@ export class TableComponent<T extends DBData> implements OnInit, OnChanges {
 		{ id: "year", title: "Anno", width: "small", auth: false },
 		{ id: "topic", title: "Argomento", auth: false },
 		{ id: "place", title: "Luogo", auth: false },
-		{ id: "notes", title: "Note", auth: true },
+        { id: "notes1", title: "Note 1", auth: true },
+        { id: "notes2", title: "Note 2", auth: true },
 	];
 
 	userLogged: boolean = false;

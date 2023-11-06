@@ -26,7 +26,10 @@ export class Book {
 	place: string;
 
 	@Prop()
-	notes: string;
+    notes1: string;
+    
+    @Prop()
+	notes2: string;
 
 	@Prop({ default: mongoose.now() })
 	createdAt: Date;

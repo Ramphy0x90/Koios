@@ -115,10 +115,19 @@
 		</div>
 
 		<div class="inspector-field form-group" *ngIf="userLogged">
-			<label>Note <i class="bi bi-justify-left"></i></label>
+			<label>Note 1<i class="bi bi-justify-left"></i></label>
 			<textarea
 				class="form-control"
-				[(ngModel)]="data[0].value.notes"
+				[(ngModel)]="data[0].value.notes1"
+				[disabled]="mode == userMode.READ"
+			></textarea>
+		</div>
+
+        <div class="inspector-field form-group" *ngIf="userLogged">
+			<label>Note 2<i class="bi bi-justify-left"></i></label>
+			<textarea
+				class="form-control"
+				[(ngModel)]="data[0].value.notes2"
 				[disabled]="mode == userMode.READ"
 			></textarea>
 		</div>

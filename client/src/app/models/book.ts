@@ -8,5 +8,6 @@ export interface Book extends DBData {
 	year: number;
 	topic: string;
 	place: string;
-	notes: string;
+    notes1: string;
+    notes2: string;
 }
