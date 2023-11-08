@@ -10,7 +10,6 @@ import { fromEvent, take } from "rxjs";
 import { InspectorStatus } from "src/app/components/inspector/inspector.component";
 import { Book } from "src/app/models/book";
 import { BookService } from "src/app/services/book.service";
-import * as XLSX from "xlsx";
 import { DOCUMENT } from "@angular/common";
 import { InspectorData } from "src/app/models/inspectorData";
 import {
@@ -18,7 +17,7 @@ import {
 	UserMode,
 } from "src/app/components/table-actions/table-actions.component";
 import _ from "lodash";
-import { GuestService } from "src/app/services/guest.service";
+import * as ExcelJS from 'exceljs';
 
 export enum FilterBooks {
 	NONE = "none",
@@ -213,7 +212,7 @@ export class BooksComponent implements OnInit, AfterViewInit {
 		return books;
 	}
 
-	fetchBooks(append: boolean = false): void {
+    fetchBooks(append: boolean = false): void {
 		this.isSearching = false;
 		this.isFiltering = false;
 
@@ -237,8 +236,6 @@ export class BooksComponent implements OnInit, AfterViewInit {
 	updateBook(): void {
 		if (this.selectedBooks.length > 1) {
 			for (let book of this.selectedBooks) {
-				const bookId = this.draftBookVersion?._id || "";
-
 				this.bookService
 					.updateBook(book)
 					.pipe(take(1))
@@ -303,13 +300,55 @@ export class BooksComponent implements OnInit, AfterViewInit {
 	booking(requestor: string): void {
 		this.draftBookVersion = { ...this.selectedBooks[0] };
 		this.draftBookVersion.requestor.push(requestor);
-		this.updateBook();
+        this.updateBook();
 	}
 
-	export(): void {
-		let elt = this.document.querySelector("app-table table");
-		let wb = XLSX.utils.table_to_book(elt, { sheet: "sheet1" });
-		return XLSX.writeFile(wb, "LibriCDE.xlsx");
+    export(): void {
+        this.bookService
+        .getAll()
+        .pipe(take(1))
+        .subscribe((data: Book[]) => {
+            const workbook = new ExcelJS.Workbook();
+            const worksheet = workbook.addWorksheet('Data');
+
+            const headers: string[] = ["requestor", "authors", "title", "year", "topic", "place", "notes1", "notes2"];
+            const headersIta: string[] = ["Richiedenti", "Autori", "Titolo", "Anno", "Argomento", "Luogo", "Note1", "Note2"];
+            const headersToRemove: string[] = ["_id", "createdAt", "updatedAt", "__v", "id", "status"];
+
+            headersToRemove.forEach((header) => {
+                data.forEach((book: any) => {
+                    delete book[header];
+                })
+            })
+
+            worksheet.addRow(headersIta);
+            worksheet.autoFilter = {
+                from: { row: 1, column: 1 },
+                to: { row: 1, column: headers.length },
+            };
+        
+            data.forEach((book: Book) => {
+                const rowColumns: string[] = [];
+
+                _.values(book).forEach((column) => {
+                    let columnFormat = _.isArray(column) ? column.join(", ") : column?.toString();
+                    rowColumns.push(columnFormat || "");
+                })
+
+                worksheet.addRow(rowColumns);
+            });
+
+            workbook.xlsx.writeBuffer().then((buffer: any) => {
+                const blob = new Blob([buffer], { type: 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet' });
+                const url = window.URL.createObjectURL(blob);
+                const a = document.createElement('a');
+
+                a.href = url;
+                a.download = 'LibriCDE.xlsx';
+                a.click();
+                window.URL.revokeObjectURL(url);
+            });
+        });
 	}
 
 	cancelOperation(): void {
