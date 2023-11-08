@@ -161,7 +161,9 @@ export class TableActionsComponent implements OnInit, OnChanges, AfterViewInit {
 			this.toastr.warning("Il campo richiedente non può essere vuoto");
 		} else {
 			this.booking.emit(this.possibleRequestor);
-			this.possibleRequestor = "";
+            this.possibleRequestor = "";
+            
+            this.toastr.success(`Il libro "${this.selectedBook?.title}" è stato prenotato con successo!`)
 		}
     }
     

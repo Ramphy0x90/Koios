@@ -24,7 +24,7 @@
 					[class.disabled]="!item.status"
 				>
 					<ng-container *ngIf="isBook(item)">
-						<td>{{ item.requestor }}</td>
+						<td *ngIf="userLogged">{{ item.requestor }}</td>
 						<td>{{ item.authors }}</td>
 						<td>{{ item.title }}</td>
 						<td>{{ item.year }}</td>
