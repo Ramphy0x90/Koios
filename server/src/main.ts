@@ -20,11 +20,11 @@ async function bootstrap() {
 		credentials: true,
 	});
 
-	const userSeedService = app.get(UserSeedService);
-	await userSeedService.seedData();
+	// const userSeedService = app.get(UserSeedService);
+	// await userSeedService.seedData();
 
-	const booksSeedService = app.get(BookSeedService);
-	await booksSeedService.seedData();
+	// const booksSeedService = app.get(BookSeedService);
+	// await booksSeedService.seedData();
 
 	await app.listen(process.env.PORT ? parseInt(process.env.PORT) : 3000);
 }
