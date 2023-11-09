@@ -42,7 +42,7 @@
 
 .island-item-main-container .sub {
 	display: grid;
-	grid-template-columns: repeat(3, 1fr);
+	grid-template-columns: repeat(2, 1fr);
 	gap: var(--space-4);
 	margin-top: var(--space-3);
 	color: var(--color-light-2);
@@ -60,7 +60,6 @@
 .island-item-main-container .sub .sub-info:nth-child(2) {
 	padding: var(--space-1) var(--space-4);
 	border-left: 1px solid var(--color-light-2);
-	border-right: 1px solid var(--color-light-2);
 }
 
 .island-item-main-container .sub .sub-info:nth-child(1) i {
@@ -69,10 +68,6 @@
 
 .island-item-main-container .sub .sub-info:nth-child(2) i {
 	color: var(--color-blue-1);
-}
-
-.island-item-main-container .sub .sub-info:nth-child(3) i {
-	color: var(--color-light-2);
 }
 
 .modal .field-value {

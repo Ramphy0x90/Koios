@@ -328,14 +328,24 @@ export class BooksComponent implements OnInit, AfterViewInit {
             };
         
             data.forEach((book: Book) => {
-                const rowColumns: string[] = [];
-
-                _.values(book).forEach((column) => {
-                    let columnFormat = _.isArray(column) ? column.join(", ") : column?.toString();
-                    rowColumns.push(columnFormat || "");
-                })
-
-                worksheet.addRow(rowColumns);
+                if (book.requestor.length > 0) {
+                    book.requestor.forEach((requestor) => {
+                        const rowColumns: string[] = [];
+                        let tempBook = { ...book }
+                        tempBook.requestor = [requestor];
+    
+                        _.values(tempBook).forEach((column) => {
+                            let columnFormat = _.isArray(column) ? column[0] : column?.toString();
+                            rowColumns.push(columnFormat || "");
+                        })
+        
+                        worksheet.addRow(rowColumns);
+                    });
+                } else {
+                    let tempBook: any = { ...book };
+                    tempBook.requestor = "";
+                    worksheet.addRow(_.values(tempBook));
+                }
             });
 
             workbook.xlsx.writeBuffer().then((buffer: any) => {
