@@ -173,15 +173,20 @@ export class TableActionsComponent implements OnInit, OnChanges, AfterViewInit {
     
     uploadFile() {
         if (this.selectedFile) {
-            this.bookService.uploadExcelFile(this.selectedFile).subscribe((response) => {
-                this.selectedFile = undefined;
-                
-                if (this.fileInput) {
-                    this.fileInput.nativeElement.value = '';
+            this.bookService.uploadExcelFile(this.selectedFile).subscribe({
+                next: (response) => {
+                    this.selectedFile = undefined;
+                        
+                    if(this.fileInput) {
+                        this.fileInput.nativeElement.value = '';
+                    }
+                        
+                    this.restore.emit(true);
+                    this.toastr.success("File Excel importato correttamente");
+                },
+                error: (error) => {
+                    this.toastr.error("Errore durante il caricamento del file Excel");
                 }
-                
-                this.restore.emit(true);
-                this.toastr.success("File Excel importato correttamente");
             });
         }
     }

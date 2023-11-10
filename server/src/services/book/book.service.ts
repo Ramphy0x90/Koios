@@ -6,7 +6,7 @@ import _ from "lodash";
 import { LogService } from "../log/log.service";
 import { Log } from "src/schemas/log.schema";
 import * as path from "path";
-import { Worksheet } from "exceljs";
+import { Worksheet, Cell } from "exceljs";
 
 const ExcelJS = require("exceljs");
 
@@ -101,19 +101,16 @@ export class BookService {
     }
     
     async import(file) {
-        console.log(file)
 		const workbook = new ExcelJS.Workbook();
         await workbook.xlsx.load(file.buffer);
 		const worksheet: Worksheet = workbook.worksheets[1];
         const totalRows = worksheet.rowCount;
-        
-        console.log(worksheet)
 
 		let books: Book[] = [];
 
 		for (const row of worksheet.getRows(1, totalRows)) {
-			let authors = row.getCell(2).value?.toString() || "-";
-			let title = row.getCell(3).value?.toString() || "-";
+			let authors = row.getCell(2).value?.toString() || "";
+            let title = this.extractCellValue(row.getCell(3));
 			let year = row.getCell(4).value?.valueOf();
 			let topic = row.getCell(5).value?.toString() || "";
 			let place = row.getCell(6).value?.toString() || "";
@@ -137,5 +134,17 @@ export class BookService {
 
 		await this.bookModel.deleteMany({});
 		await this.bookModel.create(books);
-	}
+    }
+    
+    private extractCellValue(cell: Cell): string {
+        const cellValue = cell.value;
+
+        if (typeof cellValue == "string") {
+            return cellValue;
+        } else if (cellValue?.["richText"]) {
+            return cellValue["richText"].map(({ text }) => text).join("");
+        }
+            
+        return "-";
+    }
 }

@@ -62,7 +62,6 @@ export class TableComponent<T extends DBData> implements OnInit, OnChanges {
 	constructor(
 		private route: ActivatedRoute,
 		private router: Router,
-		private activeRoute: ActivatedRoute,
 		private userService: UserService
 	) {}
 

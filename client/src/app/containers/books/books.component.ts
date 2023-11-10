@@ -309,7 +309,7 @@ export class BooksComponent implements OnInit, AfterViewInit {
         .pipe(take(1))
         .subscribe((data: Book[]) => {
             const workbook = new ExcelJS.Workbook();
-            const worksheet = workbook.addWorksheet('Data');
+            const worksheet = workbook.addWorksheet('Doppioni');
 
             const headers: string[] = ["requestor", "authors", "title", "year", "topic", "place", "notes1", "notes2"];
             const headersIta: string[] = ["Richiedenti", "Autori", "Titolo", "Anno", "Argomento", "Luogo", "Note1", "Note2"];
@@ -349,7 +349,7 @@ export class BooksComponent implements OnInit, AfterViewInit {
             });
 
             workbook.xlsx.writeBuffer().then((buffer: any) => {
-                const blob = new Blob([buffer], { type: 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet' });
+                const blob = new Blob([buffer], { type: 'application/vnd.ms-exce' });
                 const url = window.URL.createObjectURL(blob);
                 const a = document.createElement('a');
 
