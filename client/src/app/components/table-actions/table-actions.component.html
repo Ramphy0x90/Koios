@@ -126,7 +126,8 @@
     
                     <button
                         class="btn btn-export btn-secondary"
-                        (click)="execAction(actionEnum.EXPORT)"
+                        data-bs-toggle="modal"
+                        data-bs-target="#exportModal"
                     >
                         Esporta
                     </button>
@@ -218,7 +219,7 @@
 		</div>
 	</div>
 
-    	<!-- Import Modal -->
+    <!-- Import Modal -->
 	<div
         class="modal fade"
         id="importModal"
@@ -258,6 +259,64 @@
                         (click)="uploadFile()"
                     >
                         Importa
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Export modal -->
+    <div
+        class="modal fade"
+        id="exportModal"
+        tabindex="-1"
+        aria-labelledby="exportModalLabel"
+        aria-hidden="true"
+    >
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exportModalLabel">
+                        Esportazione file excel
+                    </h5>
+                    <button
+                        type="button"
+                        class="btn-close"
+                        data-bs-dismiss="modal"
+                        aria-label="Close"
+                    ></button>
+                </div>
+                <div class="modal-body">
+                    <div class="filters-title">Filtra libri</div>
+                    <select
+                        class="form-select form-select-sm filter-by"
+                        aria-label="Small select example"
+                        *ngIf="userLogged"
+                        [(ngModel)]="exportFilter"
+                        (ngModelChange)="setFilterBy($event)"
+                    >
+                        <option selected [value]="filterBooksEnum.NONE">
+                            Tutti
+                        </option>
+                        <option [value]="filterBooksEnum.BOOKS_NO_REQUESTORS">
+                            Libri senza richiedenti
+                        </option>
+                        <option [value]="filterBooksEnum.BOOKS_REQUESTORS">
+                            Libri con richiedenti
+                        </option>
+                        <option [value]="filterBooksEnum.BOOKS_DISABLED">
+                            Libri disabilitati
+                        </option>
+                    </select>
+                </div>
+                <div class="modal-footer">
+                    <button
+                        type="button"
+                        class="btn btn-secondary submit"
+                        data-bs-dismiss="modal"
+                        (click)="execAction(actionEnum.EXPORT, exportFilter)"
+                    >
+                        Espora
                     </button>
                 </div>
             </div>

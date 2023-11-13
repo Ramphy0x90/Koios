@@ -30,12 +30,17 @@ export enum UserMode {
 	MANAGE,
 }
 
-export enum Action {
+export enum ActionEnum {
 	SAVE,
 	CANCEL,
     DELETE,
     IMPORT,
 	EXPORT,
+}
+
+export interface Action {
+    action: ActionEnum,
+    payload?: any
 }
 
 @Component({
@@ -64,7 +69,7 @@ export class TableActionsComponent implements OnInit, OnChanges, AfterViewInit {
     orderBooksEnum = OrderBooks;
     sortOrderEnum = SortOrder;
 	userModeEnum = UserMode;
-	actionEnum = Action;
+	actionEnum = ActionEnum;
 
 	currentMode = UserMode.READ;
 	currentFilter = FilterBooks.NONE;
@@ -77,7 +82,8 @@ export class TableActionsComponent implements OnInit, OnChanges, AfterViewInit {
 	selectedBookId?: string;
     selectedBook?: Book;
     selectedFile?: File;
-	possibleRequestor: string = "";
+    possibleRequestor: string = "";
+    exportFilter = FilterBooks.NONE;
 
 	constructor(
 		private userService: UserService,
@@ -135,8 +141,8 @@ export class TableActionsComponent implements OnInit, OnChanges, AfterViewInit {
         this.sortOrder.emit(sortOrder);
     }
 
-	execAction(action: Action): void {
-		this.action.emit(action);
+	execAction(action: ActionEnum, payload: any): void {
+		this.action.emit({action, payload});
 	}
 
 	restoreSearch(): void {

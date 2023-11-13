@@ -14,6 +14,7 @@ import { DOCUMENT } from "@angular/common";
 import { InspectorData } from "src/app/models/inspectorData";
 import {
 	Action,
+	ActionEnum,
 	UserMode,
 } from "src/app/components/table-actions/table-actions.component";
 import _ from "lodash";
@@ -131,18 +132,19 @@ export class BooksComponent implements OnInit, AfterViewInit {
 	}
 
 	handleTableAction(action: Action): void {
-		switch (action) {
-			case Action.SAVE:
+		switch (action.action) {
+			case ActionEnum.SAVE:
 				this.saveBook();
 				break;
-			case Action.CANCEL:
+			case ActionEnum.CANCEL:
 				this.cancelOperation();
 				break;
-			case Action.DELETE:
+			case ActionEnum.DELETE:
 				this.deleteBook();
 				break;
-			case Action.EXPORT:
-				this.export();
+            case ActionEnum.EXPORT:
+                const filter = action.payload;
+				this.export(filter);
 				break;
 		}
 	}
@@ -303,10 +305,12 @@ export class BooksComponent implements OnInit, AfterViewInit {
         this.updateBook();
 	}
 
-    export(): void {
-        this.bookService
-        .getAll()
-        .pipe(take(1))
+    export(filter: FilterBooks): void {
+        const serviceCall = filter == FilterBooks.NONE ?
+            this.bookService.getAll() :
+            this.bookService.filterBooks(filter);
+        
+        serviceCall.pipe(take(1))
         .subscribe((data: Book[]) => {
             const workbook = new ExcelJS.Workbook();
             const worksheet = workbook.addWorksheet('Doppioni');
