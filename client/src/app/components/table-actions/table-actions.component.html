@@ -20,12 +20,11 @@
 			</div>
 
 			<div class="filers-container gap-1" [class.no-logged]="!userLogged">
-                <div>
+                <div *ngIf="userLogged">
                     <div class="filters-title">Filtra per</div>
                     <select
                         class="form-select form-select-sm filter-by"
                         aria-label="Small select example"
-                        *ngIf="userLogged"
                         [(ngModel)]="currentFilter"
                         (ngModelChange)="setFilterBy($event)"
                     >
@@ -79,11 +78,7 @@
                 </div>
 			</div>
 
-            <div class="d-flex flex-row gap-2">
-                <a class="btn btn-question d-flex" routerLink="/tutorial">
-                    <i class="bi bi-question-lg"></i>
-                </a>
-    
+            <div class="d-flex flex-row gap-2">   
                 <button
                     *ngIf="!userLogged"
                     class="btn btn-booking btn-secondary"
@@ -132,6 +127,10 @@
                         Esporta
                     </button>
                 </div>
+
+                <a class="d-flex help-button" routerLink="/tutorial">
+                    <i class="bi bi-question-lg"></i>
+                </a>
             </div>
 		</div>
 	</ng-container>

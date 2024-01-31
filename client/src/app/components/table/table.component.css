@@ -1,25 +1,26 @@
 .table-main-container tr th {
-	color: var(--color-light);
-	background-color: var(--color-blue) !important;
+    font-size: 15px;
+    color: var(--color-light);
+    background-color: var(--color-blue) !important;
 }
 
 .table-main-container tr th:hover {
-	color: var(--color-light);
-	background-color: var(--color-light-2) !important;
+    color: var(--color-light);
+    background-color: var(--color-light-2) !important;
 }
 
 .table-main-container tr:hover td {
-	color: var(--color-dark);
-	background-color: var(--color-light) !important;
+    color: var(--color-dark);
+    background-color: var(--color-light) !important;
 }
 
 .table-main-container tr.active td {
-	color: var(--color-light);
-	background-color: var(--color-green) !important;
+    color: var(--color-light);
+    background-color: var(--color-green) !important;
 }
 
 .table-main-container tr.disabled td {
-	background-color: var(--color-btn-danger) !important;
+    background-color: var(--color-btn-danger) !important;
 }
 
 .table-main-container thead th.small {
@@ -38,11 +39,11 @@
     .table-main-container thead th.small {
         width: 100px;
     }
-    
+
     .table-main-container thead th.medium {
         width: 200px;
     }
-    
+
     .table-main-container thead th.big {
         width: 400px;
     }

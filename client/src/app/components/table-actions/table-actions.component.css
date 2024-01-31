@@ -1,102 +1,109 @@
 .actions-main-container {
-	flex-direction: column;
-	padding: var(--space-4);
-	border-bottom: 1px solid var(--color-dark);
-	background-color: var(--color-light-1-1);
+    flex-direction: column;
+    padding: var(--space-4);
+    border-bottom: 1px solid var(--color-dark);
+    background-color: var(--color-light-1-1);
 }
 
 .actions-main-container .container-read {
-	flex-direction: column;
+    flex-direction: column;
+}
+
+.actions-main-container .container-read .help-button {
+    color: var(--color-blue);
+    font-size: 25px;
+    padding: var(--space-3) var(--space-6);
+    border-left: 3px solid var(--color-light-2);
 }
 
 .actions-main-container .container-edit {
-	flex-direction: row;
-	justify-content: space-between;
+    flex-direction: row;
+    justify-content: space-between;
 }
 
 .actions-main-container .action-buttons-container {
-	display: grid;
-	width: 100%;
-	grid-template-columns: repeat(4, 1fr);
-	align-items: center;
-	gap: var(--space-4);
+    display: grid;
+    width: 100%;
+    grid-template-columns: repeat(4, 1fr);
+    align-items: center;
+    gap: var(--space-4);
 }
 
 .actions-main-container button,
 .actions-main-container .btn-question {
-	padding: var(--space-3) var(--space-6);
-	border: none;
-	border-radius: 6px;
-	font-size: 14px;
-	box-shadow: 0px 10px 9px -7px rgba(0, 0, 0, 0.1);
+    padding: var(--space-3) var(--space-6);
+    border: none;
+    border-radius: 6px;
+    font-size: 14px;
+    box-shadow: 0px 10px 9px -7px rgba(0, 0, 0, 0.1);
 }
 
 .actions-main-container .btn-export {
-	background-color: var(--color-light-2);
+    background-color: var(--color-light-2);
 }
 
 .actions-main-container .btn-new,
 .actions-main-container .btn-save {
-	background-color: var(--color-btn-success);
+    background-color: var(--color-btn-success);
 }
 
 .actions-main-container .btn-edit {
-	background-color: var(--color-btn-warning);
+    background-color: var(--color-btn-warning);
 }
 
 .actions-main-container .btn-import {
-	background-color: var(--color-btn-danger);
+    background-color: var(--color-btn-danger);
 }
 
 .actions-main-container .btn-export {
-	background-color: var(--color-btn-info);
+    background-color: var(--color-btn-info);
 }
 
-.actions-main-container .btn-question { 
+.actions-main-container .btn-question {
     justify-content: center;
     align-items: center;
     font-size: 17px;
     color: var(--color-light);
-	background-color: var(--color-light-2);
+    background-color: var(--color-light-2);
 }
 
 .actions-main-container .btn-booking {
-	width: 120px;
-	background-color: var(--color-btn-danger);
+    width: 120px;
+    background-color: var(--color-btn-danger);
 }
 
 .actions-main-container .icon-delete {
-	margin-left: auto;
+    margin-left: auto;
 }
 
 .actions-main-container button.cancel {
-	background-color: var(--color-light-2);
+    background-color: var(--color-light-2);
 }
 
 .actions-main-container .search {
-	justify-content: space-between;
-	align-items: center;
-	padding: var(--space-3) var(--space-6);
-	background-color: white;
-	box-shadow: 0px 0px 10px -3px rgba(0, 0, 0, 0.5);
+    justify-content: space-between;
+    align-items: center;
+    padding: var(--space-3) var(--space-6);
+    background-color: white;
+    box-shadow: 0px 0px 10px -3px rgba(0, 0, 0, 0.5);
 }
 
 .actions-main-container .search input {
-	border: none;
-	width: 100%;
-	background: transparent;
+    border: none;
+    width: 100%;
+    background: transparent;
 }
 
 .actions-main-container .search input:focus {
-	outline: none;
+    outline: none;
 }
 
 .actions-main-container .filers-container {
-	display: flex;
+    display: flex;
     flex-direction: column;
 }
 
-.actions-main-container .filers-container select{
+.actions-main-container .filers-container select {
     padding: var(--space-2) var(--space-8);
     padding-left: var(--space-3);
     font-size: 12px;
@@ -108,56 +115,56 @@
 }
 
 .actions-main-container .filers-container.no-logged {
-	grid-template-columns: 1fr;
+    grid-template-columns: 1fr;
 }
 
 .modal .book-field {
-	gap: var(--space-6);
+    gap: var(--space-6);
 }
 
 .modal .field-value {
-	color: var(--color-light-2);
+    color: var(--color-light-2);
 }
 
 .custom-file-button input[type="file"] {
-	margin-left: -2px !important;
+    margin-left: -2px !important;
 }
 
 .custom-file-button input[type="file"]::-webkit-file-upload-button {
     display: none;
 }
+
 .custom-file-button input[type="file"]::file-selector-button {
     display: none;
 }
 
 .custom-file-button label {
     color: var(--color-light);
-    background-color: var(--color-light-2) ;
+    background-color: var(--color-light-2);
     cursor: pointer;
 }
 
 /* Large devices (desktops, 992px and up) */
 @media (min-width: 992px) {
-	.actions-main-container .container-read {
-		flex-direction: row;
-	}
+    .actions-main-container .container-read {
+        flex-direction: row;
+    }
 
-	.actions-main-container .action-buttons-container {
-		justify-content: start;
-	}
+    .actions-main-container .container-read div:nth-child(3) {
+        margin-left: auto;
+    }
+
+    .actions-main-container .action-buttons-container {
+        justify-content: start;
+    }
 
     .actions-main-container .filers-container {
         flex-direction: row;
     }
 
     .actions-main-container .filers-container .filters-title {
-		font-size: 11px;
-	}
-
-	.actions-main-container .filers-container.no-logged div:nth-child(1),
-	.actions-main-container .filers-container div:nth-child(2) {
-		display: none !important;
-	}
+        font-size: 11px;
+    }
 
     .actions-main-container .btn-booking {
         display: block;

@@ -1,79 +1,82 @@
 .inspector-main-container {
-	position: absolute;
-	top: 0;
-	right: -360px;
-	gap: var(--space-7);
-	width: 360px;
-	height: 100%;
-	padding: var(--space-6);
-	background-color: var(--color-light);
-	box-shadow: 0px 10px 15px -3px rgba(0, 0, 0, 0.2);
-	overflow-y: auto;
+    position: absolute;
+    top: 0;
+    right: -360px;
+    gap: var(--space-7);
+    width: 360px;
+    height: 100%;
+    padding: var(--space-6);
+    background-color: var(--color-light);
+    box-shadow: 0px 10px 15px -3px rgba(0, 0, 0, 0.2);
+    overflow-y: auto;
 }
 
 .inspector-field {
-	display: flex;
-	flex-direction: column;
+    display: flex;
+    flex-direction: column;
 }
 
 .inspector-field ng-select {
-	width: 100%;
+    width: 100%;
 }
 
 .inspector-field label {
-	color: var(--color-green);
+    color: var(--color-green);
 }
 
 .inspector-field input {
-	white-space: no-wrap;
-	text-overflow: ellipsis;
-	overflow: hidden;
+    white-space: no-wrap;
+    text-overflow: ellipsis;
+    overflow: hidden;
 }
 
 .inspector-field .requestors-list {
-	padding: var(--space-6);
-	font-size: 14px;
-	height: auto;
-	border: 1px solid var(--color-light-2);
-	border-radius: 6px;
-	margin-top: var(--space-6);
+    padding: var(--space-6);
+    font-size: 14px;
+    height: auto;
+    border: 1px solid var(--color-light-2);
+    border-radius: 6px;
+    margin-top: var(--space-6);
 }
 
 .inspector-field .requestors-list.limited {
-	height: 100px;
-	overflow-y: scroll;
+    height: 100px;
+    overflow-y: scroll;
 }
 
 .inspector-field .requestors-list .item {
-	justify-content: space-between;
+    justify-content: space-between;
 }
 
 .inspector-field .requestors-list i {
-	cursor: pointer;
+    cursor: pointer;
 }
 
 .readOnly .inspector-field input,
 .readOnly .inspector-field textarea,
 .readOnly .inspector-field select {
-	border: 1px solid var(--color-light-2);
-	background-color: var(--color-light);
+    border: 1px solid var(--color-light-2);
+    background-color: var(--color-light);
 }
 
 .inspector-actions-container {
-	flex: 0 0 30px;
-	display: flex;
-	justify-content: end;
-	align-items: center;
-	color: var(--color-green);
-	cursor: pointer;
-	text-align: right;
-	overflow: hidden;
+    flex: 0 0 30px;
+    display: flex;
+    justify-content: end;
+    align-items: center;
+    color: var(--color-green);
+    cursor: pointer;
+    text-align: right;
+    overflow: hidden;
 }
 
 .inspector-actions-container i {
-	font-size: 30px;
+    font-size: 15px;
+}
+
+.inspector-actions-container i.close-icon {
+    font-size: 30px;
 }
 
 /* Large devices (desktops, 992px and up) */
-@media (min-width: 992px) {
-}
+@media (min-width: 992px) {}

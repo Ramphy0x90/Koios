@@ -4,8 +4,17 @@
 	[class.readOnly]="mode == userMode.READ"
 >
 	<div class="inspector-actions-container d-flex justify-content-between">
-		<div (click)="emitSave()">Salva</div>
-		<i class="bi bi-x" title="Chiudi" (click)="closeInspector()"></i>
+        <div class="d-flex gap-3">
+            <div class="d-flex gap-1" (click)="emitSave()">
+                <i class="bi bi-floppy2-fill"></i> <span>Salva</span>
+            </div>
+            |
+            <div class="d-flex gap-1" (click)="emitDelete()">
+                <i class="bi bi-trash3"></i> <span>Elimina</span>
+            </div>
+        </div>
+
+		<i class="bi bi-x close-icon" title="Chiudi" (click)="closeInspector()"></i>
 	</div>
 
 	<div class="inspector-field form-group">

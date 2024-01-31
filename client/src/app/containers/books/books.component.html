@@ -16,13 +16,15 @@
 			<app-table
 				[data]="books"
 				[mode]="mode"
+                [order]="booksOrder"
+                [sortOrder]="booksSortOrder"
 				(updateItems)="setBooks($event)"
 			></app-table>
 
 			<app-items-island-view
 				[data]="books"
-				[order]="islandOrder"
-                [sortOrder]="islandSortOrder"
+				[order]="booksOrder"
+                [sortOrder]="booksSortOrder"
 				(updateItem)="setBook($event)"
 			>
 			</app-items-island-view>
@@ -35,6 +37,7 @@
 		[data]="getBooks()"
 		(itemsSstatus)="updateItemsStatus($event)"
 		(save)="saveBook()"
+        (delete)="deleteBook()"
 		(closed)="cancelOperation()"
 	></app-inspector>
 </div>
