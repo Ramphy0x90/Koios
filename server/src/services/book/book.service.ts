@@ -103,7 +103,7 @@ export class BookService {
     async import(file) {
         const workbook = new ExcelJS.Workbook();
         await workbook.xlsx.load(file.buffer);
-        const worksheet: Worksheet = workbook.worksheets[1];
+        const worksheet: Worksheet = workbook.worksheets[0];
         const totalRows = worksheet.rowCount;
 
         let books: Book[] = [];
