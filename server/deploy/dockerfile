@@ -1,0 +1,15 @@
+FROM node:18-buster as build
+WORKDIR /app
+
+# Copy package.json and package-lock.json first
+COPY package*.json ./
+RUN npm install
+
+# Then copy the rest of the application files
+COPY . .
+
+RUN npm run build
+
+EXPOSE 3000
+
+CMD ["npm", "run", "start:prod"]
