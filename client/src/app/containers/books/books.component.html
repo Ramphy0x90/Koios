@@ -3,13 +3,13 @@
 		<app-table-actions
 			[userMode]="mode"
 			(mode)="updateMode($event)"
-			(action)="handleTableAction($event)"
 			(search)="search($event)"
 			(filterBy)="filter($event)"
 			(orderBy)="order($event)"
             (sortOrder)="sortOrder($event)"
 			(restore)="fetchBooks()"
 			(booking)="booking($event)"
+			(exportBooks)="export($event)"
 		></app-table-actions>
 
 		<div #content class="content-container">

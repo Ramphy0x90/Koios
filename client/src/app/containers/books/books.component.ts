@@ -10,11 +10,7 @@ import { InspectorStatus } from "src/app/components/inspector/inspector.componen
 import { Book } from "src/app/models/book";
 import { BookService } from "src/app/services/book.service";
 import { InspectorData } from "src/app/models/inspectorData";
-import {
-    Action,
-    ActionEnum,
-    UserMode,
-} from "src/app/components/table-actions/table-actions.component";
+import { UserMode } from "src/app/components/table-actions/table-actions.component";
 import _ from "lodash";
 import * as ExcelJS from 'exceljs';
 
@@ -31,7 +27,6 @@ export enum OrderBooks {
     TOPIC = "topic",
     PLACE = "place",
 }
-
 
 export enum SortOrder {
     ASC = "asc",
@@ -129,21 +124,6 @@ export class BooksComponent implements OnInit, AfterViewInit {
         this.mode = mode;
         this.inspectedBooks = [...this.formatInspectedBooks()];
         this.status = openInspector ? this.inspectorStatus.OPEN : this.status;
-    }
-
-    handleTableAction(action: Action): void {
-        switch (action.action) {
-            case ActionEnum.CANCEL:
-                this.cancelOperation();
-                break;
-            case ActionEnum.DELETE:
-                this.deleteBook();
-                break;
-            case ActionEnum.EXPORT:
-                const filter = action.payload;
-                this.export(filter);
-                break;
-        }
     }
 
     search(term: string): void {
