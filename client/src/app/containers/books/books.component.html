@@ -33,9 +33,9 @@
 	<app-inspector
 		[mode]="mode"
 		[status]="status"
-		[data]="getBooks()"
+		[data]="inspectedBooks"
 		(itemsSstatus)="updateItemsStatus($event)"
-		(save)="saveBook()"
+		(save)="saveBook($event)"
         (delete)="deleteBook()"
 		(closed)="cancelOperation()"
 	></app-inspector>

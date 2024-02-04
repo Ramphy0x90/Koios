@@ -1,7 +1,6 @@
 import {
     Component,
     OnInit,
-    Inject,
     ViewChild,
     ElementRef,
     AfterViewInit,
@@ -10,7 +9,6 @@ import { fromEvent, take } from "rxjs";
 import { InspectorStatus } from "src/app/components/inspector/inspector.component";
 import { Book } from "src/app/models/book";
 import { BookService } from "src/app/services/book.service";
-import { DOCUMENT } from "@angular/common";
 import { InspectorData } from "src/app/models/inspectorData";
 import {
     Action,
@@ -78,12 +76,10 @@ export class BooksComponent implements OnInit, AfterViewInit {
     };
 
     selectedBooks: Book[] = [];
+    inspectedBooks: InspectorData<Book>[] = [];
     draftBookVersion: Book = this.selectedBooks[0];
 
-    constructor(
-        private bookService: BookService,
-        @Inject(DOCUMENT) private document: Document
-    ) { }
+    constructor(private bookService: BookService) { }
 
     ngOnInit(): void {
         this.fetchBooks();
@@ -114,28 +110,29 @@ export class BooksComponent implements OnInit, AfterViewInit {
     }
 
     updateMode(mode: UserMode): void {
+        let openInspector = false;
+
         switch (mode) {
             case UserMode.READ:
                 this.cancelOperation();
                 break;
             case UserMode.NEW:
                 this.selectedBooks = [{ ...this.bookTemplate }];
-                this.status = this.inspectorStatus.OPEN;
+                openInspector = true;
                 break;
             case UserMode.EDIT:
                 this.draftBookVersion = { ...this.selectedBooks[0] };
-                this.status = this.inspectorStatus.OPEN;
+                openInspector = true;
                 break;
         }
 
         this.mode = mode;
+        this.inspectedBooks = [...this.formatInspectedBooks()];
+        this.status = openInspector ? this.inspectorStatus.OPEN : this.status;
     }
 
     handleTableAction(action: Action): void {
         switch (action.action) {
-            case ActionEnum.SAVE:
-                this.saveBook();
-                break;
             case ActionEnum.CANCEL:
                 this.cancelOperation();
                 break;
@@ -196,20 +193,28 @@ export class BooksComponent implements OnInit, AfterViewInit {
     setBooks(books: Book[]): void {
         this.selectedBooks = [...books];
         this.draftBookVersion = { ...this.selectedBooks[0] };
+        this.inspectedBooks = [...this.formatInspectedBooks()];
     }
 
-    getBooks(): InspectorData<Book>[] {
+    formatInspectedBooks(): InspectorData<Book>[] {
         let books: InspectorData<Book>[] = [];
 
-        this.selectedBooks.forEach((book) => {
+        if (this.mode == UserMode.NEW) {
             books.push({
                 type: "Book",
-                value:
-                    this.selectedBooks.length == 1
-                        ? this.draftBookVersion
-                        : book,
+                value: this.bookTemplate,
             });
-        });
+        } else if (this.mode == UserMode.EDIT) {
+            this.selectedBooks.forEach((book) => {
+                books.push({
+                    type: "Book",
+                    value:
+                        this.selectedBooks.length == 1
+                            ? this.draftBookVersion
+                            : book,
+                });
+            });
+        }
 
         return books;
     }
@@ -254,7 +259,7 @@ export class BooksComponent implements OnInit, AfterViewInit {
             }
         } else {
             this.bookService
-                .updateBook(this.draftBookVersion)
+                .updateBook(this.selectedBooks[0])
                 .pipe(take(1))
                 .subscribe((data) => {
                     const selectedBookIndex = _.findIndex(
@@ -270,8 +275,9 @@ export class BooksComponent implements OnInit, AfterViewInit {
         }
     }
 
-    saveBook(): void {
+    saveBook(books: InspectorData<Book>[]): void {
         this.setItemsStatus();
+        this.selectedBooks = books.map((book) => book.value);
 
         if (this.mode == UserMode.NEW) {
             this.bookService

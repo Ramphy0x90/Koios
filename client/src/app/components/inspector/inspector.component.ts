@@ -38,7 +38,7 @@ export class InspectorComponent<T> implements OnInit, OnChanges {
     @Input() status: InspectorStatus = InspectorStatus.CLOSED;
     @Input() data: InspectorData<T>[] = [];
 
-    @Output() save: EventEmitter<boolean> = new EventEmitter();
+    @Output() save: EventEmitter<InspectorData<T>[]> = new EventEmitter();
     @Output() delete: EventEmitter<boolean> = new EventEmitter();
     @Output() closed: EventEmitter<boolean> = new EventEmitter();
     @Output() itemsSstatus: EventEmitter<boolean> = new EventEmitter();
@@ -68,14 +68,6 @@ export class InspectorComponent<T> implements OnInit, OnChanges {
             this.mode = changes["mode"]?.currentValue;
         }
 
-        if (changes["status"]) {
-            if (this.status == InspectorStatus.OPEN) {
-                this.container && this.openInspector();
-            } else {
-                this.container && this.closeInspector();
-            }
-        }
-
         if (changes["data"]?.currentValue) {
             this.data = changes["data"].currentValue;
 
@@ -83,6 +75,14 @@ export class InspectorComponent<T> implements OnInit, OnChanges {
                 this.itemStatus = this.data[0].value.status;
             } else {
                 this.itemStatus = true;
+            }
+        }
+
+        if (changes["status"]) {
+            if (this.status == InspectorStatus.OPEN) {
+                this.container && this.openInspector();
+            } else {
+                this.container && this.closeInspector();
             }
         }
     }
@@ -110,7 +110,7 @@ export class InspectorComponent<T> implements OnInit, OnChanges {
     }
 
     emitSave(): void {
-        this.save.emit(true);
+        this.save.emit(this.data);
         this.closeInspector();
     }
 
