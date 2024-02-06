@@ -94,9 +94,10 @@ export class BookController {
     @UseInterceptors(FileInterceptor('excelFile'))
     uploadExcel(
         @Res({ passthrough: true }) res: Response,
-        @UploadedFile() file
+        @UploadedFile() file,
+        @Body('append') append: boolean
     ): Promise<object> {
-        this.bookService.import(file);
+        this.bookService.import(file, append);
         res.status(HttpStatus.OK);
         return Promise.resolve({});
     }

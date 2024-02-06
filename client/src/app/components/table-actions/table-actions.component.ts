@@ -79,6 +79,7 @@ export class TableActionsComponent implements OnInit, OnChanges, AfterViewInit {
 
     onSearch: boolean = false;
     userLogged: boolean = false;
+    appendToExisting: number = 0;
 
     selectedBookId?: string;
     selectedBook?: Book;
@@ -180,7 +181,7 @@ export class TableActionsComponent implements OnInit, OnChanges, AfterViewInit {
 
     uploadFile() {
         if (this.selectedFile) {
-            this.bookService.uploadExcelFile(this.selectedFile).subscribe({
+            this.bookService.uploadExcelFile(this.selectedFile, !!(Number(this.appendToExisting))).subscribe({
                 next: (response) => {
                     this.selectedFile = undefined;
 

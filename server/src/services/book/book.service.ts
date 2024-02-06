@@ -100,7 +100,7 @@ export class BookService {
         return await this.bookModel.deleteOne({ _id: id });
     }
 
-    async import(file) {
+    async import(file, append) {
         const workbook = new ExcelJS.Workbook();
         await workbook.xlsx.load(file.buffer);
         const worksheet: Worksheet = workbook.worksheets[0];
@@ -132,7 +132,10 @@ export class BookService {
             books.push(<Book>book);
         }
 
-        await this.bookModel.deleteMany({});
+        if (append == "false") {
+            await this.bookModel.deleteMany({})
+        }
+
         await this.bookModel.create(books);
     }
 
