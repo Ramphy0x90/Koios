@@ -1,21 +1,22 @@
 .items-island-view-main-container {
-	display: grid;
-	grid-template-columns: repeat(1, minmax(300px, 1fr));
-	grid-template-rows: repeat(auto-fill, auto);
-	height: 100%;
+    display: flex;
+    flex-direction: column;
+    height: 100%;
 }
 
 /* Small devices (landscape phones, less than 768px) */
 @media (min-width: 767.98px) {
-	.items-island-view-main-container {
-		grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
-		gap: var(--space-6);
-	}
+    .items-island-view-main-container {
+        display: grid;
+        grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+        grid-template-rows: min-content;
+        gap: var(--space-6);
+    }
 }
 
 @media (min-width: 945px) {
-	.items-island-view-main-container {
-		grid-template-columns: repeat(2, minmax(300px, 1fr));
-		grid-template-rows: repeat(auto-fill, 95px);
-	}
+    .items-island-view-main-container {
+        grid-template-columns: repeat(2, minmax(300px, 1fr));
+        grid-template-rows: repeat(auto-fill, 95px);
+    }
 }

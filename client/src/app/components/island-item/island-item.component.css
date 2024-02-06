@@ -1,52 +1,52 @@
 .island-item-main-container {
-	position: relative;
-	flex-grow: 1;
-	max-width: 100%;
-	cursor: pointer;
-	overflow: hidden;
+    position: relative;
+    flex-grow: 1;
+    max-width: 100%;
+    cursor: pointer;
+    overflow: hidden;
 }
 
 .island-item-main-container .content {
-	width: 100%;
-	padding: var(--space-5) var(--space-4);
-	border-bottom: 2px solid var(--color-light);
+    width: 100%;
+    padding: var(--space-5) var(--space-4);
+    border-bottom: 2px solid var(--color-light);
 }
 
 .island-item-main-container .content-book {
-	width: 100%;
-	gap: var(--space-6);
-	overflow: hidden;
+    width: 100%;
+    gap: var(--space-6);
+    overflow: hidden;
 }
 
 .island-item-main-container.active {
-	border-color: var(--color-green);
+    border-color: var(--color-green);
 }
 
 .island-item-main-container i.icon-check {
-	position: absolute;
-	font-size: 12px;
-	right: 0;
-	color: var(--color-green);
-	margin: var(--space-4) var(--space-4) 0 0;
+    position: absolute;
+    font-size: 12px;
+    right: 0;
+    color: var(--color-green);
+    margin: var(--space-4) var(--space-4) 0 0;
 }
 
 .island-item-main-container .main,
 .island-item-main-container .body {
-	width: 100%;
+    width: 100%;
 }
 
 .island-item-main-container .main {
-	font-weight: 600;
-	color: var(--color-blue);
+    font-weight: 600;
+    color: var(--color-blue);
 }
 
 .island-item-main-container .sub {
-	display: grid;
-	grid-template-columns: repeat(2, 1fr);
-	gap: var(--space-4);
-	margin-top: var(--space-3);
-	color: var(--color-light-2);
-	font-size: 14px;
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: var(--space-4);
+    margin-top: var(--space-3);
+    color: var(--color-light-2);
+    font-size: 14px;
 }
 
 .island-item-main-container .sub .sub-info {
@@ -58,42 +58,42 @@
 }
 
 .island-item-main-container .sub .sub-info:nth-child(2) {
-	padding: var(--space-1) var(--space-4);
-	border-left: 1px solid var(--color-light-2);
+    padding: var(--space-1) var(--space-4);
+    border-left: 1px solid var(--color-light-2);
 }
 
 .island-item-main-container .sub .sub-info:nth-child(1) i {
-	color: var(--color-btn-info);
+    color: var(--color-btn-info);
 }
 
 .island-item-main-container .sub .sub-info:nth-child(2) i {
-	color: var(--color-blue-1);
+    color: var(--color-blue-1);
 }
 
 .modal .field-value {
-	color: var(--color-light-2);
+    color: var(--color-light-2);
 }
 
 /* Small devices (landscape phones, less than 768px) */
 @media (min-width: 767.98px) {
-	.island-item-main-container {
-		background-color: var(--color-blue);
-		box-shadow: 0px 0px 10px -3px rgba(0, 0, 0, 0.5);
-	}
+    .island-item-main-container {
+        background-color: var(--color-blue);
+        box-shadow: 0px 0px 10px -3px rgba(0, 0, 0, 0.5);
+    }
 
-	.island-item-main-container .content {
-		border-radius: 0 69px 0 0;
-		background-color: var(--color-light-1);
-		border-bottom: none;
-	}
+    .island-item-main-container .content {
+        border-radius: 0 69px 0 0;
+        background-color: var(--color-light-1);
+        border-bottom: none;
+    }
 
-	.island-item-main-container .content:hover {
-		color: var(--color-dark);
-		background-color: var(--color-light);
-		border-color: var(--color-green);
-	}
+    .island-item-main-container .content:hover {
+        color: var(--color-dark);
+        background-color: var(--color-light);
+        border-color: var(--color-green);
+    }
 
-	.island-item-main-container i {
-		color: var(--color-light);
-	}
+    .island-item-main-container i.icon-check {
+        color: var(--color-light);
+    }
 }
