@@ -112,11 +112,11 @@ export class BooksComponent implements OnInit, AfterViewInit {
                 this.cancelOperation();
                 break;
             case UserMode.NEW:
-                this.selectedBooks = [{ ...this.bookTemplate }];
+                this.selectedBooks = [_.cloneDeep(this.bookTemplate)];
                 openInspector = true;
                 break;
             case UserMode.EDIT:
-                this.draftBookVersion = { ...this.selectedBooks[0] };
+                this.draftBookVersion = _.cloneDeep(this.selectedBooks[0]);
                 openInspector = true;
                 break;
         }
@@ -189,9 +189,9 @@ export class BooksComponent implements OnInit, AfterViewInit {
                 books.push({
                     type: "Book",
                     value:
-                        this.selectedBooks.length == 1
+                        _.cloneDeep(this.selectedBooks.length == 1
                             ? this.draftBookVersion
-                            : book,
+                            : book),
                 });
             });
         }

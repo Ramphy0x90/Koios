@@ -41,7 +41,7 @@ export class InspectorComponent<T> implements OnInit, OnChanges {
     @Output() save: EventEmitter<InspectorData<T>[]> = new EventEmitter();
     @Output() delete: EventEmitter<boolean> = new EventEmitter();
     @Output() closed: EventEmitter<boolean> = new EventEmitter();
-    @Output() itemsSstatus: EventEmitter<boolean> = new EventEmitter();
+    @Output() itemsStatus: EventEmitter<boolean> = new EventEmitter();
 
     userMode = UserMode;
     requestorsInputRef: string = "";
@@ -88,7 +88,7 @@ export class InspectorComponent<T> implements OnInit, OnChanges {
     }
 
     onItemStatusChange(status: boolean): void {
-        this.itemsSstatus.emit(status);
+        this.itemsStatus.emit(status);
     }
 
     isBook(item: unknown): item is Book {

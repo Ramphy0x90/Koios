@@ -78,15 +78,17 @@
                 </div>
 			</div>
 
-            <div class="d-flex flex-row gap-2">   
-                <button
-                    *ngIf="!userLogged"
-                    class="btn btn-booking btn-secondary"
-                    data-bs-toggle="modal"
-                    data-bs-target="#bookingModal"
-                >
-                    Prenota libro
-                </button>
+            <div class="d-flex flex-row gap-2" [class.buttons-guest-align]="!userLogged">   
+                <div class="guest-action-buttons-container d-flex align-items-center">
+                    <button
+                        *ngIf="!userLogged"
+                        class="btn btn-booking btn-secondary"
+                        data-bs-toggle="modal"
+                        data-bs-target="#bookingModal"
+                    >
+                        Prenota libro
+                    </button>
+                </div>
 
                 <div class="action-buttons-container" *ngIf="userLogged">
                     <button
@@ -164,24 +166,34 @@
 								{{ selectedBook?.title }}
 							</div>
 						</div>
+
 						<div class="book-field">
 							<div class="field-title">Autore</div>
 							<div class="field-value">
 								{{ selectedBook?.authors }}
 							</div>
 						</div>
+
 						<div class="book-field">
 							<div class="field-title">Argomento</div>
 							<div class="field-value">
 								{{ selectedBook?.topic }}
 							</div>
 						</div>
+
 						<div class="book-field">
 							<div class="field-title">Anno</div>
 							<div class="field-value">
 								{{ selectedBook?.year }}
 							</div>
 						</div>
+
+                        <div class="book-field">
+							<div class="field-title">Numero riservazioni</div>
+							<div class="field-value">
+								{{ selectedBook?.requestor?.length }}
+							</div>
+                        </div>
 					</div>
 
 					<hr />
