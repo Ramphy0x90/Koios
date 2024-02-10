@@ -35,6 +35,12 @@
     width: 300px;
 }
 
+.table-selection-disabled {
+    -webkit-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
+}
+
 @media (min-width: 1200px) {
     .table-main-container thead th.small {
         width: 100px;

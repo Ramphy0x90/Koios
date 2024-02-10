@@ -6,6 +6,7 @@ import {
     OnInit,
     OnChanges,
     SimpleChanges,
+    Inject,
 } from "@angular/core";
 import { ActivatedRoute, Router } from "@angular/router";
 import { take } from "rxjs";
@@ -15,6 +16,7 @@ import { Book } from "src/app/models/book";
 import { UserService } from "src/app/services/user.service";
 import { UserMode } from "../table-actions/table-actions.component";
 import { OrderBooks, SortOrder } from "src/app/containers/books/books.component";
+import { DOCUMENT } from "@angular/common";
 
 interface TableColumn {
     id: string;
@@ -46,13 +48,7 @@ export class TableComponent<T extends DBData> implements OnInit, OnChanges {
     bookColumns = [
         { id: "requestor", title: "Richiedenti", width: "medium", auth: true },
         { id: "authors", title: "Autore", auth: false },
-        {
-            id: "title",
-            title: "Titolo",
-            width: "big",
-            defaultSort: true,
-            auth: false,
-        },
+        { id: "title", title: "Titolo", width: "big", defaultSort: true, auth: false },
         { id: "year", title: "Anno", width: "small", auth: false },
         { id: "topic", title: "Argomento", auth: false },
         { id: "place", title: "Luogo", auth: false },
@@ -61,16 +57,26 @@ export class TableComponent<T extends DBData> implements OnInit, OnChanges {
     ];
 
     userLogged: boolean = false;
+    shiftPressed: boolean = false;
 
     constructor(
+        @Inject(DOCUMENT) private document: Document,
         private route: ActivatedRoute,
         private router: Router,
-        private userService: UserService
+        private userService: UserService,
     ) { }
 
     ngOnInit(): void {
         this.userService.isLogged$.subscribe((status) => {
             this.userLogged = status;
+        });
+
+        this.document.addEventListener("keydown", (event) => {
+            this.shiftPressed = event.key == "Shift";
+        });
+
+        this.document.addEventListener("keyup", (event) => {
+            this.shiftPressed = event.key == "Shift" ? false : this.shiftPressed;
         });
 
         if (this.isBook(this.data[0])) {
@@ -102,15 +108,26 @@ export class TableComponent<T extends DBData> implements OnInit, OnChanges {
             ? `guest/${urlParts[urlParts.indexOf("guest") + 1]}/books`
             : "books";
 
-        if (!this.isSelected(item)) {
-            if (this.mode == this.userModeEnum.READ) {
-                this.selectedItems = [item];
-            } else if (this.mode == this.userModeEnum.EDIT) {
-                this.selectedItems.push(item);
+        if (this.shiftPressed && this.mode == this.userModeEnum.EDIT) {
+            const indexA = this.data.findIndex((i) => i._id == item._id);
+            const indexB = this.data.findIndex((i) => this.isSelected(i));
+
+            if (indexA > indexB) {
+                this.selectedItems = this.data.slice(indexB, indexA + 1);
+            } else {
+                this.selectedItems = this.data.slice(indexA, indexB + 1);
             }
         } else {
-            if (this.selectedItems.length > 1) {
-                _.remove(this.selectedItems, (i) => i._id == item._id);
+            if (!this.isSelected(item)) {
+                if (this.mode == this.userModeEnum.READ) {
+                    this.selectedItems = [item];
+                } else if (this.mode == this.userModeEnum.EDIT) {
+                    this.selectedItems.push(item);
+                }
+            } else {
+                if (this.selectedItems.length > 1) {
+                    _.remove(this.selectedItems, (i) => i._id == item._id);
+                }
             }
         }
 
