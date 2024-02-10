@@ -1,53 +1,49 @@
 .tutorial-main-container {
-	padding: var(--space-6);
-	overflow-y: auto;
-	gap: var(--space-8);
+    padding: var(--space-6);
+    overflow-y: auto;
+    gap: var(--space-8);
 }
 
 .tutorial-main-container h1 {
-	color: var(--color-green);
-	font-weight: bold;
+    color: var(--color-green);
+    font-weight: bold;
 }
 
 .tutorial-main-container p {
-	max-width: 666px;
-	text-align: justify;
+    max-width: 666px;
+    text-align: justify;
 }
 
 .tutorial-main-container .list-group {
-	width: 100%;
+    width: 100%;
 }
 
 .tutorial-main-container .list-group-item {
-	padding: var(--space-5) var(--space-8);
+    padding: var(--space-5) var(--space-8);
 }
 
 .tutorial-main-container .content-0 .example-container {
-	flex-direction: column;
-	width: 100%;
+    flex-direction: column;
+    width: 100%;
 }
 
 .tutorial-main-container .content-0 .example-container .image-container {
-	display: flex;
-	flex-direction: column;
-	gap: var(--space-4);
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-4);
 }
 
-.tutorial-main-container
-	.content-0
-	.example-container
-	.image-container
-	div.desktop {
-	display: none;
+.tutorial-main-container .content-0 .example-container .image-container div.desktop {
+    display: none;
 }
 
 .tutorial-main-container .content-0 .example-container {
-	width: 100%;
-	max-width: 1111px;
-	gap: var(--space-5);
+    width: 100%;
+    max-width: 1111px;
+    gap: var(--space-5);
 }
 
-.tutorial-main-container .image-container{
+.tutorial-main-container .image-container {
     width: 100%;
     -webkit-box-shadow: 0px 7px 12px -1px rgba(0, 0, 0, 0.28);
     -moz-box-shadow: 0px 7px 12px -1px rgba(0, 0, 0, 0.28);
@@ -55,52 +51,56 @@
 }
 
 .tutorial-main-container .content-0 .example-container .image-container {
-	position: relative;
-	overflow: hidden;
+    position: relative;
+    overflow: hidden;
 }
 
 .tutorial-main-container img:not(.mobile) {
-	display: none;
+    display: none;
 }
 
 .tutorial-main-container img {
-	width: 100%;
-	object-position: top;
+    width: 100%;
+    object-position: left;
 }
 
 .tutorial-main-container .content-1 .image-container {
-	max-width: 1111px;
-	position: relative;
-	overflow: hidden;
+    max-width: 1111px;
+    position: relative;
+    overflow: hidden;
 }
 
 /* Large devices (desktops, 992px and up) */
 @media (min-width: 767.98px) {
-	.tutorial-main-container .list-group {
-		width: fit-content;
-		min-width: 200px;
-	}
+    .tutorial-main-container .list-group {
+        width: fit-content;
+        min-width: 200px;
+    }
 
-	.tutorial-main-container .content-0 .example-container {
-		flex-direction: row;
-		width: 100%;
-	}
+    .tutorial-main-container .content-0 .example-container {
+        flex-direction: row;
+        width: 100%;
+    }
 
-	.tutorial-main-container .content-0 .example-container .image-container {
-		height: 250px;
-	}
+    .tutorial-main-container .content-0 .example-container .image-container {
+        height: 250px;
+    }
 
-	.tutorial-main-container img:not(.mobile) {
-		display: block;
+    .tutorial-main-container img:not(.mobile) {
+        display: block;
         object-fit: cover;
         height: 100%;
-	}
+    }
 
-	.tutorial-main-container img.mobile {
-		display: none;
-	}
+    .tutorial-main-container img.mobile {
+        display: none;
+    }
 
-	.tutorial-main-container .content-1 .image-container {
-		height: 444px;
-	}
+    .tutorial-main-container .content-1 .image-container {
+        height: 444px;
+    }
+
+    .tutorial-main-container .content-1 .image-container img {
+        object-position: left;
+    }
 }
