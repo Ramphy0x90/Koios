@@ -91,7 +91,7 @@ export class TableComponent<T extends DBData> implements OnInit, OnChanges {
             this.selectedItems = [];
         }
 
-        if (changes["order"]?.currentValue || changes["sortOrder"]?.currentValue) {
+        if (changes["data"]?.currentValue || changes["order"]?.currentValue || changes["sortOrder"]?.currentValue) {
             this.orderItems();
         }
 
