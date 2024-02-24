@@ -10,52 +10,52 @@ import { Guest } from "src/schemas/guest.schema";
 
 @Injectable()
 export class GuestService {
-	constructor(
-		@InjectModel(Guest.name) private guestModel: Model<Guest>,
-		private authService: AuthService
-	) {}
+    constructor(
+        @InjectModel(Guest.name) private guestModel: Model<Guest>,
+        private authService: AuthService
+    ) { }
 
-	async getAll(): Promise<Guest[]> {
-		return await this.guestModel.find({}).exec();
-	}
+    async getAll(): Promise<Guest[]> {
+        return await this.guestModel.find({}).exec();
+    }
 
-	async getById(id: string): Promise<Guest> {
-		return await this.guestModel.findById(id).exec();
-	}
+    async getById(id: string): Promise<Guest> {
+        return await this.guestModel.findById(id).exec();
+    }
 
-	async generateToken(guest: GuestTokenRequest): Promise<GuestToken> {
-		const jwtToken = await this.authService.generateGuestJwtToken(guest);
+    async generateToken(guest: GuestTokenRequest): Promise<GuestToken> {
+        const jwtToken = await this.authService.generateGuestJwtToken(guest);
 
-		const newGuest = new this.guestModel({
-			guest: guest.guest,
-			token: jwtToken,
-			expiration: guest.expirationDate,
-		});
-		await newGuest.save();
+        const newGuest = new this.guestModel({
+            guest: guest.guest,
+            token: jwtToken,
+            expiration: guest.expirationDate,
+        });
+        await newGuest.save();
 
-		return {
-			token: jwtToken,
-		};
-	}
+        return {
+            token: jwtToken,
+        };
+    }
 
-	async validateToken(tokenId: string): Promise<ValidateTokenResponse> {
-		let token = null;
+    async validateToken(guestId: string): Promise<ValidateTokenResponse> {
+        let guest = null;
 
-		try {
-			token = await this.guestModel.findById(tokenId).exec();
-		} catch {
-			throw new InvalidTokenException();
-		}
+        try {
+            guest = await this.guestModel.findById(guestId).exec();
+        } catch {
+            throw new InvalidTokenException();
+        }
 
-		if (token) {
-			const isValid = await this.authService.verifyJwt(token.token);
-			return { token: token.id, isValid: !!isValid };
-		}
+        if (guest) {
+            const isValid = await this.authService.verifyJwt(guest.token);
+            return { token: guest.token, isValid: !!isValid };
+        }
 
-		throw new InvalidTokenException();
-	}
+        throw new InvalidTokenException();
+    }
 
-	async deleteToken(id: string): Promise<object> {
-		return await this.guestModel.deleteOne({ _id: id });
-	}
+    async deleteToken(id: string): Promise<object> {
+        return await this.guestModel.deleteOne({ _id: id });
+    }
 }

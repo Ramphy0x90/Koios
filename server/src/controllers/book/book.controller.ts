@@ -32,6 +32,7 @@ export class BookController {
         return this.bookService.getAll(from, limit);
     }
 
+    @UseGuards(AuthGuard)
     @Get("search/:term")
     searchBook(
         @Res({ passthrough: true }) res: Response,
@@ -41,6 +42,7 @@ export class BookController {
         return this.bookService.search(term);
     }
 
+    @UseGuards(AuthGuard)
     @Get("filter/:term")
     filterBooks(
         @Res({ passthrough: true }) res: Response,
@@ -50,6 +52,7 @@ export class BookController {
         return this.bookService.filter(term);
     }
 
+    @UseGuards(AuthGuard)
     @Get(":id")
     getBookById(
         @Res({ passthrough: true }) res: Response,
@@ -69,6 +72,7 @@ export class BookController {
         return this.bookService.create(book);
     }
 
+    @UseGuards(AuthGuard)
     @Put(":id")
     updateBook(
         @Res({ passthrough: true }) res: Response,
@@ -102,6 +106,7 @@ export class BookController {
         return Promise.resolve({});
     }
 
+    @UseGuards(AuthGuard)
     @Get("booked-report/:guest")
     async bookedBooksReport(
         @Res({ passthrough: true }) res: Response,
