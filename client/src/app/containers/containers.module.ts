@@ -12,22 +12,22 @@ import { DirectivesModule } from "../directives/directives.module";
 import { TutorialComponent } from './tutorial/tutorial.component';
 
 @NgModule({
-	declarations: [
-		BooksComponent,
-		LogComponent,
-		LoginComponent,
-		RegisterComponent,
-		AdminComponent,
-  TutorialComponent,
-	],
-	imports: [
-		CommonModule,
-		ComponentsModule,
-		ServicesModule,
-		FormsModule,
-		ReactiveFormsModule,
-		DirectivesModule,
-	],
-	exports: [BooksComponent, LogComponent],
+    declarations: [
+        BooksComponent,
+        LogComponent,
+        LoginComponent,
+        RegisterComponent,
+        AdminComponent,
+        TutorialComponent,
+    ],
+    imports: [
+        CommonModule,
+        ComponentsModule,
+        ServicesModule,
+        FormsModule,
+        ReactiveFormsModule,
+        DirectivesModule,
+    ],
+    exports: [BooksComponent, LogComponent],
 })
-export class ContainersModule {}
+export class ContainersModule { }

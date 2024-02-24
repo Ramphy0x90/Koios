@@ -122,15 +122,19 @@ export class InspectorComponent<T> implements OnInit, OnChanges {
     insertRequestor(): void {
         if (this.isBook(this.data[0].value) && this.data.length == 1) {
             this.data[0].value.requestor.push(this.requestorsInputRef);
+            this.data[0].value.requestorId.push(this.requestorsInputRef);
             this.requestorsInputRef = "";
         }
     }
 
     deleteRequestor(name: string): void {
         if (this.isBook(this.data[0].value) && this.data.length == 1) {
-            _.remove(this.data[0].value.requestor, (requestor) => {
-                return requestor == name;
-            });
+            const requestorIndex = this.data[0].value.requestor.indexOf(name);
+
+            if (requestorIndex > -1) {
+                this.data[0].value.requestor.splice(requestorIndex, 1);
+                this.data[0].value.requestorId.splice(requestorIndex, 1);
+            }
         }
     }
 }

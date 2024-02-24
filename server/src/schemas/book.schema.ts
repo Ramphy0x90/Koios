@@ -4,38 +4,41 @@ import * as mongoose from "mongoose";
 
 @Schema({ timestamps: true })
 export class Book {
-	@Prop()
-	status: boolean;
-
-	@Prop()
-	requestor: string[];
-
-	@Prop()
-	authors: string;
-
-	@Prop({ required: true })
-	title: string;
-
-	@Prop()
-	year: number;
-
-	@Prop()
-	topic: string;
-
-	@Prop()
-	place: string;
-
-	@Prop()
-    notes1: string;
-    
     @Prop()
-	notes2: string;
+    status: boolean;
 
-	@Prop({ default: mongoose.now() })
-	createdAt: Date;
+    @Prop()
+    requestor: string[];
 
-	@Prop({ default: mongoose.now() })
-	updatedAt: Date;
+    @Prop()
+    requestorId: string[];
+
+    @Prop()
+    authors: string;
+
+    @Prop({ required: true })
+    title: string;
+
+    @Prop()
+    year: number;
+
+    @Prop()
+    topic: string;
+
+    @Prop()
+    place: string;
+
+    @Prop()
+    notes1: string;
+
+    @Prop()
+    notes2: string;
+
+    @Prop({ default: mongoose.now() })
+    createdAt: Date;
+
+    @Prop({ default: mongoose.now() })
+    updatedAt: Date;
 }
 
 export type BookDocument = HydratedDocument<Book>;

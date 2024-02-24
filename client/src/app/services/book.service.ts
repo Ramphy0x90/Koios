@@ -66,4 +66,11 @@ export class BookService {
             formData
         );
     }
+
+    bookedBooksReport(guestId: string): Observable<BlobPart> {
+        return this.httpClient.get(
+            `${environment.server}/${this.API_URI}/booked-report/${guestId}`,
+            { responseType: 'blob' }
+        );
+    }
 }

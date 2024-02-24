@@ -5,8 +5,10 @@ import { Book } from "src/schemas/book.schema";
 import _ from "lodash";
 import { LogService } from "../log/log.service";
 import { Log } from "src/schemas/log.schema";
-import * as path from "path";
 import { Worksheet, Cell } from "exceljs";
+import * as PDFDocument from 'pdfkit';
+import * as path from "path";
+import { Guest } from "src/schemas/guest.schema";
 
 const ExcelJS = require("exceljs");
 
@@ -14,6 +16,7 @@ const ExcelJS = require("exceljs");
 export class BookService {
     constructor(
         @InjectModel(Book.name) private bookModel: Model<Book>,
+        @InjectModel(Guest.name) private guestModel: Model<Guest>,
         private logService: LogService
     ) { }
 
@@ -98,6 +101,58 @@ export class BookService {
         });
 
         return await this.bookModel.deleteOne({ _id: id });
+    }
+
+    async generatePDF(guestId: string): Promise<Buffer> {
+        const guest: Guest = await this.guestModel.findOne({ _id: guestId }).exec();
+        const books: Book[] = await this.bookModel.find({ requestorId: { $in: [guestId] } }).exec();
+
+        const pdfBuffer: Buffer = await new Promise(resolve => {
+            const doc = new PDFDocument({
+                size: 'LETTER',
+                bufferPages: true,
+            });
+
+            const margin = 50;
+            const lineBase = 150;
+            const lineSpacing = 20;
+
+            const date = new Date().toLocaleDateString('en-GB');
+
+            const imageSizeWidth = 1118;
+            const imageSizeHeight = 147;
+            const imagePath = path.join(process.cwd(), "src/static/images/logo.png");
+            doc.image(imagePath, margin, margin, { width: imageSizeWidth / 5, height: imageSizeHeight / 5 });
+
+            doc.font('Helvetica-Bold');
+            doc.text("Resoconto libri riservati", margin, lineBase);
+
+            doc.font('Helvetica');
+            doc.text(guest.guest, margin, lineBase + lineSpacing * 2);
+            doc.text(date, margin, lineBase + lineSpacing * 3);
+
+            doc.fontSize(11);
+            const listBase = lineBase + lineSpacing * 5;
+
+            if (books.length == 0) {
+                doc.text("Nessun libro riservato", margin, listBase);
+            } else {
+                books.forEach((book, index) => {
+                    doc.text(`• ${book.title}`, margin, listBase + (lineSpacing * index * 2));
+                });
+            }
+
+            doc.end();
+
+            const buffer = []
+            doc.on('data', buffer.push.bind(buffer))
+            doc.on('end', () => {
+                const data = Buffer.concat(buffer)
+                resolve(data)
+            })
+        })
+
+        return pdfBuffer
     }
 
     async import(file, append) {

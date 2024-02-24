@@ -9,47 +9,47 @@ import { guestGuard } from "./guards/guest.guard";
 import { TutorialComponent } from "./containers/tutorial/tutorial.component";
 
 const routes: Routes = [
-	{ path: "", pathMatch: "full", redirectTo: "login" },
-	{
-		path: "guest/:token",
-		canActivate: [guestGuard],
-		children: [
-			{ path: "books", component: BooksComponent },
-			{ path: "books/:id", component: BooksComponent },
-		],
-	},
-	{
-		path: "books",
-		component: BooksComponent,
-		canActivate: [authGuard],
-	},
-	{
-		path: "books/:id",
-		component: BooksComponent,
-		canActivate: [authGuard],
-	},
-	{
-		path: "logs",
-		component: LogComponent,
-		canActivate: [authGuard],
-	},
-	{
-		path: "admin",
-		component: AdminComponent,
-		canActivate: [authGuard],
-	},
-	{
-		path: "login",
-		component: LoginComponent,
-	},
-	{
-		path: "tutorial",
-		component: TutorialComponent,
-	},
+    { path: "", pathMatch: "full", redirectTo: "login" },
+    {
+        path: "guest/:guest",
+        canActivate: [guestGuard],
+        children: [
+            { path: "books", component: BooksComponent },
+            { path: "books/:id", component: BooksComponent },
+        ],
+    },
+    {
+        path: "books",
+        component: BooksComponent,
+        canActivate: [authGuard],
+    },
+    {
+        path: "books/:id",
+        component: BooksComponent,
+        canActivate: [authGuard],
+    },
+    {
+        path: "logs",
+        component: LogComponent,
+        canActivate: [authGuard],
+    },
+    {
+        path: "admin",
+        component: AdminComponent,
+        canActivate: [authGuard],
+    },
+    {
+        path: "login",
+        component: LoginComponent,
+    },
+    {
+        path: "tutorial",
+        component: TutorialComponent,
+    },
 ];
 
 @NgModule({
-	imports: [RouterModule.forRoot(routes, { useHash: true })],
-	exports: [RouterModule],
+    imports: [RouterModule.forRoot(routes, { useHash: true })],
+    exports: [RouterModule],
 })
-export class AppRoutingModule {}
+export class AppRoutingModule { }

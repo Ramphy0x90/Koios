@@ -21,6 +21,7 @@ import {
 } from "src/app/containers/books/books.component";
 import { Book } from "src/app/models/book";
 import { BookService } from "src/app/services/book.service";
+import { GuestService } from "src/app/services/guest.service";
 import { UserService } from "src/app/services/user.service";
 
 export enum UserMode {
@@ -43,6 +44,11 @@ export interface Action {
     payload?: any
 }
 
+export interface BookingData {
+    id: string,
+    name: string
+}
+
 @Component({
     selector: "app-table-actions",
     templateUrl: "./table-actions.component.html",
@@ -56,10 +62,11 @@ export class TableActionsComponent implements OnInit, OnChanges, AfterViewInit {
     @Output() mode: EventEmitter<UserMode> = new EventEmitter();
     @Output() search: EventEmitter<string> = new EventEmitter();
     @Output() restore: EventEmitter<boolean> = new EventEmitter();
-    @Output() booking: EventEmitter<string> = new EventEmitter();
+    @Output() booking: EventEmitter<BookingData> = new EventEmitter();
     @Output() filterBy: EventEmitter<FilterBooks> = new EventEmitter();
     @Output() orderBy: EventEmitter<OrderBooks> = new EventEmitter();
     @Output() sortOrder: EventEmitter<SortOrder> = new EventEmitter();
+    @Output() exportBooking: EventEmitter<string> = new EventEmitter();
     @Output() exportBooks: EventEmitter<FilterBooks> = new EventEmitter();
 
     searchFormGroup: FormGroup = new FormGroup({
@@ -89,6 +96,7 @@ export class TableActionsComponent implements OnInit, OnChanges, AfterViewInit {
 
     constructor(
         private userService: UserService,
+        private guestService: GuestService,
         private bookService: BookService,
         private route: ActivatedRoute,
         private toastr: ToastrService
@@ -168,11 +176,21 @@ export class TableActionsComponent implements OnInit, OnChanges, AfterViewInit {
         if (this.possibleRequestor.length == 0) {
             this.toastr.warning("Il campo richiedente non può essere vuoto");
         } else {
-            this.booking.emit(this.possibleRequestor);
-            this.possibleRequestor = "";
+            this.route.params.pipe(take(1)).subscribe((params) => {
+                const guestId = params["guest"];
+                this.booking.emit({ id: guestId, name: this.possibleRequestor });
+                this.possibleRequestor = "";
 
-            this.toastr.success(`Il libro "${this.selectedBook?.title}" è stato prenotato con successo!`)
+                this.toastr.success(`Il libro "${this.selectedBook?.title}" è stato prenotato con successo!`);
+            });
         }
+    }
+
+    exportBookings(): void {
+        this.route.params.pipe(take(1)).subscribe((params) => {
+            const guestId = params["guest"];
+            this.exportBooking.emit(guestId);
+        });
     }
 
     onFileSelected(event: any) {

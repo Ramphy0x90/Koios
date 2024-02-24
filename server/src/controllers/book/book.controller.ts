@@ -101,4 +101,18 @@ export class BookController {
         res.status(HttpStatus.OK);
         return Promise.resolve({});
     }
+
+    @Get("booked-report/:guest")
+    async bookedBooksReport(
+        @Res({ passthrough: true }) res: Response,
+        @Param("guest") guest: string
+    ): Promise<void> {
+        const buffer = await this.bookService.generatePDF(guest);
+
+        res.setHeader('Content-Type', 'application/pdf');
+        res.setHeader('Content-Disposition', 'attachment; filename=Riservazioni-resoconto.pdf');
+        res.setHeader('Content-Length', buffer.length);
+
+        res.end(buffer);
+    }
 }

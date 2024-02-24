@@ -79,7 +79,16 @@
 			</div>
 
             <div class="d-flex flex-row gap-2" [class.buttons-guest-align]="!userLogged">   
-                <div class="guest-action-buttons-container d-flex align-items-center">
+                <div class="guest-action-buttons-container d-flex align-items-center gap-2">
+                    <button
+                        *ngIf="!userLogged"
+                        class="btn btn-secondary"
+                        (click)="exportBookings()"
+                    >
+                        Resoconto
+                        <i class="bi bi-file-earmark-arrow-down"></i>
+                    </button>
+
                     <button
                         *ngIf="!userLogged"
                         class="btn btn-booking btn-secondary"

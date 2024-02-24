@@ -10,7 +10,7 @@ import { InspectorStatus } from "src/app/components/inspector/inspector.componen
 import { Book } from "src/app/models/book";
 import { BookService } from "src/app/services/book.service";
 import { InspectorData } from "src/app/models/inspectorData";
-import { UserMode } from "src/app/components/table-actions/table-actions.component";
+import { BookingData, UserMode } from "src/app/components/table-actions/table-actions.component";
 import _ from "lodash";
 import * as ExcelJS from 'exceljs';
 
@@ -61,6 +61,7 @@ export class BooksComponent implements OnInit, AfterViewInit {
     bookTemplate: Book = {
         status: false,
         requestor: [],
+        requestorId: [],
         authors: "",
         title: "",
         year: new Date().getFullYear(),
@@ -285,10 +286,19 @@ export class BooksComponent implements OnInit, AfterViewInit {
         });
     }
 
-    booking(requestor: string): void {
+    booking(requestor: BookingData): void {
         this.draftBookVersion = { ...this.selectedBooks[0] };
-        this.draftBookVersion.requestor.push(requestor);
+        this.draftBookVersion.requestorId.push(requestor.id);
+        this.draftBookVersion.requestor.push(requestor.name);
         this.updateBook();
+    }
+
+    exportBooking(guestId: string): void {
+        this.bookService.bookedBooksReport(guestId).subscribe((data) => {
+            const blob = new Blob([data], { type: 'application/pdf' });
+            const url = window.URL.createObjectURL(blob);
+            window.open(url);
+        });
     }
 
     export(filter: FilterBooks): void {

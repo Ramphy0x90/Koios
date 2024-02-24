@@ -8,45 +8,45 @@ import { ValidateTokenResponse } from "../models/validateTokenResponse";
 import _ from "lodash";
 
 @Injectable({
-	providedIn: "root",
+    providedIn: "root",
 })
 export class GuestService {
-	private readonly API_URI = "api/v1/guest";
+    private readonly API_URI = "api/v1/guest";
 
-	constructor(private httpClient: HttpClient) {}
+    constructor(private httpClient: HttpClient) { }
 
-	getAll(): Observable<GuestTempAuthResponse[]> {
-		return this.httpClient.get<GuestTempAuthResponse[]>(
-			`${environment.server}/${this.API_URI}`
-		);
-	}
-
-	getGuestById(id: string): Observable<GuestTempAuthResponse> {
-		return this.httpClient.get<GuestTempAuthResponse>(
-			`${environment.server}/${this.API_URI}/${id}`
-		);
+    getAll(): Observable<GuestTempAuthResponse[]> {
+        return this.httpClient.get<GuestTempAuthResponse[]>(
+            `${environment.server}/${this.API_URI}`
+        );
     }
 
-	getCurrentToken(): string {
-		return window.localStorage.getItem("guestToken") || "";
-	}
+    getGuestById(id: string): Observable<GuestTempAuthResponse> {
+        return this.httpClient.get<GuestTempAuthResponse>(
+            `${environment.server}/${this.API_URI}/${id}`
+        );
+    }
 
-	generateToken(guest: GuestTokenRequest): Observable<GuestTempAuthResponse> {
-		return this.httpClient.post<GuestTempAuthResponse>(
-			`${environment.server}/${this.API_URI}/token`,
-			guest
-		);
-	}
+    getCurrentToken(): string {
+        return window.localStorage.getItem("guestToken") || "";
+    }
 
-	validateToken(token: string): Observable<ValidateTokenResponse> {
-		return this.httpClient.get<ValidateTokenResponse>(
-			`${environment.server}/${this.API_URI}/validate/${token}`
-		);
-	}
+    generateToken(guest: GuestTokenRequest): Observable<GuestTempAuthResponse> {
+        return this.httpClient.post<GuestTempAuthResponse>(
+            `${environment.server}/${this.API_URI}/token`,
+            guest
+        );
+    }
 
-	deleteToken(id: string): Observable<object> {
-		return this.httpClient.delete<GuestTempAuthResponse>(
-			`${environment.server}/${this.API_URI}/${id}`
-		);
-	}
+    validateToken(token: string): Observable<ValidateTokenResponse> {
+        return this.httpClient.get<ValidateTokenResponse>(
+            `${environment.server}/${this.API_URI}/validate/${token}`
+        );
+    }
+
+    deleteToken(id: string): Observable<object> {
+        return this.httpClient.delete<GuestTempAuthResponse>(
+            `${environment.server}/${this.API_URI}/${id}`
+        );
+    }
 }
