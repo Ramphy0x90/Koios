@@ -29,7 +29,7 @@ export class AuthInterceptor implements HttpInterceptor {
         const userToken = this.userService.getUserToken();
         const guestToken = this.guestService.getCurrentToken();
 
-        if ((this.userLogged && userToken) || guestToken) {
+        if ((userToken && this.userLogged) || (guestToken && !request.url.includes("login"))) {
             request = request.clone({
                 setHeaders: {
                     Authorization: `Bearer ${userToken || guestToken}`,
