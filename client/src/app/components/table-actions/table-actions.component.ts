@@ -92,11 +92,11 @@ export class TableActionsComponent implements OnInit, OnChanges, AfterViewInit {
     selectedBook?: Book;
     selectedFile?: File;
     possibleRequestor: string = "";
+    pdfForRequestor: string = "";
     exportFilter = FilterBooks.NONE;
 
     constructor(
         private userService: UserService,
-        private guestService: GuestService,
         private bookService: BookService,
         private route: ActivatedRoute,
         private toastr: ToastrService
@@ -187,10 +187,8 @@ export class TableActionsComponent implements OnInit, OnChanges, AfterViewInit {
     }
 
     exportBookings(): void {
-        this.route.params.pipe(take(1)).subscribe((params) => {
-            const guestId = params["guest"];
-            this.exportBooking.emit(guestId);
-        });
+        this.exportBooking.emit(this.pdfForRequestor);
+        this.pdfForRequestor = "";
     }
 
     onFileSelected(event: any) {

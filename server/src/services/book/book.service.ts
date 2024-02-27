@@ -103,9 +103,8 @@ export class BookService {
         return await this.bookModel.deleteOne({ _id: id });
     }
 
-    async generatePDF(guestId: string): Promise<Buffer> {
-        const guest: Guest = await this.guestModel.findOne({ _id: guestId }).exec();
-        const books: Book[] = await this.bookModel.find({ requestorId: { $in: [guestId] } }).exec();
+    async generatePDF(guest: string): Promise<Buffer> {
+        const books: Book[] = await this.bookModel.find({ requestor: { $in: [guest] } }).exec();
 
         const pdfBuffer: Buffer = await new Promise(resolve => {
             const doc = new PDFDocument({
@@ -128,7 +127,7 @@ export class BookService {
             doc.text("Resoconto libri riservati", margin, lineBase);
 
             doc.font('Helvetica');
-            doc.text(guest.guest, margin, lineBase + lineSpacing * 2);
+            doc.text(guest, margin, lineBase + lineSpacing * 2);
             doc.text(date, margin, lineBase + lineSpacing * 3);
 
             doc.fontSize(11);

@@ -293,8 +293,8 @@ export class BooksComponent implements OnInit, AfterViewInit {
         this.updateBook();
     }
 
-    exportBooking(guestId: string): void {
-        this.bookService.bookedBooksReport(guestId).subscribe((data) => {
+    exportBooking(guest: string): void {
+        this.bookService.bookedBooksReport(guest).subscribe((data) => {
             const blob = new Blob([data], { type: 'application/pdf' });
             const url = window.URL.createObjectURL(blob);
             window.open(url);

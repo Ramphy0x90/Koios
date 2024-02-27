@@ -83,7 +83,8 @@
                     <button
                         *ngIf="!userLogged"
                         class="btn btn-secondary"
-                        (click)="exportBookings()"
+                        data-bs-toggle="modal"
+                        data-bs-target="#pdfModal"
                     >
                         Resoconto
                         <i class="bi bi-file-earmark-arrow-down"></i>
@@ -238,6 +239,60 @@
 			</div>
 		</div>
 	</div>
+
+    <!-- Export PDF Modal -->
+    <div
+        class="modal fade"
+        id="pdfModal"
+        tabindex="-1"
+        aria-labelledby="pdfModalLabel"
+        aria-hidden="true"
+    >
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="pdfModalLabel">
+                        PDF resoconto prenotazioni
+                    </h5>
+                    <button
+                        type="button"
+                        class="btn-close"
+                        data-bs-dismiss="modal"
+                        aria-label="Close"
+                    ></button>
+                </div>
+                <div class="modal-body">
+                    <div class="requestor-info d-flex flex-column">
+                        <label class="field-title"
+                            >Cognome, Nome
+                        </label>
+                        <input
+                            type="text"
+                            class="form-control"
+                            [(ngModel)]="pdfForRequestor"
+                        />
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button
+                        type="button"
+                        class="btn btn-secondary cancel"
+                        data-bs-dismiss="modal"
+                    >
+                        Annulla
+                    </button>
+                    <button
+                        type="button"
+                        class="btn btn-primary booking submit"
+                        data-bs-dismiss="modal"
+                        (click)="exportBookings()"
+                    >
+                        Scarica PDF
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
 
     <!-- Import Modal -->
 	<div
