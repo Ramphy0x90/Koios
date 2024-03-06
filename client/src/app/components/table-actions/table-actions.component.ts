@@ -21,7 +21,6 @@ import {
 } from "src/app/containers/books/books.component";
 import { Book } from "src/app/models/book";
 import { BookService } from "src/app/services/book.service";
-import { GuestService } from "src/app/services/guest.service";
 import { UserService } from "src/app/services/user.service";
 
 export enum UserMode {
@@ -187,8 +186,12 @@ export class TableActionsComponent implements OnInit, OnChanges, AfterViewInit {
     }
 
     exportBookings(): void {
-        this.exportBooking.emit(this.pdfForRequestor);
-        this.pdfForRequestor = "";
+        if (!this.pdfForRequestor) {
+            this.toastr.warning("Il campo cognome, nome non può essere vuoto");
+        } else {
+            this.exportBooking.emit(this.pdfForRequestor);
+            this.pdfForRequestor = "";
+        }
     }
 
     onFileSelected(event: any) {

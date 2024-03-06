@@ -148,6 +148,11 @@
     cursor: pointer;
 }
 
+.export-booking-info {
+    font-size: 12px;
+    margin-bottom: 5px;
+}
+
 /* Large devices (desktops, 992px and up) */
 @media (min-width: 992px) {
     .actions-main-container .container-read {
