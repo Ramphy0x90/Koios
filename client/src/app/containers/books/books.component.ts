@@ -5,7 +5,7 @@ import {
     ElementRef,
     AfterViewInit,
 } from "@angular/core";
-import { fromEvent, take } from "rxjs";
+import { debounceTime, fromEvent, take, takeUntil } from "rxjs";
 import { InspectorStatus } from "src/app/components/inspector/inspector.component";
 import { Book } from "src/app/models/book";
 import { BookService } from "src/app/services/book.service";
@@ -41,7 +41,7 @@ export enum SortOrder {
 export class BooksComponent implements OnInit, AfterViewInit {
     @ViewChild("content") contentContainer?: ElementRef;
 
-    readonly BOOKS_INCREMENT: number = 20;
+    readonly BOOKS_INCREMENT: number = 30;
     inspectorStatus = InspectorStatus;
     userMode = UserMode;
 
@@ -87,23 +87,25 @@ export class BooksComponent implements OnInit, AfterViewInit {
 
     contentContainerScroll(): void {
         const contentContainerEl = this.contentContainer?.nativeElement;
+        const averageItemSize = 60;
 
-        fromEvent(contentContainerEl, "scroll", { capture: true }).subscribe(
-            () => {
-                const scrolled =
-                    contentContainerEl.offsetHeight +
-                    contentContainerEl.scrollTop;
+        fromEvent(contentContainerEl, "scroll", { capture: true })
+            .subscribe(
+                () => {
+                    const scrolled = contentContainerEl.offsetHeight + contentContainerEl.scrollTop;
+                    const dynamicThreshold = contentContainerEl.scrollHeight - averageItemSize * 5;
 
-                if (
-                    scrolled >= contentContainerEl.scrollHeight &&
-                    !this.isSearching &&
-                    !this.isFiltering
-                ) {
-                    this.booksFrom += this.BOOKS_INCREMENT;
-                    this.fetchBooks(true);
+                    if (
+                        scrolled >= dynamicThreshold &&
+                        !this.isSearching &&
+                        !this.isFiltering
+                    ) {
+                        const currentScrollTop = contentContainerEl.scrollTop;
+                        this.booksFrom += this.BOOKS_INCREMENT;
+                        this.fetchBooks(true);
+                    }
                 }
-            }
-        );
+            );
     }
 
     updateMode(mode: UserMode): void {
@@ -209,16 +211,18 @@ export class BooksComponent implements OnInit, AfterViewInit {
             .getAll(this.booksFrom, this.booksLimit)
             .pipe(take(1))
             .subscribe((data) => {
-                if (append) {
-                    this.books = [...this.books, ...data];
-                } else {
-                    this.books = [...data];
-                }
+                requestAnimationFrame(() => {
+                    if (append) {
+                        this.books = [...this.books, ...data];
+                    } else {
+                        this.books = [...data];
+                    }
 
-                this.selectedBooks =
-                    this.books.length > 0
-                        ? [this.books[0]]
-                        : [this.bookTemplate];
+                    this.selectedBooks =
+                        this.books.length > 0
+                            ? [this.books[0]]
+                            : [this.bookTemplate];
+                });
             });
     }
 
