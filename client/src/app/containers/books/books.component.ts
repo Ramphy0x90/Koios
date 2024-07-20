@@ -87,6 +87,7 @@ export class BooksComponent implements OnInit, AfterViewInit {
 
     contentContainerScroll(): void {
         const contentContainerEl = this.contentContainer?.nativeElement;
+
         fromEvent(contentContainerEl, "scroll", { capture: true }).subscribe(
             () => {
                 const scrolled =
@@ -317,13 +318,13 @@ export class BooksComponent implements OnInit, AfterViewInit {
 
                 const headers: string[] = ["requestor", "authors", "title", "year", "topic", "place", "notes1", "notes2"];
                 const headersIta: string[] = ["Richiedenti", "Autori", "Titolo", "Anno", "Argomento", "Luogo", "Note1", "Note2"];
-                const headersToRemove: string[] = ["_id", "createdAt", "updatedAt", "__v", "id", "status"];
+                const headersToRemove: string[] = ["_id", "createdAt", "updatedAt", "__v", "id", "status", "requestorId"];
 
                 headersToRemove.forEach((header) => {
                     data.forEach((book: any) => {
                         delete book[header];
                     })
-                })
+                });
 
                 worksheet.addRow(headersIta);
                 worksheet.autoFilter = {
