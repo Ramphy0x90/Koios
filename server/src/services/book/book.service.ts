@@ -16,7 +16,6 @@ const ExcelJS = require("exceljs");
 export class BookService {
     constructor(
         @InjectModel(Book.name) private bookModel: Model<Book>,
-        @InjectModel(Guest.name) private guestModel: Model<Guest>,
         private logService: LogService
     ) { }
 
@@ -154,7 +153,7 @@ export class BookService {
         return pdfBuffer
     }
 
-    async import(file, append) {
+    async import(file, append): Promise<Book[]> {
         const workbook = new ExcelJS.Workbook();
         await workbook.xlsx.load(file.buffer);
         const worksheet: Worksheet = workbook.worksheets[0];
@@ -191,6 +190,7 @@ export class BookService {
         }
 
         await this.bookModel.create(books);
+        return this.getAll(0, 20);
     }
 
     private extractCellValue(cell: Cell): string {

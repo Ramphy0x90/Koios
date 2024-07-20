@@ -100,10 +100,9 @@ export class BookController {
         @Res({ passthrough: true }) res: Response,
         @UploadedFile() file,
         @Body('append') append: boolean
-    ): Promise<object> {
-        this.bookService.import(file, append);
+    ): Promise<Book[]> {
         res.status(HttpStatus.OK);
-        return Promise.resolve({});
+        return this.bookService.import(file, append);
     }
 
     @UseGuards(AuthGuard)

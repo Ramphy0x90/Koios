@@ -211,7 +211,7 @@ export class BooksComponent implements OnInit, AfterViewInit {
                 if (append) {
                     this.books = [...this.books, ...data];
                 } else {
-                    this.books = data;
+                    this.books = [...data];
                 }
 
                 this.selectedBooks =
@@ -299,6 +299,10 @@ export class BooksComponent implements OnInit, AfterViewInit {
             const url = window.URL.createObjectURL(blob);
             window.open(url);
         });
+    }
+
+    import(books: Book[]): void {
+        this.books = [...books];
     }
 
     export(filter: FilterBooks): void {

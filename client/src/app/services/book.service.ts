@@ -56,12 +56,12 @@ export class BookService {
         );
     }
 
-    uploadExcelFile(file: File, append: boolean = false) {
+    uploadExcelFile(file: File, append: boolean = false): Observable<Book[]> {
         const formData = new FormData();
         formData.append('excelFile', file);
         formData.append('append', append.toString());
 
-        return this.httpClient.post(
+        return this.httpClient.post<Book[]>(
             `${environment.server}/${this.API_URI}/upload`,
             formData
         );

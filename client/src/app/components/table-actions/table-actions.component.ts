@@ -65,6 +65,7 @@ export class TableActionsComponent implements OnInit, OnChanges, AfterViewInit {
     @Output() filterBy: EventEmitter<FilterBooks> = new EventEmitter();
     @Output() orderBy: EventEmitter<OrderBooks> = new EventEmitter();
     @Output() sortOrder: EventEmitter<SortOrder> = new EventEmitter();
+    @Output() importBooks: EventEmitter<Book[]> = new EventEmitter();
     @Output() exportBooking: EventEmitter<string> = new EventEmitter();
     @Output() exportBooks: EventEmitter<FilterBooks> = new EventEmitter();
 
@@ -208,7 +209,7 @@ export class TableActionsComponent implements OnInit, OnChanges, AfterViewInit {
                         this.fileInput.nativeElement.value = '';
                     }
 
-                    this.restore.emit(true);
+                    this.importBooks.emit(response);
                     this.toastr.success("File Excel importato correttamente");
                 },
                 error: (error) => {
