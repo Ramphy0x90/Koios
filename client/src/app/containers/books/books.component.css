@@ -1,47 +1,68 @@
 .books-main-container {
-	flex-direction: row;
+    flex-direction: row;
 }
 
 .body-container {
-	width: 100%;
+    width: 100%;
 }
 
 .content-container {
-	width: 100%;
-	height: 100%;
-	padding: var(--space-3);
-	overflow-y: auto;
+    width: 100%;
+    height: 100%;
+    padding: var(--space-3);
+    overflow-y: auto;
+}
+
+.pagination-container {
+    flex: 0 0 60px;
+    justify-content: center;
+    align-items: center;
+    padding: var(--space-5);
+    background-color: var(--color-light-1-1);
+}
+
+.pagination-container ul {
+    margin: 0;
+}
+
+.pagination-container .page-link {
+    font-size: 12px;
+}
+
+.page-link.active {
+    background: var(--color-btn-success);
+    border: none;
 }
 
 app-table {
-	display: none;
+    display: none;
 }
 
 /* Large devices (desktops, 992px and up) */
 @media (min-width: 992px) {
-	app-table {
-		display: initial;
-	}
+    app-table {
+        display: initial;
+    }
 
-	app-items-island-view {
-		display: none;
-	}
+    app-items-island-view {
+        display: none;
+    }
 
-	.content-container {
-		padding: var(--space-4);
-	}
+    .content-container {
+        padding: var(--space-4);
+    }
 }
 
 @media print {
-	app-table {
-		display: initial;
-	}
+    app-table {
+        display: initial;
+    }
 
-	app-items-island-view {
-		display: none;
-	}
+    app-items-island-view {
+        display: none;
+    }
 
-	.content-container {
-		padding: var(--space-4);
-	}
+    .content-container {
+        padding: var(--space-4);
+    }
 }

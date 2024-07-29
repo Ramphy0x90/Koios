@@ -32,6 +32,12 @@ export class BookController {
         return this.bookService.getAll(from, limit);
     }
 
+    @Get("/count")
+    countAll(@Res({ passthrough: true }) res: Response): Promise<number> {
+        res.status(HttpStatus.OK);
+        return this.bookService.getAllCount();
+    }
+
     @UseGuards(AuthGuard)
     @Get("search/:term")
     searchBook(

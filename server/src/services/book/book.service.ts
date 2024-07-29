@@ -8,7 +8,6 @@ import { Log } from "src/schemas/log.schema";
 import { Worksheet, Cell } from "exceljs";
 import * as PDFDocument from 'pdfkit';
 import * as path from "path";
-import { Guest } from "src/schemas/guest.schema";
 
 const ExcelJS = require("exceljs");
 
@@ -27,6 +26,10 @@ export class BookService {
         }
 
         return await query.exec();
+    }
+
+    async getAllCount(): Promise<number> {
+        return await this.bookModel.countDocuments().exec();
     }
 
     async search(term: string): Promise<Book[]> {

@@ -56,6 +56,7 @@ export class TableComponent<T extends DBData> implements OnInit, OnChanges {
         { id: "notes2", title: "Note 2", auth: true },
     ];
 
+    currentPage: number = 0;
     userLogged: boolean = false;
     shiftPressed: boolean = false;
 
@@ -67,6 +68,10 @@ export class TableComponent<T extends DBData> implements OnInit, OnChanges {
     ) { }
 
     ngOnInit(): void {
+        this.route.paramMap.subscribe(params => {
+            this.currentPage = Number(params.get('page'));
+        });
+
         this.userService.isLogged$.subscribe((status) => {
             this.userLogged = status;
         });
@@ -131,8 +136,13 @@ export class TableComponent<T extends DBData> implements OnInit, OnChanges {
             }
         }
 
+        if (item) {
+            this.router.navigate([path, this.currentPage, item._id || ""]);
+        } else {
+            this.router.navigate([path, this.currentPage, ""]);
+        }
+
         this.updateItems.emit(this.selectedItems);
-        item && this.router.navigate([path, item?._id || ""]);
     }
 
     isSelected(item: T): boolean {

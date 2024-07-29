@@ -13,6 +13,13 @@ import { InspectorData } from "src/app/models/inspectorData";
 import { BookingData, UserMode } from "src/app/components/table-actions/table-actions.component";
 import _ from "lodash";
 import * as ExcelJS from 'exceljs';
+import { Router } from "@angular/router";
+
+export type PaginationItem = {
+    index: number;
+    from: number;
+    to: number;
+}
 
 export enum FilterBooks {
     NONE = "none",
@@ -38,10 +45,12 @@ export enum SortOrder {
     templateUrl: "./books.component.html",
     styleUrls: ["./books.component.css"],
 })
-export class BooksComponent implements OnInit, AfterViewInit {
+export class BooksComponent implements OnInit {
     @ViewChild("content") contentContainer?: ElementRef;
 
     readonly BOOKS_INCREMENT: number = 30;
+    readonly PAGE_BUFFER: number = 10;
+
     inspectorStatus = InspectorStatus;
     userMode = UserMode;
 
@@ -58,6 +67,7 @@ export class BooksComponent implements OnInit, AfterViewInit {
 
     itemsStatus: boolean = true;
     books: Book[] = [];
+    booksCount: number = 0;
     bookTemplate: Book = {
         status: false,
         requestor: [],
@@ -75,37 +85,68 @@ export class BooksComponent implements OnInit, AfterViewInit {
     inspectedBooks: InspectorData<Book>[] = [];
     draftBookVersion: Book = this.selectedBooks[0];
 
-    constructor(private bookService: BookService) { }
+    paginationItems: PaginationItem[] = [];
+    currentPage: number = 0;
+    pagesFrom: number = 0;
+    pagesTo: number = this.PAGE_BUFFER;
+
+    constructor(
+        private bookService: BookService,
+        private router: Router
+    ) { }
 
     ngOnInit(): void {
+        this.bookService.getAllCount()
+            .pipe(take(1))
+            .subscribe((booksCount) => {
+                this.booksCount = booksCount;
+
+                this.intiPaginationItems();
+                this.fetchBooks();
+            });
+    }
+
+    intiPaginationItems(): void {
+        for (let page = 1; page < this.booksCount / this.BOOKS_INCREMENT; page++) {
+            this.paginationItems.push(
+                {
+                    index: page,
+                    from: (page - 1) * this.BOOKS_INCREMENT,
+                    to: this.BOOKS_INCREMENT
+                }
+            )
+        }
+    }
+
+    getPaginationItems(): PaginationItem[] {
+        return this.paginationItems.slice(this.pagesFrom, this.pagesTo);
+    }
+
+    goToPage(pageIndex: number): void {
+        const half = Math.floor(this.PAGE_BUFFER / 2);
+        this.currentPage = pageIndex;
+        this.pagesFrom = this.currentPage - half;
+        this.pagesTo = this.currentPage + half;
+
+        if (this.pagesFrom < 0) {
+            this.pagesFrom = 0;
+            this.pagesTo = Math.min(this.PAGE_BUFFER, this.paginationItems.length);
+        } else if (this.pagesTo > this.paginationItems.length) {
+            this.pagesTo = this.paginationItems.length;
+            this.pagesFrom = Math.max(this.paginationItems.length - this.PAGE_BUFFER + 1, 1);
+        }
+
         this.fetchBooks();
     }
 
-    ngAfterViewInit(): void {
-        this.contentContainerScroll();
+    decPage(): void {
+        if (this.currentPage == 0) return;
+        this.goToPage(this.currentPage - 1);
     }
 
-    contentContainerScroll(): void {
-        const contentContainerEl = this.contentContainer?.nativeElement;
-        const averageItemSize = 60;
-
-        fromEvent(contentContainerEl, "scroll", { capture: true })
-            .subscribe(
-                () => {
-                    const scrolled = contentContainerEl.offsetHeight + contentContainerEl.scrollTop;
-                    const dynamicThreshold = contentContainerEl.scrollHeight - averageItemSize * 5;
-
-                    if (
-                        scrolled >= dynamicThreshold &&
-                        !this.isSearching &&
-                        !this.isFiltering
-                    ) {
-                        const currentScrollTop = contentContainerEl.scrollTop;
-                        this.booksFrom += this.BOOKS_INCREMENT;
-                        this.fetchBooks(true);
-                    }
-                }
-            );
+    incPage(): void {
+        if (this.currentPage == this.paginationItems.length - 1) return;
+        this.goToPage(this.currentPage + 1);
     }
 
     updateMode(mode: UserMode): void {
@@ -203,26 +244,30 @@ export class BooksComponent implements OnInit, AfterViewInit {
         return books;
     }
 
-    fetchBooks(append: boolean = false): void {
+    fetchBooks(): void {
+        const page = this.paginationItems[this.currentPage];
+
         this.isSearching = false;
         this.isFiltering = false;
 
         this.bookService
-            .getAll(this.booksFrom, this.booksLimit)
+            .getAll(page.from, page.to)
             .pipe(take(1))
             .subscribe((data) => {
-                requestAnimationFrame(() => {
-                    if (append) {
-                        this.books = [...this.books, ...data];
-                    } else {
-                        this.books = [...data];
-                    }
+                this.books = [...data];
 
-                    this.selectedBooks =
-                        this.books.length > 0
-                            ? [this.books[0]]
-                            : [this.bookTemplate];
-                });
+                this.selectedBooks =
+                    this.books.length > 0
+                        ? [this.books[0]]
+                        : [this.bookTemplate];
+
+                const item = this.books[0];
+
+                if (item) {
+                    this.router.navigate(["books", this.currentPage, item._id || ""]);
+                } else {
+                    this.router.navigate(["books", this.currentPage, ""]);
+                }
             });
     }
 

@@ -16,6 +16,10 @@ export class BookService {
         );
     }
 
+    getAllCount(): Observable<number> {
+        return this.httpClient.get<number>(`${environment.server}/${this.API_URI}/count`);
+    }
+
     searchBook(term: string): Observable<Book[]> {
         return this.httpClient.get<Book[]>(
             `${environment.server}/${this.API_URI}/search/${term}`

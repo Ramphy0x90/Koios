@@ -24,7 +24,12 @@ const routes: Routes = [
         canActivate: [authGuard],
     },
     {
-        path: "books/:id",
+        path: "books/:page",
+        component: BooksComponent,
+        canActivate: [authGuard],
+    },
+    {
+        path: "books/:page/:id",
         component: BooksComponent,
         canActivate: [authGuard],
     },

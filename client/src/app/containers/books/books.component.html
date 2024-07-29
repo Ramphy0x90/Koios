@@ -30,6 +30,32 @@
 				(updateItem)="setBook($event)"
 			></app-items-island-view>
 		</div>
+
+        <div class="pagination-container d-flex">
+            <nav aria-label="Page navigation">
+                <ul class="pagination">
+                    <li class="page-item">
+                        <a class="page-link" aria-label="Previous" (click)="decPage()">
+                            <span aria-hidden="true">&laquo;</span>
+                        </a>
+                    </li>
+                    
+                    <ng-container *ngFor="let page of getPaginationItems()">
+                        <li class="page-item">
+                            <a class="page-link"
+                                [class.active]="(page.index - 1) == currentPage"
+                                (click)="goToPage(page.index - 1)">{{page.index}}</a>
+                        </li>
+                    </ng-container>
+
+                    <li class="page-item">
+                        <a class="page-link" aria-label="Next" (click)="incPage()">
+                            <span aria-hidden="true">&raquo;</span>
+                        </a>
+                    </li>
+                </ul>
+            </nav>
+        </div>
 	</div>
 
 	<app-inspector
