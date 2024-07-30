@@ -39,6 +39,9 @@ export class NavBarComponent implements OnInit {
 
     onClickLogo(): void {
         const guestId = window.localStorage.getItem("guestId");
+        console.log("NAV_BAR: ")
+        console.log(this.userLogged)
+        console.log(guestId)
 
         if (this.userLogged) {
             this.router.navigate(["books"]);
