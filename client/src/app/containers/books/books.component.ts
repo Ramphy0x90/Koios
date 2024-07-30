@@ -262,11 +262,15 @@ export class BooksComponent implements OnInit {
                         : [this.bookTemplate];
 
                 const item = this.books[0];
+                const urlParts = this.router.url.split("/");
+                const path = urlParts.includes("guest")
+                      ? `guest/${urlParts[urlParts.indexOf("guest") + 1]}/books`
+                      : "books";
 
                 if (item) {
-                    this.router.navigate(["books", this.currentPage, item._id || ""]);
+                    this.router.navigate([path, this.currentPage, item._id || ""]);
                 } else {
-                    this.router.navigate(["books", this.currentPage, ""]);
+                    this.router.navigate([path, this.currentPage, ""]);
                 }
             });
     }
