@@ -107,7 +107,7 @@ export class BooksComponent implements OnInit {
     }
 
     intiPaginationItems(): void {
-        for (let page = 1; page < this.booksCount / this.BOOKS_INCREMENT; page++) {
+        for (let page = 1; page <= Math.ceil(this.booksCount / this.BOOKS_INCREMENT); page++) {
             this.paginationItems.push(
                 {
                     index: page,
