@@ -15,7 +15,8 @@ const routes: Routes = [
         canActivate: [guestGuard],
         children: [
             { path: "books", component: BooksComponent },
-            { path: "books/:id", component: BooksComponent },
+            { path: "books/:page", component: BooksComponent },
+            { path: "books/:page/:id", component: BooksComponent },
         ],
     },
     {
