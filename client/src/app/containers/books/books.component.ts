@@ -14,6 +14,7 @@ import { BookingData, UserMode } from "src/app/components/table-actions/table-ac
 import _ from "lodash";
 import * as ExcelJS from 'exceljs';
 import { Router } from "@angular/router";
+import { ViewportScroller } from "@angular/common";
 
 export type PaginationItem = {
     index: number;
@@ -92,7 +93,8 @@ export class BooksComponent implements OnInit {
 
     constructor(
         private bookService: BookService,
-        private router: Router
+        private router: Router,
+        private viewportScroller: ViewportScroller
     ) { }
 
     ngOnInit(): void {
@@ -273,6 +275,10 @@ export class BooksComponent implements OnInit {
                     this.router.navigate([path, this.currentPage, item._id || ""]);
                 } else {
                     this.router.navigate([path, this.currentPage, ""]);
+                }
+
+                if (this.contentContainer) {
+                    this.contentContainer.nativeElement.scrollTop = 0;
                 }
             });
     }
