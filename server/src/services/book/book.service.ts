@@ -18,12 +18,14 @@ export class BookService {
         private logService: LogService
     ) { }
 
-    async getAll(from: number, limit: number): Promise<Book[]> {
+    async getAll(from: number, limit: number, order: string, orderBy: string): Promise<Book[]> {
         const query = this.bookModel.find();
 
         if (limit > 0) {
             query.skip(from).limit(limit);
         }
+
+        query.sort({ [orderBy]: order == "asc" ? 1 : -1 });
 
         return await query.exec();
     }
@@ -193,7 +195,7 @@ export class BookService {
         }
 
         await this.bookModel.create(books);
-        return this.getAll(0, 20);
+        return this.getAll(0, 30, "asc", "title");
     }
 
     private extractCellValue(cell: Cell): string {

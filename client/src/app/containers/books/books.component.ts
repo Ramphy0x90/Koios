@@ -191,10 +191,12 @@ export class BooksComponent implements OnInit {
 
     order(order: OrderBooks) {
         this.booksOrder = order;
+        this.fetchBooks();
     }
 
     sortOrder(sortOrder: SortOrder): void {
         this.booksSortOrder = sortOrder;
+        this.fetchBooks();
     }
 
     updateItemsStatus(status: boolean): void {
@@ -251,7 +253,7 @@ export class BooksComponent implements OnInit {
         this.isFiltering = false;
 
         this.bookService
-            .getAll(page.from, page.to)
+            .getAll(page.from, page.to, this.booksSortOrder, this.booksOrder)
             .pipe(take(1))
             .subscribe((data) => {
                 this.books = [...data];
@@ -264,8 +266,8 @@ export class BooksComponent implements OnInit {
                 const item = this.books[0];
                 const urlParts = this.router.url.split("/");
                 const path = urlParts.includes("guest")
-                      ? `guest/${urlParts[urlParts.indexOf("guest") + 1]}/books`
-                      : "books";
+                    ? `guest/${urlParts[urlParts.indexOf("guest") + 1]}/books`
+                    : "books";
 
                 if (item) {
                     this.router.navigate([path, this.currentPage, item._id || ""]);

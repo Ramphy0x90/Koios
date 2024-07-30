@@ -22,14 +22,16 @@ import { BookService } from "src/services/book/book.service";
 export class BookController {
     constructor(private bookService: BookService) { }
 
-    @Get("all/:from?/:limit?")
+    @Get("all/:from?/:limit?/:order?/:orderBy?")
     fetchAll(
         @Res({ passthrough: true }) res: Response,
         @Param("from") from: number = 0,
-        @Param("limit") limit: number = -1
+        @Param("limit") limit: number = -1,
+        @Param("order") order: string = "asc",
+        @Param("orderBy") orderBy: string = "title"
     ): Promise<Book[]> {
         res.status(HttpStatus.OK);
-        return this.bookService.getAll(from, limit);
+        return this.bookService.getAll(from, limit, order, orderBy);
     }
 
     @Get("/count")

@@ -20,8 +20,6 @@ import { OrderBooks, SortOrder } from "src/app/containers/books/books.component"
 })
 export class ItemsIslandViewComponent<T extends DBData> implements OnInit, OnChanges {
     @Input() data: T[] = [];
-    @Input() order: OrderBooks = OrderBooks.TITLE;
-    @Input() sortOrder: SortOrder = SortOrder.ASC;
     @Output() updateItem: EventEmitter<T> = new EventEmitter();
 
     selectedItem?: T;
@@ -38,11 +36,6 @@ export class ItemsIslandViewComponent<T extends DBData> implements OnInit, OnCha
     ngOnChanges(changes: SimpleChanges): void {
         if (changes["data"]?.currentValue) {
             this.setCurrentItemFromUrl();
-            this.orderItems();
-        }
-
-        if (changes["order"]?.currentValue || changes["sortOrder"]?.currentValue) {
-            this.orderItems();
         }
     }
 
@@ -61,11 +54,6 @@ export class ItemsIslandViewComponent<T extends DBData> implements OnInit, OnCha
         }
 
         this.updateItem.emit(item);
-    }
-
-    orderItems(): void {
-        this.data = _.orderBy(this.data, this.order, this.sortOrder);
-        this.data = [...this.data];
     }
 
     setCurrentItemFromUrl(): void {

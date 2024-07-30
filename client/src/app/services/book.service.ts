@@ -10,9 +10,9 @@ export class BookService {
 
     constructor(private httpClient: HttpClient) { }
 
-    getAll(from: number = 0, limit: number = -1): Observable<Book[]> {
+    getAll(from: number = 0, limit: number = -1, order: string = "asc", orderBy: string = "title"): Observable<Book[]> {
         return this.httpClient.get<Book[]>(
-            `${environment.server}/${this.API_URI}/all/${from}/${limit}`
+            `${environment.server}/${this.API_URI}/all/${from}/${limit}/${order}/${orderBy}`
         );
     }
 

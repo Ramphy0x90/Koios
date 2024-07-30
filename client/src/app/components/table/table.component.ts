@@ -15,7 +15,6 @@ import { DBData } from "src/app/models/dbData";
 import { Book } from "src/app/models/book";
 import { UserService } from "src/app/services/user.service";
 import { UserMode } from "../table-actions/table-actions.component";
-import { OrderBooks, SortOrder } from "src/app/containers/books/books.component";
 import { DOCUMENT } from "@angular/common";
 
 interface TableColumn {
@@ -34,8 +33,6 @@ interface TableColumn {
 export class TableComponent<T extends DBData> implements OnInit, OnChanges {
     @Input() data: T[] = [];
     @Input() mode: UserMode = UserMode.READ;
-    @Input() order: OrderBooks = OrderBooks.TITLE;
-    @Input() sortOrder: SortOrder = SortOrder.ASC;
 
     @Output() updateItem: EventEmitter<T> = new EventEmitter();
     @Output() updateItems: EventEmitter<T[]> = new EventEmitter();
@@ -96,10 +93,6 @@ export class TableComponent<T extends DBData> implements OnInit, OnChanges {
             this.selectedItems = [];
         }
 
-        if (changes["data"]?.currentValue || changes["order"]?.currentValue || changes["sortOrder"]?.currentValue) {
-            this.orderItems();
-        }
-
         this.setCurrentItemFromUrl();
     }
 
@@ -147,11 +140,6 @@ export class TableComponent<T extends DBData> implements OnInit, OnChanges {
 
     isSelected(item: T): boolean {
         return this.selectedItems.includes(item);
-    }
-
-    orderItems(): void {
-        this.data = _.orderBy(this.data, this.order, this.sortOrder);
-        this.data = [...this.data];
     }
 
     updateData(data: T[]): void {
