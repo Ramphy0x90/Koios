@@ -9,6 +9,7 @@ export const guestGuard: CanActivateFn = (route, state) => {
 
     guestService.validateToken(guestId).subscribe((data) => {
         if (!data.isValid) {
+            console.log("GUEST GUARD: REDIRECT");
             router.navigate(["login"]);
         } else {
             window.localStorage.setItem("guestId", guestId);
