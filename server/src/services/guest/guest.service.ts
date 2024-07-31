@@ -43,7 +43,7 @@ export class GuestService {
 
         try {
             guest = await this.guestModel.findById(guestId).exec();
-        } catch {
+        } catch (e) {
             throw new InvalidTokenException();
         }
 
