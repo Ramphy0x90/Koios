@@ -93,8 +93,7 @@ export class BooksComponent implements OnInit {
 
     constructor(
         private bookService: BookService,
-        private router: Router,
-        private viewportScroller: ViewportScroller
+        private router: Router
     ) { }
 
     ngOnInit(): void {

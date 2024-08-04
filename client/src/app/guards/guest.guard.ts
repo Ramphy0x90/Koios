@@ -7,10 +7,12 @@ export const guestGuard: CanActivateFn = (route, state) => {
     const guestService: GuestService = inject(GuestService);
     const guestId = route.params["guest"];
 
-    window.localStorage.removeItem("guestId");
-    window.localStorage.removeItem("guestToken");
-
     guestService.validateToken(guestId).subscribe((data) => {
+        if (data.token !== guestService.getCurrentToken() || !data.isValid) {
+            window.localStorage.removeItem("guestId");
+            window.localStorage.removeItem("guestToken");
+        }
+
         if (!data.isValid) {
             router.navigate(["login"]);
         } else {
