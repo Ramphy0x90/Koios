@@ -7,11 +7,11 @@
 				<div class="main">{{ item.title }}</div>
 				<div class="body">{{ item.authors }}</div>
 				<div class="sub">
-					<div class="sub-info">
+					<div class="sub-info" *ngIf="item.place">
 						<i class="bi bi-geo-alt"></i>
 						{{ item.place }}
 					</div>
-					<div class="sub-info">
+					<div class="sub-info" *ngIf="item.year">
 						<i class="bi bi-calendar4-week"></i>
 						{{ item.year }}
 					</div>

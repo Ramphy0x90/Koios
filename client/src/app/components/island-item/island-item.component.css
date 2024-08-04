@@ -57,11 +57,6 @@
     gap: var(--space-3);
 }
 
-.island-item-main-container .sub .sub-info:nth-child(2) {
-    padding: var(--space-1) var(--space-4);
-    border-left: 1px solid var(--color-light-2);
-}
-
 .island-item-main-container .sub .sub-info:nth-child(1) i {
     color: var(--color-btn-info);
 }
@@ -72,28 +67,4 @@
 
 .modal .field-value {
     color: var(--color-light-2);
-}
-
-/* Small devices (landscape phones, less than 768px) */
-@media (min-width: 767.98px) {
-    .island-item-main-container {
-        background-color: var(--color-blue);
-        box-shadow: 0px 0px 10px -3px rgba(0, 0, 0, 0.5);
-    }
-
-    .island-item-main-container .content {
-        border-radius: 0 69px 0 0;
-        background-color: var(--color-light-1);
-        border-bottom: none;
-    }
-
-    .island-item-main-container .content:hover {
-        color: var(--color-dark);
-        background-color: var(--color-light);
-        border-color: var(--color-green);
-    }
-
-    .island-item-main-container i.icon-check {
-        color: var(--color-light);
-    }
 }
