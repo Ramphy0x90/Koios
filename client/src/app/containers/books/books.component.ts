@@ -14,7 +14,6 @@ import { BookingData, UserMode } from "src/app/components/table-actions/table-ac
 import _ from "lodash";
 import * as ExcelJS from 'exceljs';
 import { Router } from "@angular/router";
-import { ViewportScroller } from "@angular/common";
 
 export type PaginationItem = {
     index: number;
@@ -26,6 +25,7 @@ export enum FilterBooks {
     NONE = "none",
     BOOKS_NO_REQUESTORS = "booksNoRequestors",
     BOOKS_REQUESTORS = "booksRequestor",
+    BOOKS_ENABLED = "booksEnabled",
     BOOKS_DISABLED = "booksDisabled",
 }
 
