@@ -34,6 +34,8 @@ export enum OrderBooks {
     AUTHOR = "authors",
     TOPIC = "topic",
     PLACE = "place",
+    CREATED = "createdAt",
+    MODIFIED = "updatedAt"
 }
 
 export enum SortOrder {
