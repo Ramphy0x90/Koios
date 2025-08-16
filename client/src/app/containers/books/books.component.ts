@@ -14,7 +14,6 @@ import { BookingData, UserMode } from "src/app/components/table-actions/table-ac
 import _ from "lodash";
 import * as ExcelJS from 'exceljs';
 import { Router } from "@angular/router";
-import { ViewportScroller } from "@angular/common";
 
 export type PaginationItem = {
     index: number;
@@ -26,6 +25,7 @@ export enum FilterBooks {
     NONE = "none",
     BOOKS_NO_REQUESTORS = "booksNoRequestors",
     BOOKS_REQUESTORS = "booksRequestor",
+    BOOKS_ENABLED = "booksEnabled",
     BOOKS_DISABLED = "booksDisabled",
 }
 
@@ -207,13 +207,11 @@ export class BooksComponent implements OnInit {
     }
 
     setItemsStatus(): void {
-        if (this.selectedBooks.length > 1) {
-            this.selectedBooks.forEach((book) => {
-                book.status = this.itemsStatus;
-            });
-        } else {
-            this.draftBookVersion.status = this.itemsStatus;
-        }
+        this.selectedBooks.forEach((book) => {
+            book.status = this.itemsStatus;
+        });
+
+        this.draftBookVersion.status = this.itemsStatus;
     }
 
     setBook(book: Book): void {
@@ -320,8 +318,8 @@ export class BooksComponent implements OnInit {
     }
 
     saveBook(books: InspectorData<Book>[]): void {
-        this.setItemsStatus();
         this.selectedBooks = books.map((book) => book.value);
+        this.setItemsStatus();
 
         if (this.mode == UserMode.NEW) {
             this.bookService

@@ -59,6 +59,8 @@ export class BookService {
             result.where({ requestor: { $size: 0 } });
         } else if (term == "booksRequestor") {
             result.where({ requestor: { $not: { $size: 0 } } });
+        } else if(term == "booksEnabled") {
+            result.where({ status: true });
         } else if (term == "booksDisabled") {
             result.where({ status: false });
         }
