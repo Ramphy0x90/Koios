@@ -124,6 +124,17 @@
 			></textarea>
 		</div>
 
+        <div class="inspector-field form-group">
+			<label>Luogo <i class="bi bi-geo-alt-fill"></i></label>
+			<textarea
+				class="form-control"
+				[title]="data[0].value.place"
+				[(ngModel)]="data[0].value.place"
+				[disabled]="mode == userMode.READ || !userLogged"
+			>
+			</textarea>
+		</div>
+
 		<div class="inspector-field form-group" *ngIf="userLogged">
 			<label>Note 1<i class="bi bi-justify-left"></i></label>
 			<textarea
