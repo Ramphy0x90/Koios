@@ -1,6 +1,6 @@
 <div class="items-island-view-main-container">
 	<ng-container *ngFor="let item of data">
-		<app-island-item
+		<app-island-item *ngIf="item.status || userLogged"
 			[item]="item"
 			[active]="item._id == selectedItem?._id"
 			(click)="select(item)"

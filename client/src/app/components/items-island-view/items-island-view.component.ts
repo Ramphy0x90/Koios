@@ -11,7 +11,7 @@ import { ActivatedRoute, Router } from "@angular/router";
 import { DBData } from "src/app/models/dbData";
 import { take } from "rxjs";
 import _ from "lodash";
-import { OrderBooks, SortOrder } from "src/app/containers/books/books.component";
+import { UserService } from "src/app/services/user.service";
 
 @Component({
     selector: "app-items-island-view",
@@ -24,12 +24,21 @@ export class ItemsIslandViewComponent<T extends DBData> implements OnInit, OnCha
 
     selectedItem?: T;
     currentPage: number = 0;
+    userLogged: boolean = false;
 
-    constructor(private route: ActivatedRoute, private router: Router) { }
+    constructor(
+        private route: ActivatedRoute,
+        private router: Router,
+        private userService: UserService,
+    ) { }
 
     ngOnInit(): void {
         this.route.paramMap.subscribe(params => {
             this.currentPage = Number(params.get('page'));
+        });
+
+        this.userService.isLogged$.subscribe((status) => {
+            this.userLogged = status;
         });
     }
 
