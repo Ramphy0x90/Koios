@@ -59,7 +59,7 @@ export class BooksComponent implements OnInit {
 
     mode = UserMode.READ;
     status = this.inspectorStatus.CLOSED;
-    booksOrder = OrderBooks.TITLE;
+    booksOrder = OrderBooks.MODIFIED;
     booksSortOrder = SortOrder.ASC;
 
     booksFrom: number = 0;
