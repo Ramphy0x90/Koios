@@ -60,7 +60,7 @@ export class BooksComponent implements OnInit {
     mode = UserMode.READ;
     status = this.inspectorStatus.CLOSED;
     booksOrder = OrderBooks.MODIFIED;
-    booksSortOrder = SortOrder.ASC;
+    booksSortOrder = SortOrder.DESC;
 
     booksFrom: number = 0;
     booksLimit: number = this.BOOKS_INCREMENT;

@@ -82,7 +82,7 @@ export class TableActionsComponent implements OnInit, OnChanges, AfterViewInit {
     currentMode = UserMode.READ;
     currentFilter = FilterBooks.NONE;
     currentOrder = OrderBooks.MODIFIED;
-    currentSortOrder = SortOrder.ASC;
+    currentSortOrder = SortOrder.DESC;
 
     onSearch: boolean = false;
     userLogged: boolean = false;
