@@ -51,6 +51,7 @@ export class TableComponent<T extends DBData> implements OnInit, OnChanges {
         { id: "place", title: "Luogo", auth: false },
         { id: "notes1", title: "Note 1", auth: true },
         { id: "notes2", title: "Note 2", auth: true },
+        { id: "updatedAt", title: "Ultima modifica", auth: true },
     ];
 
     currentPage: number = 0;
