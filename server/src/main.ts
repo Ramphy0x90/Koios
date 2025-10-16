@@ -9,16 +9,22 @@ tls.DEFAULT_MAX_VERSION = "TLSv1.2";
 async function bootstrap() {
 	const app = await NestFactory.create(AppModule);
 
-	app.enableCors({
-		origin: [
-			"http://localhost:4200",
-			"http://koios.devracom.ch",
-			"http://cde-lista-doppioni.ch",
-			"https://cde-lista-doppioni.ch",
-		],
-		methods: ["GET", "POST", "PUT", "DELETE"],
-		credentials: true,
-	});
+    const corsOriginsEnv = process.env.CORS_ORIGINS || "";
+    const corsOrigins = corsOriginsEnv
+        .split(",")
+        .map((s) => s.trim())
+        .filter((s) => s.length > 0);
+
+    app.enableCors({
+        origin: corsOrigins.length > 0 ? corsOrigins : [
+            "http://localhost:4200",
+            "http://koios.devracom.ch",
+            "http://cde-lista-doppioni.ch",
+            "https://cde-lista-doppioni.ch",
+        ],
+        methods: ["GET", "POST", "PUT", "DELETE"],
+        credentials: true,
+    });
 
 	// const userSeedService = app.get(UserSeedService);
 	// await userSeedService.seedData();

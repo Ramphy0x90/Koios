@@ -1,0 +1,42 @@
+version: "3.9"
+
+services:
+  frontend:
+    build:
+      context: ../client
+      dockerfile: deploy/Dockerfile
+      args:
+        NG_BUILD_CONFIGURATION: development
+    container_name: koios-frontend
+    ports:
+      - "8080:80"
+    depends_on:
+      - backend
+
+  backend:
+    build:
+      context: ../server
+      dockerfile: deploy/dockerfile
+    container_name: koios-backend
+    environment:
+      - PORT=${PORT:-3000}
+      - SECRET=${SECRET:-dev_secret}
+      - CORS_ORIGINS=${CORS_ORIGINS:-https://koios.localhost,https://api.koios.localhost,http://localhost:4200}
+      - MONGO_URL=${MONGO_URL:-mongodb://mongo:27017/koios}
+    depends_on:
+      - mongo
+    ports:
+      - "3000:3000"
+
+  mongo:
+    image: mongo:6
+    container_name: koios-mongo
+    ports:
+      - "27017:27017"
+    volumes:
+      - mongo-data:/data/db
+
+volumes:
+  mongo-data:
+    driver: local
+
