@@ -1,5 +1,9 @@
 version: "3.9"
 
+networks:
+  traefik-network:
+    external: true  # must already exist
+
 services:
   frontend:
     build:
@@ -8,25 +12,35 @@ services:
       args:
         NG_BUILD_CONFIGURATION: development
     container_name: koios-frontend
-    ports:
-      - "8080:80"
+    networks:
+      - traefik-network
     depends_on:
       - backend
+    labels:
+      - "traefik.enable=true"
+      - "traefik.http.routers.koios-frontend.rule=Host(`cde-lista-doppioni.ch`)"
+      - "traefik.http.routers.koios-frontend.entrypoints=websecure"
+      - "traefik.http.routers.koios-frontend.tls.certresolver=letsencrypt"
 
   backend:
     build:
       context: ../server
       dockerfile: deploy/dockerfile
     container_name: koios-backend
+    networks:
+      - traefik-network
     environment:
       - PORT=${PORT:-3000}
       - SECRET=${SECRET:-dev_secret}
-      - CORS_ORIGINS=${CORS_ORIGINS:-https://koios.localhost,https://api.koios.localhost,http://localhost:4200}
+      - CORS_ORIGINS=${CORS_ORIGINS:-cde-lista-doppioni.ch,http://localhost:4200}
       - MONGO_URL=${MONGO_URL:-mongodb://mongo:27017/koios}
     depends_on:
       - mongo
-    ports:
-      - "3000:3000"
+    labels:
+      - "traefik.enable=true"
+      - "traefik.http.routers.koios-backend.rule=Host(`cde-lista-doppioni.ch`) && PathPrefix(`/api`)"
+      - "traefik.http.routers.koios-backend.entrypoints=websecure"
+      - "traefik.http.routers.koios-backend.tls.certresolver=letsencrypt"
 
   mongo:
     image: mongo:6
@@ -34,12 +48,11 @@ services:
     environment:
       - MONGO_INITDB_ROOT_USERNAME=${MONGO_INITDB_ROOT_USERNAME}
       - MONGO_INITDB_ROOT_PASSWORD=${MONGO_INITDB_ROOT_PASSWORD}
-    ports:
-      - "27017:27017"
+    networks:
+      - traefik-network
     volumes:
       - mongo-data:/data/db
 
 volumes:
   mongo-data:
     driver: local
-
