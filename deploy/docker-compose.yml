@@ -2,7 +2,7 @@ version: "3.9"
 
 networks:
   traefik-network:
-    external: true  # must already exist
+    external: true
 
 services:
   frontend:
